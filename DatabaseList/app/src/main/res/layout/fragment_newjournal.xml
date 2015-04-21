@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="40sp"
+        android:id="@+id/textview_newjournal_manufacturer"
+        android:text="Manufacturer:"
+        android:gravity="bottom"
+
+        />
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/edittext_newjournal_manufacturer"
+        android:layout_toRightOf="@id/textview_newjournal_manufacturer"
+        android:ems="10"
+
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="40sp"
+        android:id="@+id/textview_newjournal_type"
+        android:text="Type:"
+        android:layout_below="@id/textview_newjournal_manufacturer"
+        android:gravity="bottom"
+        />
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/edittext_newjournal_type"
+        android:layout_toRightOf="@id/textview_newjournal_type"
+        android:layout_below="@id/edittext_newjournal_manufacturer"
+        android:ems="10"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="40sp"
+        android:id="@+id/textview_newjournal_line"
+        android:text="journal Line:"
+        android:layout_below="@id/textview_newjournal_type"
+        android:gravity="bottom"
+        />
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/edittext_newjournal_line"
+        android:layout_toRightOf="@id/textview_newjournal_line"
+        android:layout_below="@id/edittext_newjournal_type"
+        android:ems="10"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="40sp"
+        android:id="@+id/textview_newjournal_name"
+        android:text="Name:"
+        android:layout_below="@id/textview_newjournal_line"
+        android:gravity="bottom"
+        />
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/edittext_newjournal_name"
+        android:layout_toRightOf="@id/textview_newjournal_name"
+        android:layout_below="@id/edittext_newjournal_line"
+        android:ems="10"
+        />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/button_newjournal_save"
+        android:layout_below="@id/textview_newjournal_name"
+        android:text="Save"
+        />
+</RelativeLayout>
