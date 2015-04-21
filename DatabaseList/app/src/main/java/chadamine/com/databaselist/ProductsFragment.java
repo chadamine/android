@@ -39,7 +39,6 @@ public class ProductsFragment extends ListFragment
 
         View thisView = inflater.inflate(R.layout.fragment_products, container, false);
 
-        registerForContextMenu(thisView);
         prepareList();
 
         prepareSpinner(thisView);

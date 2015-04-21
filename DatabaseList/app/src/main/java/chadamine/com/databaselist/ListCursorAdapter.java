@@ -12,16 +12,22 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.HashMap;
+import java.text.*;
+import java.lang.reflect.*;
+import android.widget.*;
 
 /**
  * Created by chadamine  on 4/12/2015.
  */
 public class ListCursorAdapter extends CursorAdapter {
 
-    Uri mUri;
-    int mID;
+    private Uri mUri;
+    private int mID;
+	private String mKeyID;
+	private String[] mKeyArray;
+	
     Context mContext;
-    private HashMap<Integer, Long> mProductsIds;
+    private HashMap<Integer, Long> mIds;
     private SparseBooleanArray mSelectedItems;
 
     public ListCursorAdapter(Context context, Cursor c, Uri uri, int id) {
@@ -30,12 +36,23 @@ public class ListCursorAdapter extends CursorAdapter {
         mUri = uri;
         mID = id;
         mSelectedItems = new SparseBooleanArray();
-        mProductsIds = new HashMap<>();
+        mIds = new HashMap<>();
+		setDatabase();
     }
 
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
 
+		
+		HashMap<String, EditText> map = new HashMap<>();
+		//for(int i = 0; i<mKeyArray.length; i++)
+		EditText name = (EditText) view.findViewById(R.id.textview_productlist_name);
+		    map.put(cursor.getString(cursor.getColumnIndex(mKeyArray[0])), name);
+		//map.put(cursor.getString(cursor.getColumnIndex(mKeyArray[1])), R.id.textview_productlist_manufacturer);
+		//map.put(cursor.getString(cursor.getColumnIndex(mKeyArray[2])), R.id.textview_productlist_type);
+		//map.put(cursor.getString(cursor.getColumnIndex(mKeyArray[3])), R.id.textview_productlist_line);
+		
+		
         switch(DatabaseContract.URI_MATCHER.match(mUri)) {
 
             case DatabaseContract.PRODUCTS:
@@ -59,23 +76,62 @@ public class ListCursorAdapter extends CursorAdapter {
 
             default:
         }
+		
+		
+		
+		//map.get(key)
+		//for(String key:mKeyArray)
+		for(int i = 0; i < mKeyArray.length; i++)
+			(map.get(mKeyArray[i])).setText(
+				cursor.getString(cursor.getColumnIndex(mKeyArray[i])));
     }
+	
+	private void setDatabase() {
+		switch(DatabaseContract.URI_MATCHER.match(mUri)) {
+
+            case DatabaseContract.PRODUCTS:
+				mKeyID = DatabaseContract.Products.KEY_ID;
+				mKeyArray = DatabaseContract.Products.KEY_ID_ARRAY;
+				mUri = DatabaseContract.Products.CONTENT_URI;
+				break;
+
+			case DatabaseContract.JOURNALS:
+				mKeyID = DatabaseContract.Journals.KEY_ID;
+				mUri = DatabaseContract.Journals.CONTENT_URI;
+				mKeyArray = DatabaseContract.Journals.KEY_ID_ARRAY;
+				break;
+				
+			default:
+				mKeyID = "";
+				mUri = null;
+				mKeyArray = null;
+		}
+	}
+
+	@Override
+	public Cursor getCursor() {
+		
+		return mContext.getContentResolver().query(mUri, mKeyArray, mKeyID, null, null);
+	}
+	
+	
 
     public void toggleSelection(int position) {
 
-        boolean checked = !mSelectedItems.get(position);
-        Cursor cursor = mContext.getContentResolver().query(DatabaseContract.Products.CONTENT_URI,
-                DatabaseContract.Products.KEY_ID_ARRAY, "_id", null, null);
+        boolean checked = !mSelectedItems.get(position); 
+		
+		//setDatabase();
+		Cursor cursor = getCursor();
 
         cursor.moveToPosition(position);
+		
         if(checked) {
             mSelectedItems.put(position, checked);
-            //Toast.makeText(mContext, "Position: " + position, Toast.LENGTH_SHORT).show();
-            mProductsIds.put(position,
+            mIds.put(position,
                     cursor.getLong(
-                            cursor.getColumnIndex(DatabaseContract.Products.KEY_ID)));
+                            cursor.getColumnIndex(mKeyID)));
         } else {
-            mProductsIds.remove(position);
+            mIds.remove(position);
             mSelectedItems.delete(position);
         }
 
@@ -83,17 +139,20 @@ public class ListCursorAdapter extends CursorAdapter {
     }
 
     public void refreshSelection() {
-        mProductsIds = new HashMap<>();
+		
+        mIds = new HashMap<>();
         mSelectedItems = new SparseBooleanArray();
     }
 
+	
     public void remove(int key) {
-        mContext.getContentResolver().delete(DatabaseContract.Products.CONTENT_URI,
-                "_id = " + mProductsIds.get(key), null);
+		
+        mContext.getContentResolver().delete(mUri, mKeyID + " = " + mIds.get(key), null);
     }
 
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
+		
         return LayoutInflater.from(context).inflate(mID, parent, false);
     }
 }

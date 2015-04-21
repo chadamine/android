@@ -50,8 +50,56 @@ public class JournalsFragment extends ListFragment implements LoaderManager.Load
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        getListView().setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+        getListView().setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
         getListView().setItemsCanFocus(false);
+		
+		getListView().setMultiChoiceModeListener(new AbsListView.MultiChoiceModeListener() {
+
+				@Override
+				public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+
+					mode.getMenuInflater().inflate(R.menu.menu_products, menu);
+					return true;
+				}
+
+				@Override
+				public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+					return false;
+				}
+
+				@Override
+				public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+					switch(item.getItemId()) {
+						case R.id.delete:
+
+							for(int i = (getListView().getCheckedItemCount() - 1); i >= 0; i--) {
+								int checkedItemKey = getListView()
+									.getCheckedItemPositions()
+									.keyAt(i);
+								mListCursorAdapter.remove(checkedItemKey);
+							}
+
+							mode.finish();
+							return true;
+						default:
+							return false;
+					}
+				}
+
+				@Override
+				public void onDestroyActionMode(ActionMode mode) {
+					mListCursorAdapter.refreshSelection();
+				}
+
+				@Override
+				public void onItemCheckedStateChanged(ActionMode mode, int position, long id,
+													  boolean checked) {
+
+					mode.setTitle(getListView().getCheckedItemCount() + " Products Selected");
+					mListCursorAdapter.toggleSelection(position);
+				}
+
+			});
     }
 
     @Override
