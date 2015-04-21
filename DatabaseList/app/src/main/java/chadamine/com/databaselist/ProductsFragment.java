@@ -29,6 +29,8 @@ public class ProductsFragment extends ListFragment
     private ListCursorAdapter mListCursorAdapter;
     private static final int LIST_LOADER_ID = 0;
 
+    //git test
+
     public ProductsFragment() {}
 
     @Override
