@@ -17,7 +17,7 @@
             </intent-filter>
         </activity>
         <provider
-            android:name=".DatabaseContentProvider"
+            android:name=".Database.DatabaseContentProvider"
             android:authorities="chadamine.com.databaselist.provider"
             />
     </application>

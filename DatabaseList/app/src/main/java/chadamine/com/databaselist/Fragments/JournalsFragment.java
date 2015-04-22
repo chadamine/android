@@ -1,4 +1,4 @@
-package chadamine.com.databaselist;
+package chadamine.com.databaselist.Fragments;
 
 import android.database.Cursor;
 import android.os.Bundle;
@@ -7,6 +7,10 @@ import android.support.v4.app.*;
 import android.support.v4.content.*;
 import android.view.*;
 import android.widget.*;
+
+import chadamine.com.databaselist.Database.DatabaseContract;
+import chadamine.com.databaselist.Adapters.ListCursorAdapter;
+import chadamine.com.databaselist.R;
 
 /**
  * Created by chadamine on 4/12/2015.

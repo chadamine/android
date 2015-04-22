@@ -1,4 +1,4 @@
-package chadamine.com.databaselist;
+package chadamine.com.databaselist.Adapters;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -9,12 +9,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CursorAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.HashMap;
-import java.text.*;
-import java.lang.reflect.*;
+
 import android.widget.*;
+
+import chadamine.com.databaselist.Database.DatabaseContract;
+import chadamine.com.databaselist.R;
 
 /**
  * Created by chadamine  on 4/12/2015.

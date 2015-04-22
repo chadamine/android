@@ -1,8 +1,10 @@
-package chadamine.com.databaselist;
+package chadamine.com.databaselist.Database;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import chadamine.com.databaselist.Database.DatabaseContract;
 
 /**
  * Created by chadamine on 4/10/2015.

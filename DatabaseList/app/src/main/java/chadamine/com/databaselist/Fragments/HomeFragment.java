@@ -1,4 +1,4 @@
-package chadamine.com.databaselist;
+package chadamine.com.databaselist.Fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+
+import chadamine.com.databaselist.R;
 
 /**
  * Created by calipinski on 4/10/2015.

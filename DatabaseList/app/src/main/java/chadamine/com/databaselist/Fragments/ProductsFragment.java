@@ -1,4 +1,4 @@
-package chadamine.com.databaselist;
+package chadamine.com.databaselist.Fragments;
 
 import android.database.Cursor;
 import android.database.MatrixCursor;
@@ -9,7 +9,6 @@ import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.support.v4.widget.SimpleCursorAdapter;
 import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -19,6 +18,12 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.ListView;
 import android.widget.Spinner;
+
+import chadamine.com.databaselist.Adapters.ListCursorAdapter;
+import chadamine.com.databaselist.Database.DatabaseContract;
+import chadamine.com.databaselist.Fragments.NewProductFragment;
+import chadamine.com.databaselist.R;
+import chadamine.com.databaselist.Adapters.SpinnerCursorAdapter;
 
 /**
  * Created by chadamine on 4/10/2015.
@@ -71,16 +76,9 @@ public class ProductsFragment extends ListFragment
                 DatabaseContract.Journals.CONTENT_URI,
                 null, null, null, null);
 
-        final SimpleCursorAdapter mSpinnerCursorAdapter
-                = new SimpleCursorAdapter(getActivity(),
-                android.R.layout.simple_spinner_item, cursor,
-                new String[] { DatabaseContract.Journals.KEY_NAME },
-                new int[] { android.R.id.text1 }, 0);
-
         final SpinnerCursorAdapter spinnerCursorAdapter = new SpinnerCursorAdapter(getActivity(),
                 getMergedCursor(cursor));
 
-        mSpinnerCursorAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         final Spinner spinner = (Spinner) view.findViewById(R.id.spinner_sample);
         spinner.setAdapter(spinnerCursorAdapter);
     }

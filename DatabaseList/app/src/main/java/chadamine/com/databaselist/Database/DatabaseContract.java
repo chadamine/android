@@ -1,6 +1,5 @@
-package chadamine.com.databaselist;
+package chadamine.com.databaselist.Database;
 
-import java.net.*;
 import android.content.UriMatcher;
 import android.net.Uri;
 import android.provider.BaseColumns;

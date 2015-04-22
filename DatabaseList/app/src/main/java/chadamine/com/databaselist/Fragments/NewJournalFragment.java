@@ -1,4 +1,4 @@
-package chadamine.com.databaselist;
+package chadamine.com.databaselist.Fragments;
 
 import android.content.ContentValues;
 import android.os.Bundle;
@@ -9,6 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+
+import chadamine.com.databaselist.Database.DatabaseContract;
+import chadamine.com.databaselist.R;
 
 /**
  * Created by chadamine on 4/12/2015.

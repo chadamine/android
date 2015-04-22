@@ -1,4 +1,4 @@
-package chadamine.com.databaselist;
+package chadamine.com.databaselist.Database;
 
 import android.content.ContentProvider;
 import android.content.ContentValues;
