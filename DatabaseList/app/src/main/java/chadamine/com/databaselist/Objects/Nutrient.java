@@ -13,7 +13,9 @@ public class Nutrient {
     private String mName;
     private String mManufacturer;
     private String mProductLine;
+    private String mSource;
     private int mState;
+    private int mForm;
     private double mPurity;
     private String mType;
 
@@ -21,19 +23,26 @@ public class Nutrient {
     public static final int STATE_LIQUID = 1;
     public static final int STATE_GAS = 2;
 
+    public static final int FORM_FINE_POWDER = 0;
+    public static final int FORM_POWDER = 1;
+    public static final int FORM_GRANULAR = 2;
+
     private List<ChemicalElement> mChemicalElements;
     private List<ChemicalCompound> mChemicalCompounds;
-    private HashMap<ChemicalElement, Double> mElementPercents;
-    private HashMap<ChemicalCompound, Double> mCompoundPercents;
+    private HashMap<ChemicalElement, Double> mElementRatios;
+    private HashMap<ChemicalCompound, Double> mCompoundRatios;
 
     public Nutrient(int id, String name) {
+
         mID = id;
+
         mName = name;
-        mElementPercents = new HashMap<>();
-        mCompoundPercents = new HashMap<>();
+        mElementRatios = new HashMap<>();
+        mCompoundRatios = new HashMap<>();
 
     }
 
+    //TODO: Manufacturer, ProductLine classes
     public Nutrient(int id, String name, String manufacturer, String productLine, double purity, int state, String type) {
         mID = id;
         mName = name;
@@ -69,6 +78,14 @@ public class Nutrient {
         return mProductLine;
     }
 
+    public void setSource(String source) {
+        mSource = source;
+    }
+
+    public String getmSource() {
+        return mSource;
+    }
+
     public double getPurity() {
         if(mPurity == 0)
             mPurity = 1;
@@ -94,7 +111,7 @@ public class Nutrient {
     }
 
     public void setElementPercent(ChemicalElement element, double percent) {
-        mElementPercents.put(element, percent);
+        mElementRatios.put(element, percent);
     }
 
     public double getElementPercent(ChemicalElement e) {
@@ -103,7 +120,7 @@ public class Nutrient {
 
         for(ChemicalElement element : mChemicalElements) {
             if(element.getAtomicNumber() == e.getAtomicNumber()) {
-                percent = mElementPercents.get(element);
+                percent = mElementRatios.get(element);
             }
         }
 
@@ -116,7 +133,7 @@ public class Nutrient {
 
         for(ChemicalCompound compound : mChemicalCompounds) {
             if(compound.getName() == c.getName()) {
-                percent = mCompoundPercents.get(compound);
+                percent = mCompoundRatios.get(compound);
             }
         }
 

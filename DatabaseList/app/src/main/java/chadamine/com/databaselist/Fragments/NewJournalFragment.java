@@ -21,7 +21,7 @@ public class NewJournalFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        final View thisView = inflater.inflate(R.layout.fragment_newjournal, container, false);
+        final View thisView = inflater.inflate(R.layout.fragment_new_journal, container, false);
         final ContentValues values = new ContentValues();
 
         Button btnSave = (Button) thisView.findViewById(R.id.button_newjournal_save);

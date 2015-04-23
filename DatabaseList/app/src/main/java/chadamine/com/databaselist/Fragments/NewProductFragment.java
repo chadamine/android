@@ -27,7 +27,7 @@ public class NewProductFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        thisView = inflater.inflate(R.layout.fragment_newproduct, container, false);
+        thisView = inflater.inflate(R.layout.fragment_new_product, container, false);
         values = new ContentValues();
 
         Button btnSave = (Button) thisView.findViewById(R.id.button_newproduct_save);
