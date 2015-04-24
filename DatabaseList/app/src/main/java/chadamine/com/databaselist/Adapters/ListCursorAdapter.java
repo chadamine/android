@@ -45,14 +45,13 @@ public class ListCursorAdapter extends CursorAdapter {
     public void bindView(View view, Context context, Cursor cursor) {
 
 		
-		HashMap<String, EditText> map = new HashMap<>();
+		HashMap<String, TextView> map = new HashMap<>();
 		//for(int i = 0; i<mKeyArray.length; i++)
-		EditText name = (EditText) view.findViewById(R.id.textview_productlist_name);
+		TextView name = (TextView) view.findViewById(R.id.textview_productlist_name);
 		    map.put(cursor.getString(cursor.getColumnIndex(mKeyArray[0])), name);
 		//map.put(cursor.getString(cursor.getColumnIndex(mKeyArray[1])), R.id.textview_productlist_manufacturer);
 		//map.put(cursor.getString(cursor.getColumnIndex(mKeyArray[2])), R.id.textview_productlist_type);
 		//map.put(cursor.getString(cursor.getColumnIndex(mKeyArray[3])), R.id.textview_productlist_line);
-		
 		
         switch(DatabaseContract.URI_MATCHER.match(mUri)) {
 
@@ -82,7 +81,7 @@ public class ListCursorAdapter extends CursorAdapter {
 		
 		//map.get(key)
 		//for(String key:mKeyArray)
-		for(int i = 0; i < mKeyArray.length; i++)
+		for(int i = 0; i < mKeyArray.length - 1; i++)
 			(map.get(mKeyArray[i])).setText(
 				cursor.getString(cursor.getColumnIndex(mKeyArray[i])));
     }

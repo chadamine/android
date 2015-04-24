@@ -12,10 +12,11 @@ public class ChemicalElement {
     private String mAbbr;
     private double mMass;
 
-    public ChemicalElement(String name, String abbr, double mass) {
+    public ChemicalElement(int atomicNum, String name, String abbr, double mass) {
         mName = name;
         mAbbr = abbr;
         mMass = mass;
+        mAtomicNumber = atomicNum;
     }
 
 

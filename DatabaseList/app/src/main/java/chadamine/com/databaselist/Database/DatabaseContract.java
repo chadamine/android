@@ -9,7 +9,7 @@ import android.provider.BaseColumns;
  */
 public class DatabaseContract {
 
-    public static final String AUTHORITY = "chadamine.com.databaselist.provider";
+    public static final String AUTHORITY = "chadamine.com.databaselist.database.provider";
     public static final String DATABASE_NAME = "example.db";
     public static final int DATABASE_VERSION = 1;
     public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY);
