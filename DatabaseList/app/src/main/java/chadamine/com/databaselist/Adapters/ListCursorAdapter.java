@@ -46,9 +46,9 @@ public class ListCursorAdapter extends CursorAdapter {
 
 		
 		HashMap<String, TextView> map = new HashMap<>();
-		//for(int i = 0; i<mKeyArray.length; i++)
+		/*for(int i = 0; i<mKeyArray.length; i++)
 		TextView name = (TextView) view.findViewById(R.id.textview_productlist_name);
-		    map.put(cursor.getString(cursor.getColumnIndex(mKeyArray[0])), name);
+		    map.put(cursor.getString(cursor.getColumnIndex(mKeyArray[0])), name);*/
 		//map.put(cursor.getString(cursor.getColumnIndex(mKeyArray[1])), R.id.textview_productlist_manufacturer);
 		//map.put(cursor.getString(cursor.getColumnIndex(mKeyArray[2])), R.id.textview_productlist_type);
 		//map.put(cursor.getString(cursor.getColumnIndex(mKeyArray[3])), R.id.textview_productlist_line);
@@ -76,14 +76,10 @@ public class ListCursorAdapter extends CursorAdapter {
 
             default:
         }
-		
-		
-		
-		//map.get(key)
-		//for(String key:mKeyArray)
-		for(int i = 0; i < mKeyArray.length - 1; i++)
+
+		/*for(int i = 0; i < mKeyArray.length - 1; i++)
 			(map.get(mKeyArray[i])).setText(
-				cursor.getString(cursor.getColumnIndex(mKeyArray[i])));
+				cursor.getString(cursor.getColumnIndex(mKeyArray[i])));*/
     }
 	
 	private void setDatabase() {
@@ -103,9 +99,9 @@ public class ListCursorAdapter extends CursorAdapter {
 				
 			default:
 				mKeyID = "";
-				mUri = null;
+                mUri = null;
 				mKeyArray = null;
-		}
+        }
 	}
 
 	@Override
