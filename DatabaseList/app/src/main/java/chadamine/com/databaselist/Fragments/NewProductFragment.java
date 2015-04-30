@@ -1,16 +1,30 @@
 package chadamine.com.databaselist.Fragments;
 
 import android.content.ContentValues;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.internal.widget.TintEditText;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 import chadamine.com.databaselist.Database.DatabaseContract;
+import chadamine.com.databaselist.Objects.Product;
 import chadamine.com.databaselist.R;
 
 /**
@@ -18,41 +32,103 @@ import chadamine.com.databaselist.R;
  */
 public class NewProductFragment extends Fragment {
 
-    private ContentValues values;
-    DatabaseContract.Products products;
-    View thisView;
+    private Product mProduct;
+    private View mView;
+    private List<View> mFields;
+    private EditText mEditTextName;
+    private ProductPicture mProductPicture;
 
-    public NewProductFragment() {
-    }
+    static final int REQUEST_IMAGE_CAPTURE = 1;
+
+    public NewProductFragment() {}
 
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        thisView = inflater.inflate(R.layout.fragment_new_product, container, false);
-        values = new ContentValues();
+    public View onCreateView(LayoutInflater inflater,
+                             @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        mView = inflater.inflate(R.layout.fragment_new_product, container, false);
+        mProduct = new Product();
+        mFields = new ArrayList<>();
+        mProductPicture = new ProductPicture(mProduct);
 
-        Button btnSave = (Button) thisView.findViewById(R.id.button_newproduct_save);
+        mEditTextName = (EditText) mView.findViewById(R.id.edittext_newproduct_name);
+        mFields.add(mEditTextName);
+
+        Button btnSave = (Button) mView.findViewById(R.id.button_newproduct_save);
         btnSave.setOnClickListener(new View.OnClickListener() {
-            /**
-             * Called when a view has been clicked.
-             *
-             * @param v The view that was clicked.
-             */
+
             @Override
             public void onClick(View v) {
-                putValues();
-                getActivity().getContentResolver().insert(products.CONTENT_URI, values);
-                getFragmentManager().popBackStack();
-
+                if(mProduct.hasName()) {
+                    getActivity().getContentResolver()
+                            .insert(DatabaseContract.Products.CONTENT_URI, mProduct.getValues());
+                    getFragmentManager().popBackStack();
+                }
+                else
+                    Toast.makeText(getActivity(),
+                            "Product must have a name to save", Toast.LENGTH_LONG).show();
             }
         });
 
-        return thisView;
+        (mView.findViewById(R.id.button_takepicture)).setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                mProduct.setName(mEditTextName.getText().toString());
+
+                if (mProduct.hasName()) {
+                    startCamera();
+                } else
+                    Toast.makeText(getActivity(),
+                            "Product must have a name to take a photo", Toast.LENGTH_LONG).show();
+            }
+        });
+
+        return mView;
     }
 
-    private void putValues() {
-        values.put(products.KEY_NAME, ((EditText) thisView.findViewById(R.id.edittext_newproduct_name)).getText().toString());
-        // values.put(products.KEY_TYPE, ((EditText) thisView.findViewById(R.id.edittext_newproduct_type)).getText().toString());
-        // values.put(products.KEY_PRODUCTLINE, ((EditText) thisView.findViewById(R.id.edittext_newproduct_line)).getText().toString());
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        Toast.makeText(getActivity(),
+                "Product image saved as " + mProduct.getName()
+                    + "\nin the following folder: " + mProductPicture.getPictureFolder(),
+                Toast.LENGTH_LONG).show();
+    }
+
+    private void clearFields() {
+
+        View view = null;
+        for(int i = 0; i < mFields.size(); i++)  {
+            view = mFields.get(i);
+            if(view.getClass().getName() == TintEditText.class.getName().toString())
+                ((EditText) view).setText("");
+            //TODO: if(Spinner) choose option: 0
+
+            toggleFocusable(view);
+        }
+    }
+
+    private void toggleFocusable(View view) {
+        if(view.isFocused()) {
+            view.setFocusable(false);
+            view.setFocusable(true);
+        }
+    }
+
+    private void startCamera() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+        if(takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
+
+            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, mProductPicture.getUri());
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+
+        }
     }
 }
 

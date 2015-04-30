@@ -70,8 +70,16 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:id="@+id/button_takepicture"
+        android:layout_below="@id/edittext_newproduct_name"
+        android:text="Add Picture"
+        />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:id="@+id/button_newproduct_save"
-        android:layout_below="@id/textview_newproduct_name"
+        android:layout_below="@id/button_takepicture"
+
         android:text="Save"
         />
 </RelativeLayout>
