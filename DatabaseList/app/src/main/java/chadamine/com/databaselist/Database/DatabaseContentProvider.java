@@ -43,6 +43,14 @@ public class DatabaseContentProvider extends ContentProvider {
                 queryBuilder.setTables(DatabaseContract.Products.TABLE_NAME);
                 break;
 
+            case DatabaseContract.PRODUCT_PHOTO_ID:
+                queryBuilder.appendWhere(DatabaseContract.ProductPhotos.KEY_ID + "=" + uri.getLastPathSegment());
+
+            case DatabaseContract.PRODUCT_PHOTOS:
+                queryBuilder.setTables(DatabaseContract.ProductPhotos.TABLE_NAME);
+                break;
+
+
             case DatabaseContract.JOURNAL_ID:
                 queryBuilder.appendWhere(DatabaseContract.Journals.KEY_ID + "=" + uri.getLastPathSegment());
 
@@ -83,6 +91,11 @@ public class DatabaseContentProvider extends ContentProvider {
                 tableName = DatabaseContract.Journals.TABLE_NAME;
                 break;
 
+            case DatabaseContract.PRODUCT_PHOTOS:
+                id = database.insert(DatabaseContract.ProductPhotos.TABLE_NAME, null, values);
+                tableName = DatabaseContract.ProductPhotos.TABLE_NAME;
+                break;
+
             default:
                 throw new IllegalArgumentException("Unknown URI: "+ uri);
         }
@@ -116,6 +129,7 @@ public class DatabaseContentProvider extends ContentProvider {
                     rowsDeleted = database.delete(DatabaseContract.Products.TABLE_NAME,
                             DatabaseContract.Products.KEY_ID + "=" + id + " and " + selection, selectionArgs);
                 }
+
                 break;
 
             case DatabaseContract.JOURNALS:
@@ -135,6 +149,9 @@ public class DatabaseContentProvider extends ContentProvider {
                             DatabaseContract.Journals.KEY_ID + "=" + id + " and " + selection, selectionArgs);
                 }
                 break;
+
+            //TODO: Delete case for pictures
+
             default:
                 throw new IllegalArgumentException("Unknown URI: " + uri);
         }
