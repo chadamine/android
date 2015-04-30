@@ -19,6 +19,7 @@ import java.util.List;
 
 import chadamine.com.databaselist.Database.DatabaseContract;
 import chadamine.com.databaselist.Objects.Product;
+import chadamine.com.databaselist.Objects.ProductPhoto;
 import chadamine.com.databaselist.R;
 
 /**

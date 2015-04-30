@@ -3,7 +3,6 @@ package chadamine.com.databaselist.Objects;
 import android.content.ContentValues;
 
 import chadamine.com.databaselist.Database.DatabaseContract;
-import chadamine.com.databaselist.Fragments.ProductPhoto;
 
 /**
  * Created by chadamine on 4/29/2015.

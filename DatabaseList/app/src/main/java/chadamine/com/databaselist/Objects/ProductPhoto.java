@@ -1,4 +1,4 @@
-package chadamine.com.databaselist.Fragments;
+package chadamine.com.databaselist.Objects;
 
 import android.content.ContentValues;
 import android.content.Context;
