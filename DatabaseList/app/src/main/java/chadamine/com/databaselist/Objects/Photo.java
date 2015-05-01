@@ -11,51 +11,66 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import chadamine.com.databaselist.Database.DatabaseContract;
-import chadamine.com.databaselist.Objects.Product;
 
 /**
  * Created by chadamine on 4/29/2015.
  */
-public class ProductPhoto extends Product {
+public class Photo extends Product {
 
     private String mPhotoName;
     private String mDirPhoto;
     private String mPhotoFullName;
     private String mTimestamp;
+    private String mType;
 
-    public ProductPhoto(Product product) {
+    public static final String TYPE_PRODUCT = "product";
+
+    public Photo(Product product) {
         super(product);
+        mType = TYPE_PRODUCT;
 
         mDirPhoto = Environment.getExternalStorageDirectory()
-                + DatabaseContract.ProductPhotos.DIR_PRODUCT_PHOTOS;
+                + DatabaseContract.Photos.DIR_PRODUCT_PHOTOS;
+    }
+
+    public Photo(Plant plant) {
+
     }
 
     public void setID(Context activity, int id) {
         Cursor cursor =
                 activity.getContentResolver()
-                        .query(DatabaseContract.ProductPhotos.CONTENT_URI,
-                                new String[]{DatabaseContract.ProductPhotos.KEY_ID},
+                        .query(DatabaseContract.Photos.CONTENT_URI,
+                                new String[]{DatabaseContract.Photos.KEY_ID},
                                 null, null, null);
 
         if (cursor != null) {
             cursor.moveToFirst();
-            // TODO: use id to label picture
+            // TODO: use id to label picture?
             setID(cursor.getInt(cursor
-                    .getColumnIndexOrThrow(DatabaseContract.ProductPhotos.KEY_ID)));
+                    .getColumnIndexOrThrow(DatabaseContract.Photos.KEY_ID)));
         } else {
             super.setID(id);
         }
 
     }
 
+    public void setType(String type) {
+        mType = type;
+    }
+
+    public String getType() {
+        return mType;
+    }
+
     public String getNewPhotoFullName() {
         mTimestamp = new SimpleDateFormat(
-                DatabaseContract.ProductPhotos.DATE_FORMAT).format(new Date());
+                DatabaseContract.Photos.DATE_FORMAT).format(new Date());
 
         mPhotoFullName =
                 this.getName() + "_"
                         + mTimestamp
-                        + DatabaseContract.ProductPhotos.EXTENSION_PNG;
+                        + DatabaseContract.Photos.EXTENSION_PNG;
         return mPhotoFullName;
     }
 
@@ -86,16 +101,16 @@ public class ProductPhoto extends Product {
 
     public void dbInsertPictures(Context activity) {
         activity.getContentResolver()
-                .insert(DatabaseContract.ProductPhotos.CONTENT_URI, getValues());
-
+                .insert(DatabaseContract.Photos.CONTENT_URI, getValues());
     }
 
     @Override
     public ContentValues getValues() throws NullPointerException {
         ContentValues values = new ContentValues();
-        values.put(DatabaseContract.ProductPhotos.KEY_NAME, getName());
-        values.put(DatabaseContract.ProductPhotos.KEY_DIRECTORY, mDirPhoto);
-        values.put(DatabaseContract.ProductPhotos.KEY_TIMESTAMP, mTimestamp);
+        values.put(DatabaseContract.Photos.KEY_NAME, getName());
+        values.put(DatabaseContract.Photos.KEY_DIRECTORY, mDirPhoto);
+        values.put(DatabaseContract.Photos.KEY_TIMESTAMP, mTimestamp);
+        values.put(DatabaseContract.Photos.KEY_TYPE, mType);
 
         return values;
     }

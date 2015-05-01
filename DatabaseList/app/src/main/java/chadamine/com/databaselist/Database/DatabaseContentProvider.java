@@ -44,10 +44,10 @@ public class DatabaseContentProvider extends ContentProvider {
                 break;
 
             case DatabaseContract.PRODUCT_PHOTO_ID:
-                queryBuilder.appendWhere(DatabaseContract.ProductPhotos.KEY_ID + "=" + uri.getLastPathSegment());
+                queryBuilder.appendWhere(DatabaseContract.Photos.KEY_ID + "=" + uri.getLastPathSegment());
 
             case DatabaseContract.PRODUCT_PHOTOS:
-                queryBuilder.setTables(DatabaseContract.ProductPhotos.TABLE_NAME);
+                queryBuilder.setTables(DatabaseContract.Photos.TABLE_NAME);
                 break;
 
 
@@ -92,8 +92,8 @@ public class DatabaseContentProvider extends ContentProvider {
                 break;
 
             case DatabaseContract.PRODUCT_PHOTOS:
-                id = database.insert(DatabaseContract.ProductPhotos.TABLE_NAME, null, values);
-                tableName = DatabaseContract.ProductPhotos.TABLE_NAME;
+                id = database.insert(DatabaseContract.Photos.TABLE_NAME, null, values);
+                tableName = DatabaseContract.Photos.TABLE_NAME;
                 break;
 
             default:

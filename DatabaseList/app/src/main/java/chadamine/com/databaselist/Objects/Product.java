@@ -9,38 +9,40 @@ import chadamine.com.databaselist.Database.DatabaseContract;
  */
 public class Product {
 
-    private int mProductID;
-    private String mProductName;
-    private ProductPhoto mProductPhoto;
+    private int mID;
+    private String mName;
+    private Photo mPhoto;
+    private Double mSize;
+
     //private Manufacturer mManufacturer;
     //private Supplier mSupplier;
 
     public Product() {}
 
     public Product(Product product) {
-        mProductID = product.getID();
-        mProductName = product.getName();
+        mID = product.getID();
+        mName = product.getName();
     }
 
     public String getName() throws NullPointerException {
-        return mProductName;
+        return mName;
     }
 
     public int getID() {
-        return mProductID;
+        return mID;
     }
 
     public void setID(int id) {
-        mProductID = id;
+        mID = id;
     }
 
     public void setName(String name) {
-        mProductName = name;
+        mName = name;
     }
 
     public boolean hasName() {
 
-        if(mProductName.length() > 0)
+        if(mName.length() > 0)
             return true;
         else
             return false;
@@ -52,5 +54,22 @@ public class Product {
         values.put(DatabaseContract.Products.KEY_NAME, getName());
 
         return values;
+    }
+
+
+    public Double getSize() {
+        return mSize;
+    }
+
+    public void setmSize(Double size) {
+        mSize = size;
+    }
+
+    public Photo getPhoto() {
+        return mPhoto;
+    }
+
+    public void setmPhoto(Photo photo) {
+        mPhoto = photo;
     }
 }

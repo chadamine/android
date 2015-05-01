@@ -10,16 +10,16 @@ import android.widget.Button;
 import chadamine.com.databaselist.R;
 
 /**
- * Created by calipinski on 4/10/2015.
+ * Created by chadamine on 4/10/2015.
  */
 public class HomeFragment extends Fragment {
     
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.fragment_home, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_new_home, container, false);
 
-        Button btnProducts = (Button) rootView.findViewById(R.id.button_toproducts);
+        Button btnProducts = (Button) rootView.findViewById(R.id.button_tomaterials);
         btnProducts.setOnClickListener(new View.OnClickListener() {
            @Override
         public void onClick(View v) {
