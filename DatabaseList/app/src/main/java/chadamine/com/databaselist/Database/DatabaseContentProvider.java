@@ -15,13 +15,11 @@ import android.text.TextUtils;
 
 public class DatabaseContentProvider extends ContentProvider {
 
-    //private DatabaseOpenHelper dbOpenHelper;
     private SQLiteDatabase database;
 
 
     @Override
     public boolean onCreate() {
-        //dbOpenHelper = new DatabaseOpenHelper(getContext());
         DatabaseOpenHelper dbOpenHelper = new DatabaseOpenHelper(getContext());
         database = dbOpenHelper.getWritableDatabase();        return false;
     }
@@ -29,10 +27,7 @@ public class DatabaseContentProvider extends ContentProvider {
     @Override
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
 
-
         SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
-        //queryBuilder.setTables(ProductTable.TABLE_PRODUCT);
-
 
         switch(DatabaseContract.URI_MATCHER.match(uri)) {
 
@@ -50,6 +45,12 @@ public class DatabaseContentProvider extends ContentProvider {
                 queryBuilder.setTables(DatabaseContract.Photos.TABLE_NAME);
                 break;
 
+            case DatabaseContract.PLANT_ID:
+                queryBuilder.appendWhere(DatabaseContract.Plants.KEY_ID + "=" + uri.getLastPathSegment());
+
+            case DatabaseContract.PLANTS:
+                queryBuilder.setTables(DatabaseContract.Plants.TABLE_NAME);
+                break;
 
             case DatabaseContract.JOURNAL_ID:
                 queryBuilder.appendWhere(DatabaseContract.Journals.KEY_ID + "=" + uri.getLastPathSegment());
@@ -89,6 +90,11 @@ public class DatabaseContentProvider extends ContentProvider {
             case DatabaseContract.JOURNALS:
                 id = database.insert(DatabaseContract.Journals.TABLE_NAME, null, values);
                 tableName = DatabaseContract.Journals.TABLE_NAME;
+                break;
+
+            case DatabaseContract.PLANTS:
+                id = database.insert(DatabaseContract.Plants.TABLE_NAME, null, values);
+                tableName = DatabaseContract.Plants.TABLE_NAME;
                 break;
 
             case DatabaseContract.PRODUCT_PHOTOS:
@@ -147,6 +153,23 @@ public class DatabaseContentProvider extends ContentProvider {
                 } else {
                     rowsDeleted = database.delete(DatabaseContract.Journals.TABLE_NAME,
                             DatabaseContract.Journals.KEY_ID + "=" + id + " and " + selection, selectionArgs);
+                }
+
+            case DatabaseContract.PLANTS:
+                rowsDeleted = database.delete(DatabaseContract.Plants.TABLE_NAME,
+                        selection, selectionArgs);
+                break;
+            case DatabaseContract.PLANT_ID:
+                id = uri.getLastPathSegment();
+
+                if (TextUtils.isEmpty(selection)) {
+                    rowsDeleted = database.
+                            delete(DatabaseContract.Plants.TABLE_NAME,
+                                    DatabaseContract.Plants.KEY_ID
+                                            + "=" + id, null);
+                } else {
+                    rowsDeleted = database.delete(DatabaseContract.Plants.TABLE_NAME,
+                            DatabaseContract.Plants.KEY_ID + "=" + id + " and " + selection, selectionArgs);
                 }
                 break;
 

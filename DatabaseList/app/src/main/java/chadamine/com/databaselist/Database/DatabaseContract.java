@@ -25,7 +25,8 @@ public class DatabaseContract {
     public static final String[] CREATE_TABLES = {
             Products.TABLE_CREATE,
             Photos.TABLE_CREATE,
-            Journals.TABLE_CREATE
+            Journals.TABLE_CREATE,
+            Plants.TABLE_CREATE
             // TODO: add all tables
     };
 
@@ -37,6 +38,9 @@ public class DatabaseContract {
 
     public static final int JOURNALS = 5;
     public static final int JOURNAL_ID = 6;
+
+    public static final int PLANTS = 7;
+    public static final int PLANT_ID = 8;
 
     // TODO: ADD REMAINING TABLES
 
@@ -52,6 +56,8 @@ public class DatabaseContract {
         URI_MATCHER.addURI(AUTHORITY, Journals.TABLE_NAME, JOURNALS);
         URI_MATCHER.addURI(AUTHORITY, Journals.TABLE_NAME + "/#", JOURNAL_ID);
 
+        URI_MATCHER.addURI(AUTHORITY, Plants.TABLE_NAME, PLANTS);
+        URI_MATCHER.addURI(AUTHORITY, Plants.TABLE_NAME + "/#", PLANT_ID);
         // TODO: ADD REMAINING TABLES TO URI_MATCHER
 
     }
@@ -122,15 +128,13 @@ public class DatabaseContract {
         public static final String[] KEY_ARRAY = { KEY_NAME };
 
         public static final String TABLE_CREATE =
-                "CREATE TABLE "
-                        + TABLE_NAME + "("
-                        + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-                        + KEY_NAME + " TEXT, "
-                        + KEY_CULTIVAR + " TEXT, "
-                        + KEY_CULTIGEN + " TEXT, "
-                        + KEY_HEIGHT + " TEXT"
-
-                        + ");";
+                     CT + TABLE_NAME + OB
+                        + KEY_ID + IPKA
+                        + KEY_NAME + TXT
+                        + KEY_CULTIVAR + TXT
+                        + KEY_CULTIGEN + TXT
+                        + KEY_HEIGHT + TXF
+                        + CLOSE;
 
         public static final Uri CONTENT_URI = Uri.withAppendedPath(DatabaseContract.CONTENT_URI, TABLE_NAME);
 
@@ -147,8 +151,10 @@ public class DatabaseContract {
         public static final String KEY_LINE = "line";
         public static final String KEY_TYPE = "type";
 
-        public static final String[] KEY_ID_ARRAY = { KEY_ID, KEY_NAME, KEY_MANUFACTURER, KEY_LINE, KEY_TYPE };
-        public static final String[] KEY_ARRAY = { KEY_NAME };
+        public static final String[] KEY_ID_ARRAY = {
+                KEY_ID, KEY_NAME, KEY_MANUFACTURER, KEY_LINE, KEY_TYPE };
+
+        //public static final String[] KEY_ARRAY = { KEY_NAME, KEY_MANUFACTURER, KEY_LINE, KEY_TYPE };
 
         public static final String TABLE_CREATE =
                 CT + TABLE_NAME + OB

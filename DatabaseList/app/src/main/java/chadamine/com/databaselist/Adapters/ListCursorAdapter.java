@@ -46,12 +46,6 @@ public class ListCursorAdapter extends CursorAdapter {
 
 		
 		HashMap<String, TextView> map = new HashMap<>();
-		/*for(int i = 0; i<mKeyArray.length; i++)
-		TextView name = (TextView) view.findViewById(R.id.textview_productlist_name);
-		    map.put(cursor.getString(cursor.getColumnIndex(mKeyArray[0])), name);*/
-		//map.put(cursor.getString(cursor.getColumnIndex(mKeyArray[1])), R.id.textview_productlist_manufacturer);
-		//map.put(cursor.getString(cursor.getColumnIndex(mKeyArray[2])), R.id.textview_productlist_type);
-		//map.put(cursor.getString(cursor.getColumnIndex(mKeyArray[3])), R.id.textview_productlist_line);
 		
         switch(DatabaseContract.URI_MATCHER.match(mUri)) {
 
@@ -69,17 +63,11 @@ public class ListCursorAdapter extends CursorAdapter {
             case DatabaseContract.JOURNALS:
                 ((TextView) view.findViewById(R.id.textview_journallist_name)).setText(
                         cursor.getString(cursor.getColumnIndex(DatabaseContract.Journals.KEY_NAME)));
-                /*((TextView) view.findViewById(android.R.id.text1)).setText(
-                        cursor.getString(cursor.getColumnIndex(DatabaseContract.Journals.KEY_NAME)));*/
 
                 break;
 
             default:
         }
-
-		/*for(int i = 0; i < mKeyArray.length - 1; i++)
-			(map.get(mKeyArray[i])).setText(
-				cursor.getString(cursor.getColumnIndex(mKeyArray[i])));*/
     }
 	
 	private void setDatabase() {
@@ -116,7 +104,6 @@ public class ListCursorAdapter extends CursorAdapter {
 
         boolean checked = !mSelectedItems.get(position); 
 		
-		//setDatabase();
 		Cursor cursor = getCursor();
 
         cursor.moveToPosition(position);
