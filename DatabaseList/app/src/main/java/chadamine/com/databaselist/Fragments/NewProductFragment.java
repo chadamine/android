@@ -41,7 +41,7 @@ public class NewProductFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater,
                              @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mView = inflater.inflate(R.layout.fragment_new_product, container, false);
+        mView = inflater.inflate(R.layout.fragment_product_new, container, false);
         mProduct = new Product();
         mFields = new ArrayList<>();
         mPhotos = new ArrayList<>();
