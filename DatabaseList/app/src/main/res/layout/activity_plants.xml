@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:layout="@layout/fragment_plants"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/viewpager"
+    android:id="@+id/frame_plant_activity"
     android:name="chadamine.com.databaselist.PlantsActivityFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent" />

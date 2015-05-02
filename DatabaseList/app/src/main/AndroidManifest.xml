@@ -30,7 +30,7 @@
             android:authorities="chadamine.com.databaselist.database.provider" />
 
         <activity
-            android:name=".Fragments.PlantsActivity"
+            android:name=".PlantsActivity"
             android:label="@string/title_activity_plants" >
         </activity>
     </application>

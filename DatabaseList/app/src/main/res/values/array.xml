@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="plant_sort_items">
+        <item>Name, Ascending</item>
+        <item>Name, Descending</item>
+
+    </string-array>
+</resources>

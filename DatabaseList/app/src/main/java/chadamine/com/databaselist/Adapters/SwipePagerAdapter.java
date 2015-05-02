@@ -78,7 +78,7 @@ public class SwipePagerAdapter extends PagerAdapter {
         switch(DatabaseContract.URI_MATCHER.match(mUri)) {
 
             case DatabaseContract.PRODUCTS:
-                view = mInflater.inflate(R.layout.fragment_plant_view, null);
+                view = mInflater.inflate(R.layout.fragment_plant_new_info, null);
                 setProducts(view);
                 break;
 
