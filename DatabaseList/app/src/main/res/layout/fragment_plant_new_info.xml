@@ -104,30 +104,25 @@
 		android:layout_width="wrap_content"
 		android:layout_toRightOf="@id/textview_plant_view_info_species_title"
 		android:layout_below="@id/textview_plant_view_info_name_title"
-		android:layout_margin="10dp"
-		android:layout_marginTop="0dp"
 		android:layout_marginBottom="0dp"
-		android:layout_alignBottom="@id/textview_plant_view_info_species_title"/>
+		android:layout_alignBottom="@id/textview_plant_view_info_species_title"
+		android:layout_marginLeft="10dp" />
 
 	<EditText
-		android:layout_height="25dp"
-		android:ems="10"
+		android:layout_height="wrap_content"
+		android:ems="5"
 		android:layout_width="wrap_content"
 		android:layout_toRightOf="@id/textview_plant_view_info_name_title"
-		android:layout_margin="10dp"
-		android:layout_marginBottom="0dp"
-		android:textSize="20sp"
-		android:layout_alignBottom="@id/textview_plant_view_info_name_title"
-		android:layout_marginTop="0dp"/>
+		android:layout_alignBottom="@id/textview_plant_view_info_name_title" />
 
 	<EditText
-		android:layout_height="25dp"
+		android:layout_height="wrap_content"
 		android:ems="5"
 		android:layout_width="match_parent"
 		android:layout_toRightOf="@id/textview_plant_view_info_cultivar_title"
 		android:layout_below="@id/textview_plant_view_info_species_title"
-		android:layout_margin="10dp"
-		android:layout_marginTop="0dp"/>
+		android:layout_marginTop="0dp"
+		android:layout_marginLeft="10dp" />
 
 	<EditText
 		android:layout_height="25dp"
