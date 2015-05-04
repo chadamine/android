@@ -13,6 +13,7 @@ import android.widget.TextView;
 import java.util.HashMap;
 
 import chadamine.com.databaselist.Database.DatabaseContract;
+import chadamine.com.databaselist.Objects.DatabaseObject;
 import chadamine.com.databaselist.R;
 
 /**
@@ -20,32 +21,41 @@ import chadamine.com.databaselist.R;
  */
 public class ListCursorAdapter extends CursorAdapter {
 
-    private Uri mUri;
+    //private Uri mUri;
     private int mID;
-	private String mKeyID;
-	private String[] mKeyArray;
-    private Object mObject;
+	//private String mKeyID;
+	//private String[] mKeyArray;
+    private DatabaseObject mDatabaseObject;
+    private View mView;
 	
     Context mContext;
     private HashMap<Integer, Long> mIds;
     private SparseBooleanArray mSelectedItems;
 
-    public ListCursorAdapter(Context context, Cursor c, Uri uri, int id) {
-        super(context, c);
+    public ListCursorAdapter(Context context, Cursor c, Uri uri, int flag, int id) {
+        super(context, c, flag);
         mContext = context;
-        mUri = uri;
+        //mUri = uri;
         mID = id;
         mSelectedItems = new SparseBooleanArray();
         mIds = new HashMap<>();
-		setDatabase();
+		//setDatabase();
+    }
+
+    public ListCursorAdapter(Context context, Cursor c, int flags, DatabaseObject dbObject) {
+        super(context, c, flags);
+        mContext = context;
+        mDatabaseObject = dbObject;
+        mIds = new HashMap<>();
     }
 
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
 
-		HashMap<String, TextView> map = new HashMap<>();
+        mDatabaseObject.setListItemContent(view);
+        mView = view;
 
-        switch(DatabaseContract.URI_MATCHER.match(mUri)) {
+        /*switch(DatabaseContract.URI_MATCHER.match(mUri)) {
 
             case DatabaseContract.PRODUCTS:
                 ((TextView) view.findViewById(R.id.textview_productlist_name)).setText(
@@ -86,10 +96,10 @@ public class ListCursorAdapter extends CursorAdapter {
                 //if(age == "")
                     ((TextView) view.findViewById(R.id.textview_plants_item_age)).setText(age);
                 break;
-        }
+        }*/
     }
 	
-	private void setDatabase() {
+	/*private void setDatabase() {
 		switch(DatabaseContract.URI_MATCHER.match(mUri)) {
 
             case DatabaseContract.PRODUCTS:
@@ -110,15 +120,19 @@ public class ListCursorAdapter extends CursorAdapter {
                 mKeyArray = DatabaseContract.Plants.KEY_ID_ARRAY;
                 break;
         }
-	}
+	}*/
 
 	@Override
 	public Cursor getCursor() {
-		
-		return mContext.getContentResolver().query(mUri, mKeyArray, mKeyID, null, null);
+
+        return mDatabaseObject.getCursor();
+        /*return mContext.getContentResolver()
+                .query(mDatabaseObject.getUri(),
+                        mDatabaseObject.getKeyArray(),
+                        mDatabaseObject.getKeyID(), null, null);*/
+
+		//return mContext.getContentResolver().query(mUri, mKeyArray, mKeyID, null, null);
 	}
-	
-	
 
     public void toggleSelection(int position) {
 
@@ -132,7 +146,7 @@ public class ListCursorAdapter extends CursorAdapter {
             mSelectedItems.put(position, checked);
             mIds.put(position,
                     cursor.getLong(
-                            cursor.getColumnIndex(mKeyID)));
+                            cursor.getColumnIndex(mDatabaseObject.getKeyID())));
         } else {
             mIds.remove(position);
             mSelectedItems.delete(position);
@@ -147,15 +161,14 @@ public class ListCursorAdapter extends CursorAdapter {
         mSelectedItems = new SparseBooleanArray();
     }
 
-	
     public void remove(int key) {
 		
-        mContext.getContentResolver().delete(mUri, mKeyID + " = " + mIds.get(key), null);
+        mContext.getContentResolver().delete(mDatabaseObject.getUri(), mDatabaseObject.getKeyID() + " = " + mIds.get(key), null);
     }
 
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
 		
-        return LayoutInflater.from(context).inflate(mID, parent, false);
+        return LayoutInflater.from(context).inflate(R.layout.list_item_plant, parent, false);
     }
 }

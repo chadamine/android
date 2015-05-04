@@ -18,7 +18,7 @@ import android.widget.AbsListView;
 import android.widget.ListView;
 
 import chadamine.com.databaselist.Adapters.ListCursorAdapter;
-import chadamine.com.databaselist.Database.DatabaseContract;
+import chadamine.com.databaselist.Database.DatabaseContract.Plants;
 import chadamine.com.databaselist.Objects.Plant;
 import chadamine.com.databaselist.R;
 
@@ -39,6 +39,8 @@ public class PlantsFragment extends ListFragment
 
         View view = inflater.inflate(R.layout.fragment_plants, container, false);
 
+        mPlant = new Plant(getActivity());
+
         prepareList();
 
         return view;
@@ -58,16 +60,12 @@ public class PlantsFragment extends ListFragment
     private void prepareList() {
 
         getLoaderManager().initLoader(LIST_LOADER_ID, null, this);
-        Cursor cursor = getActivity().getContentResolver().query(DatabaseContract.Plants.CONTENT_URI, DatabaseContract.Plants.KEY_ID_ARRAY, null, null, null);
-        String[] from = DatabaseContract.Plants.KEY_ARRAY;
-        int[] to = {R.id.textview_plants_item_name, R.id.textview_plants_item_species, R.id.textview_plants_item_stage, R.id.textview_plants_item_age, R.id.textview_plants_item_date };
+
 
         mListCursorAdapter
-/*
-                = new SimpleCursorAdapter(getActivity(), R.layout.list_item_plant, null, from, to, 0);
-*/
-                = new ListCursorAdapter(getActivity(), null,
-                DatabaseContract.Plants.CONTENT_URI, R.layout.list_item_plant);
+                = new ListCursorAdapter(getActivity(), null, 0, mPlant);
+                /*= new ListCursorAdapter(getActivity(), null,
+                Plants.CONTENT_URI, R.layout.list_item_plant);*/
         setListAdapter(mListCursorAdapter);
     }
 
@@ -146,8 +144,8 @@ public class PlantsFragment extends ListFragment
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         return new CursorLoader(getActivity(),
-                DatabaseContract.Plants.CONTENT_URI,
-                DatabaseContract.Plants.KEY_ID_ARRAY,
+                Plants.CONTENT_URI,
+                Plants.KEY_ID_ARRAY,
                 null, null, null);
     }
 

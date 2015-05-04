@@ -15,7 +15,7 @@ import chadamine.com.databaselist.R;
 /**
  * Created by chadamine on 4/29/2015.
  */
-public class Product {
+public class Product implements DatabaseObject{
 
     private int mID;
     private String mName;
@@ -75,12 +75,46 @@ public class Product {
             return false;
     }
 
+    @Override
+    public Uri getUri() {
+        return null;
+    }
+
+    @Override
+    public void insertValues(Context context, Uri uri) {
+
+    }
+
+    @Override
+    public String[] getKeyArray() {
+        return new String[0];
+    }
+
     public ContentValues getValues() throws NullPointerException {
 
         ContentValues values = new ContentValues();
         values.put(DatabaseContract.Products.KEY_NAME, getName());
 
         return values;
+    }
+
+    @Override
+    public String getKeyID() {
+        return null;
+    }
+
+    @Override
+    public Cursor getCursor() {
+        return null;
+    }
+
+    @Override
+    public void setListItemContent(View view) {
+
+    }
+
+    public android.R.layout getListItemLayoutId() {
+        return null;
     }
 
     public Double getSize() {

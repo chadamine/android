@@ -10,6 +10,7 @@ import android.widget.*;
 
 import chadamine.com.databaselist.Database.DatabaseContract;
 import chadamine.com.databaselist.Adapters.ListCursorAdapter;
+import chadamine.com.databaselist.Objects.Journal;
 import chadamine.com.databaselist.R;
 
 /**
@@ -19,6 +20,7 @@ public class JournalsFragment extends ListFragment implements LoaderManager.Load
 
     private ListCursorAdapter mListCursorAdapter;
     private ListCursorAdapter mSpinnerCursorAdapter;
+    private Journal mJournal;
 
     public JournalsFragment() {}
 
@@ -30,7 +32,8 @@ public class JournalsFragment extends ListFragment implements LoaderManager.Load
 
         mListCursorAdapter
                 = new ListCursorAdapter(getActivity(),
-                null, DatabaseContract.Journals.CONTENT_URI, R.layout.list_item_journal);
+                null, 0, mJournal);
+        //DatabaseContract.Journals.CONTENT_URI, R.layout.list_item_journal);
         setListAdapter(mListCursorAdapter);
 
 

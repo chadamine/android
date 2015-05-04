@@ -21,6 +21,8 @@ import android.widget.Spinner;
 
 import chadamine.com.databaselist.Adapters.ListCursorAdapter;
 import chadamine.com.databaselist.Database.DatabaseContract;
+import chadamine.com.databaselist.Database.DatabaseContract.Products;
+import chadamine.com.databaselist.Objects.Product;
 import chadamine.com.databaselist.R;
 import chadamine.com.databaselist.Adapters.SpinnerCursorAdapter;
 
@@ -32,6 +34,7 @@ public class ProductsFragment extends ListFragment
 
     private ListCursorAdapter mListCursorAdapter;
     private static final int LIST_LOADER_ID = 0;
+    private Product mProduct;
 
     public ProductsFragment() {}
 
@@ -40,9 +43,9 @@ public class ProductsFragment extends ListFragment
                              ViewGroup container, Bundle savedInstanceState) {
 
         View thisView = inflater.inflate(R.layout.fragment_products, container, false);
+        mProduct = new Product();
 
         prepareList();
-
         prepareSpinner(thisView);
 
         thisView.findViewById(R.id.button_addproduct)
@@ -66,7 +69,7 @@ public class ProductsFragment extends ListFragment
 
         mListCursorAdapter
                 = new ListCursorAdapter(getActivity(), null,
-                DatabaseContract.Products.CONTENT_URI, R.layout.list_item_product);
+                0, mProduct);
         setListAdapter(mListCursorAdapter);
     }
 

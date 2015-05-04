@@ -1,25 +1,28 @@
 package chadamine.com.databaselist.Objects;
 
 import android.content.ContentValues;
+import android.content.Context;
+import android.database.Cursor;
+import android.net.Uri;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.TextView;
 
-//import chadamine.com.databaselist.Database.DatabaseContract;
+import chadamine.com.databaselist.Database.DatabaseContract;
 import chadamine.com.databaselist.Database.DatabaseContract.Plants;
+import chadamine.com.databaselist.R;
 
 /**
  * Created by chadamine on 4/30/2015.
  */
-public class Plant extends Organism {
+public class Plant extends Organism implements DatabaseObject {
 
     private int mID;
 
     private String mName;
     private String mCultivar;
-    private String mCultigen;
     private String mHeight;
     private String mSpecies;
-
-    private boolean isCultigen;
-    private boolean isCultivar;
 
     private Substrate mSubstrate;
     private CultivationSystem mSystem;
@@ -30,33 +33,78 @@ public class Plant extends Organism {
     private String mAge;
     private String mPotSize;
 
+    private Context mContext;
+    private static final Uri CONTENT_URI = Plants.CONTENT_URI;
+    private Cursor mCursor;
+    private static final String KEY_ID = Plants.KEY_ID;
+    private static final String[] KEY_ID_ARRAY = Plants.KEY_ID_ARRAY;
+    private static final String[] KEY_ARRAY = Plants.KEY_ARRAY;
+    private static final String KEY_NAME = Plants.KEY_NAME;
+
     public Plant() {
-
     }
 
-    public Plant(int mID,
-                 String mName, String mCultivar, String mCultigen, String mHeight,
-                 boolean isCultigen, boolean isCultivar,
-                 Substrate mSubstrate, CultivationSystem mSystem, Schedule mIrrigationSchedule,
-                 Progress mProgress, Lineage mLineage) {
-
-        this.mID = mID;
-        this.mName = mName;
-        this.mCultivar = mCultivar;
-        this.mCultigen = mCultigen;
-        this.mHeight = mHeight;
-
-        this.isCultigen = isCultigen;
-        this.isCultivar = isCultivar;
-        this.mSubstrate = mSubstrate;
-        this.mSystem = mSystem;
-        this.mIrrigationSchedule = mIrrigationSchedule;
-        this.mProgress = mProgress;
-        this.mLineage = mLineage;
+    public Plant (Context context) {
+        mContext = context;
+        mCursor = mContext.getContentResolver()
+                .query(CONTENT_URI, KEY_ID_ARRAY, KEY_ID, null, null);
     }
 
-    public void dbInsert() {
-        // TODO: insert into database
+    public int getListItemLayoutId() {
+        return R.layout.list_item_plant;
+    }
+
+    public void setContext(Context context) {
+        mContext = context;
+    }
+    @Override
+    public Uri getUri() {
+        return CONTENT_URI;
+    }
+
+    @Override
+    public String getKeyID() {
+        return KEY_ID;
+    }
+
+    @Override
+    public Cursor getCursor() {
+        return mCursor;
+    }
+
+    @Override
+    public void setListItemContent(View view) {
+        mCursor.moveToFirst();
+        String name = mCursor.getString(mCursor.getColumnIndexOrThrow(Plants.KEY_NAME));
+        if(!name.isEmpty())
+            ((TextView) view.findViewById(R.id.textview_plants_item_name)).setText(name );
+
+        String species = mCursor.getString(mCursor.getColumnIndexOrThrow(DatabaseContract.Plants.KEY_SPECIES));
+        //if(species == "")
+        ((TextView) view.findViewById(R.id.textview_plants_item_species)).setText(species);
+
+
+        String cultivar = mCursor.getString(mCursor.getColumnIndexOrThrow(DatabaseContract.Plants.KEY_CULTIVAR));
+        //if(cultivar == "")
+        ((TextView) view.findViewById(R.id.textview_plants_item_cultivar)).setText(cultivar);
+
+        String stage = mCursor.getString(mCursor.getColumnIndexOrThrow(DatabaseContract.Plants.KEY_STAGE));
+        //if(stage == "")
+        ((TextView) view.findViewById(R.id.textview_plants_item_stage)).setText(stage);
+
+        String age = mCursor.getString(mCursor.getColumnIndexOrThrow(DatabaseContract.Plants.KEY_AGE));
+        //if(age == "")
+        ((TextView) view.findViewById(R.id.textview_plants_item_age)).setText(age);
+    }
+
+    @Override
+    public void insertValues(Context context, Uri uri) {
+        context.getContentResolver().insert(DatabaseContract.Plants.CONTENT_URI, getValues());
+    }
+
+    @Override
+    public String[] getKeyArray() {
+        return KEY_ARRAY;
     }
 
     @Override
@@ -81,19 +129,9 @@ public class Plant extends Organism {
         this.mCultivar = mCultivar;
     }
 
-    public String getCultigen() {
-        return mCultigen;
-    }
-
-    public void setCultigen(String mCultigen) {
-        this.mCultigen = mCultigen;
-    }
-
-
     public String getSpecies() {
         return mSpecies;
     }
-
 
     public void setStage(String stage) {
         mStage = stage;
@@ -125,22 +163,6 @@ public class Plant extends Organism {
 
     public void setHeight(String mHeight) {
         this.mHeight = mHeight;
-    }
-
-    public boolean isCultigen() {
-        return isCultigen;
-    }
-
-    public void setIsCultigen(boolean isCultigen) {
-        this.isCultigen = isCultigen;
-    }
-
-    public boolean isCultivar() {
-        return isCultivar;
-    }
-
-    public void setIsCultivar(boolean isCultivar) {
-        this.isCultivar = isCultivar;
     }
 
     public Substrate getSubstrate() {
@@ -179,10 +201,11 @@ public class Plant extends Organism {
         return mLineage;
     }
 
-    public void setmLineage(Lineage mLineage) {
+    public void setLineage(Lineage mLineage) {
         this.mLineage = mLineage;
     }
 
+    @Override
     public ContentValues getValues() throws NullPointerException {
 
         ContentValues values = new ContentValues();
