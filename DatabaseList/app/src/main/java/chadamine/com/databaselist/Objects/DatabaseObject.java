@@ -23,9 +23,8 @@ public interface DatabaseObject {
 
     Cursor getCursor();
 
-    void setListItemContent(View view);
+    void setListItemContent(View view, Cursor cursor);
 
-    //android.R.layout getListItemLayoutId();
+    int getListItemLayoutId();
 
-    //View getListItemLayout();
 }

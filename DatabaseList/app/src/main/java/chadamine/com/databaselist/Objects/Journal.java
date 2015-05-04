@@ -50,11 +50,15 @@ public class Journal implements DatabaseObject {
     }
 
     @Override
+    public void setListItemContent(View view, Cursor cursor) {
+
+    }
+
     public void setListItemContent(View view) {
 
     }
 
-    public android.R.layout getListItemLayoutId() {
-        return null;
+    public int getListItemLayoutId() {
+        return 0;
     }
 }

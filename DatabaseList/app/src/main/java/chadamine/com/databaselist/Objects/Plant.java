@@ -41,17 +41,14 @@ public class Plant extends Organism implements DatabaseObject {
     private static final String[] KEY_ARRAY = Plants.KEY_ARRAY;
     private static final String KEY_NAME = Plants.KEY_NAME;
 
-    public Plant() {
-    }
+    public Plant() {}
 
     public Plant (Context context) {
         mContext = context;
-        mCursor = mContext.getContentResolver()
-                .query(CONTENT_URI, KEY_ID_ARRAY, KEY_ID, null, null);
     }
 
     public int getListItemLayoutId() {
-        return R.layout.list_item_plant;
+        return mContext.getResources().getIdentifier("list_item_plant", "layout", mContext.getPackageName());
     }
 
     public void setContext(Context context) {
@@ -72,16 +69,16 @@ public class Plant extends Organism implements DatabaseObject {
         return mCursor;
     }
 
-    @Override
-    public void setListItemContent(View view) {
-        mCursor.moveToFirst();
+    public void setListItemContent(View view, Cursor cursor) {
+        mCursor = cursor;
+
         String name = mCursor.getString(mCursor.getColumnIndexOrThrow(Plants.KEY_NAME));
         if(!name.isEmpty())
             ((TextView) view.findViewById(R.id.textview_plants_item_name)).setText(name );
 
         String species = mCursor.getString(mCursor.getColumnIndexOrThrow(DatabaseContract.Plants.KEY_SPECIES));
-        //if(species == "")
-        ((TextView) view.findViewById(R.id.textview_plants_item_species)).setText(species);
+        if(!species.isEmpty())
+            ((TextView) view.findViewById(R.id.textview_plants_item_species)).setText(species);
 
 
         String cultivar = mCursor.getString(mCursor.getColumnIndexOrThrow(DatabaseContract.Plants.KEY_CULTIVAR));

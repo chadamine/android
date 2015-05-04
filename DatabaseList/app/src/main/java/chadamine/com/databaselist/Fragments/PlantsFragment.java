@@ -38,8 +38,10 @@ public class PlantsFragment extends ListFragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_plants, container, false);
+        //View itemView = inflater.inflate(R.layout.list_item_plant, container, false);
 
         mPlant = new Plant(getActivity());
+        //mPlant.setListItemContent(itemView);
 
         prepareList();
 
@@ -60,7 +62,6 @@ public class PlantsFragment extends ListFragment
     private void prepareList() {
 
         getLoaderManager().initLoader(LIST_LOADER_ID, null, this);
-
 
         mListCursorAdapter
                 = new ListCursorAdapter(getActivity(), null, 0, mPlant);
