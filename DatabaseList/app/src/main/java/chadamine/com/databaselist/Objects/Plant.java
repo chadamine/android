@@ -1,5 +1,10 @@
 package chadamine.com.databaselist.Objects;
 
+import android.content.ContentValues;
+
+//import chadamine.com.databaselist.Database.DatabaseContract;
+import chadamine.com.databaselist.Database.DatabaseContract.Plants;
+
 /**
  * Created by chadamine on 4/30/2015.
  */
@@ -11,6 +16,7 @@ public class Plant extends Organism {
     private String mCultivar;
     private String mCultigen;
     private String mHeight;
+    private String mSpecies;
 
     private boolean isCultigen;
     private boolean isCultivar;
@@ -20,6 +26,9 @@ public class Plant extends Organism {
     private Schedule mIrrigationSchedule;
     private Progress mProgress;
     private Lineage mLineage;
+    private String mStage;
+    private String mAge;
+    private String mPotSize;
 
     public Plant() {
 
@@ -50,35 +59,71 @@ public class Plant extends Organism {
         // TODO: insert into database
     }
 
-    public String getmName() {
+    @Override
+    public String getName() {
         return mName;
     }
 
-    public void setmName(String mName) {
+    @Override
+    public void setName(String mName) {
         this.mName = mName;
     }
 
-    public String getmCultivar() {
+    public void setSpecies(String species) {
+        mSpecies = species;
+    }
+
+    public String getCultivar() {
         return mCultivar;
     }
 
-    public void setmCultivar(String mCultivar) {
+    public void setCultivar(String mCultivar) {
         this.mCultivar = mCultivar;
     }
 
-    public String getmCultigen() {
+    public String getCultigen() {
         return mCultigen;
     }
 
-    public void setmCultigen(String mCultigen) {
+    public void setCultigen(String mCultigen) {
         this.mCultigen = mCultigen;
     }
 
-    public String getmHeight() {
+
+    public String getSpecies() {
+        return mSpecies;
+    }
+
+
+    public void setStage(String stage) {
+        mStage = stage;
+    }
+
+    public String getStage() {
+        return mStage;
+    }
+
+    public void setAge(String age) {
+        mAge = age;
+    }
+
+    public String getAge() {
+        return mAge;
+    }
+
+    public void setPotSize(String potSize) {
+        mPotSize = potSize;
+    }
+
+    public String getPotSize() {
+        return mPotSize;
+    }
+
+    public String getHeight() {
         return mHeight;
     }
 
-    public void setmHeight(String mHeight) {
+    public void setHeight(String mHeight) {
         this.mHeight = mHeight;
     }
 
@@ -98,43 +143,58 @@ public class Plant extends Organism {
         this.isCultivar = isCultivar;
     }
 
-    public Substrate getmSubstrate() {
+    public Substrate getSubstrate() {
         return mSubstrate;
     }
 
-    public void setmSubstrate(Substrate mSubstrate) {
+    public void setSubstrate(Substrate mSubstrate) {
         this.mSubstrate = mSubstrate;
     }
 
-    public CultivationSystem getmSystem() {
+    public CultivationSystem getSystem() {
         return mSystem;
     }
 
-    public void setmSystem(CultivationSystem mSystem) {
+    public void setSystem(CultivationSystem mSystem) {
         this.mSystem = mSystem;
     }
 
-    public Schedule getmIrrigationSchedule() {
+    public Schedule getIrrigationSchedule() {
         return mIrrigationSchedule;
     }
 
-    public void setmIrrigationSchedule(Schedule mIrrigationSchedule) {
+    public void setIrrigationSchedule(Schedule mIrrigationSchedule) {
         this.mIrrigationSchedule = mIrrigationSchedule;
     }
 
-    public Progress getmProgress() {
+    public Progress getProgress() {
         return mProgress;
     }
 
-    public void setmProgress(Progress mProgress) {
+    public void setProgress(Progress mProgress) {
         this.mProgress = mProgress;
     }
 
-    public Lineage getmLineage() {
+    public Lineage getLineage() {
         return mLineage;
     }
 
     public void setmLineage(Lineage mLineage) {
         this.mLineage = mLineage;
+    }
+
+    public ContentValues getValues() throws NullPointerException {
+
+        ContentValues values = new ContentValues();
+        values.put(Plants.KEY_NAME, getName());
+        values.put(Plants.KEY_SPECIES, getSpecies());
+        values.put(Plants.KEY_CULTIVAR, getCultivar());
+        values.put(Plants.KEY_STAGE, getStage());
+        values.put(Plants.KEY_AGE, getAge());
+        values.put(Plants.KEY_HEIGHT, getHeight());
+        //values.put(Plants.KEY_SUBSTRATE, getSubstrate());
+        //values.put(Plants.KEY_POTSIZE, getPotSize());
+
+        return values;
     }
 }

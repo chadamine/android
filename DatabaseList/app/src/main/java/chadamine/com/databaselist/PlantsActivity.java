@@ -7,16 +7,19 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.zip.Inflater;
 
 import chadamine.com.databaselist.Database.DatabaseContract;
 import chadamine.com.databaselist.Fragments.PlantNewFragment;
-import chadamine.com.databaselist.Fragments.PlantViewFragment;
+import chadamine.com.databaselist.Fragments.PlantsFragment;
 import chadamine.com.databaselist.Objects.Plant;
 
 public class PlantsActivity extends ActionBarActivity {
@@ -29,16 +32,18 @@ public class PlantsActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        //setContentView(R.layout.activity_plants);
+        View view = getLayoutInflater().inflate(R.layout.fragment_plants, null);
         setContentView(R.layout.activity_plants);
 
-        mPlants = new ArrayList<>();
+        //loadPlants();
 
         //mPageData = TODO: GET FROM DATABASE
         //mViewPager = (ViewPager) findViewById(R.id.frame_plant_activity);
-        //mViewPager.setAdapter(new SwipePagerAdapter(this, getPlants(), DatabaseContract.Plants.CONTENT_URI));
+        //mViewPager.setAdapter(new SwipePagerAdapter(this, mPlants, DatabaseContract.Plants.CONTENT_URI));
 
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.frame_plant_activity, new PlantViewFragment()).commit();
+                .replace(R.id.frame_plant_activity, new PlantsFragment()).commit();
     }
 
     @Override
@@ -59,27 +64,29 @@ public class PlantsActivity extends ActionBarActivity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
 
         switch(item.getItemId()) {
             case R.id.action_settings:
                 return true;
             case R.id.add_plant:
+                Toast.makeText(this, " add plant ", Toast.LENGTH_SHORT).show();
                 getSupportFragmentManager().beginTransaction()
                         .addToBackStack("new plant fragment")
-                        .add(R.id.frame_plant_activity, new PlantNewFragment()).commit();
+                        .replace(R.id.frame_plant_activity, new PlantNewFragment()).commit();
                 return true;
         }
 
-        return super.onOptionsItemSelected(item);
+        //return super.onOptionsItemSelected(item);
+        return true;
     }
 
-    private List<Object> getPlants() {
+ /*   private List<Object> getPlants() {
 
         return loadPlants();
-    }
+    }*/
 
-    private List<Object> loadPlants() {
+
+    private void loadPlants() {
 
         mPlants = new ArrayList<>();
         String[] mKeyArray = DatabaseContract.Plants.KEY_ID_ARRAY;
@@ -95,6 +102,6 @@ public class PlantsActivity extends ActionBarActivity {
             cursor.moveToNext();
         }
 
-        return mPlants;
+        //return mPlants;
     }
 }

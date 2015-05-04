@@ -5,7 +5,12 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
 
+import chadamine.com.databaselist.Database.DatabaseContract;
+import chadamine.com.databaselist.Objects.Plant;
 import chadamine.com.databaselist.R;
 
 public class PlantNewFragment extends Fragment {
@@ -20,6 +25,9 @@ public class PlantNewFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;*/
 
+    View mView;
+    Plant mPlant;
+
     // TODO: Rename and change types and number of parameters
     public static PlantNewFragment newInstance(/*String param1, String param2*/) {
         PlantNewFragment fragment = new PlantNewFragment();
@@ -30,9 +38,7 @@ public class PlantNewFragment extends Fragment {
         return fragment;
     }
 
-    public PlantNewFragment() {
-        // Required empty public constructor
-    }
+    public PlantNewFragment() {}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -47,8 +53,54 @@ public class PlantNewFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_plant_new_info, container, false);
+        mView = inflater.inflate(R.layout.fragment_plant_new_info, container, false);
+
+        setUpButton();
+
+        return mView;
     }
+
+
+    private void setUpButton() {
+        Button btnSavePlant = (Button) mView.findViewById(R.id.button_save_plant_new_info);
+        btnSavePlant.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                createPlant();
+                saveToDB();
+
+                getFragmentManager().popBackStack();
+
+            }
+        });
+    }
+
+    private void createPlant() {
+        mPlant = new Plant();
+        mPlant.setName(((EditText) mView.findViewById(R.id.edittext_plant_new_info_name))
+                .getText().toString());
+        mPlant.setSpecies(((EditText) mView.findViewById(R.id.edittext_plant_new_info_species))
+                .getText().toString());
+        mPlant.setCultivar(((EditText) mView.findViewById(R.id.edittext_plant_new_info_cultivar))
+                .getText().toString());
+        mPlant.setStage(((EditText) mView.findViewById(R.id.edittext_plant_new_info_stage))
+                .getText().toString());
+        mPlant.setAge(((EditText) mView.findViewById(R.id.edittext_plant_new_info_age))
+                .getText().toString());
+        mPlant.setHeight(((EditText) mView.findViewById(R.id.edittext_plant_new_info_height_1))
+                .getText().toString());
+        // TODO: Create Substrate, Pot, Taxonomy classes
+        /*plant.setSubstrate(((Spinner) mView.findViewById(R.id.spinner_plant_new_info_substrate))
+                .getSelectedItem().toString());*/
+        /*plant.setPotSize();*/
+    }
+
+    private void saveToDB() {
+        getActivity().getContentResolver()
+                .insert(DatabaseContract.Plants.CONTENT_URI, mPlant.getValues());
+    }
+
+
 
     // TODO: Rename method, update argument and hook method into UI event
    /* public void onButtonPressed(Uri uri) {

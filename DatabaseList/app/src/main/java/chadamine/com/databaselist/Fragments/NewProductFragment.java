@@ -57,7 +57,7 @@ public class NewProductFragment extends Fragment {
             public void onClick(View v) {
 
                 //mProduct.setName(mEditTextName.getText().toString());
-                saveFields();
+                //saveFields();
 
                 if(mProduct.hasName()) {
                     savePictures();

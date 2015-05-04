@@ -21,7 +21,6 @@ import android.widget.Spinner;
 
 import chadamine.com.databaselist.Adapters.ListCursorAdapter;
 import chadamine.com.databaselist.Database.DatabaseContract;
-import chadamine.com.databaselist.Fragments.NewProductFragment;
 import chadamine.com.databaselist.R;
 import chadamine.com.databaselist.Adapters.SpinnerCursorAdapter;
 
@@ -67,7 +66,7 @@ public class ProductsFragment extends ListFragment
 
         mListCursorAdapter
                 = new ListCursorAdapter(getActivity(), null,
-                DatabaseContract.Products.CONTENT_URI, R.layout.list_item_products);
+                DatabaseContract.Products.CONTENT_URI, R.layout.list_item_product);
         setListAdapter(mListCursorAdapter);
     }
 
@@ -98,7 +97,6 @@ public class ProductsFragment extends ListFragment
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
 
         getListView().setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
 

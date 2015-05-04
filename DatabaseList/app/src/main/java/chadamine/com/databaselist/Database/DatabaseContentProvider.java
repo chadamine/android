@@ -21,7 +21,8 @@ public class DatabaseContentProvider extends ContentProvider {
     @Override
     public boolean onCreate() {
         DatabaseOpenHelper dbOpenHelper = new DatabaseOpenHelper(getContext());
-        database = dbOpenHelper.getWritableDatabase();        return false;
+        database = dbOpenHelper.getWritableDatabase();
+        return false;
     }
 
     @Override

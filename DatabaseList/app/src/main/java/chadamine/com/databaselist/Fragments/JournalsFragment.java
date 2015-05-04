@@ -30,7 +30,7 @@ public class JournalsFragment extends ListFragment implements LoaderManager.Load
 
         mListCursorAdapter
                 = new ListCursorAdapter(getActivity(),
-                null, DatabaseContract.Journals.CONTENT_URI, R.layout.list_item_journals);
+                null, DatabaseContract.Journals.CONTENT_URI, R.layout.list_item_journal);
         setListAdapter(mListCursorAdapter);
 
 

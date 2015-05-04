@@ -115,25 +115,26 @@ public class DatabaseContract {
 
         public static final String KEY_ID = "_id";
         public static final String KEY_NAME = "name";
+        public static final String KEY_SPECIES = "species";
         public static final String KEY_CULTIVAR = "cultivar";
-        public static final String KEY_CULTIGEN = "cultigen";
+        public static final String KEY_STAGE = "stage";
+        public static final String KEY_AGE = "age";
         public static final String KEY_HEIGHT = "height";
-        public static final String KEY_IS_CULTIGEN = "isCultigen";
-        public static final String KEY_IS_CULTIVAT = "isCultivar";
+        public static final String KEY_SUBSTRATE = "substrate";
+        public static final String KEY_POTSIZE = "potSize";
 
+        public static final String[] KEY_ID_ARRAY = { KEY_ID, KEY_NAME, KEY_SPECIES, KEY_CULTIVAR,
+                KEY_STAGE, KEY_AGE, KEY_HEIGHT };
 
-        public static final String[] KEY_ID_ARRAY = { KEY_ID, KEY_NAME, KEY_CULTIVAR,
-                KEY_CULTIGEN, KEY_HEIGHT };
-
-        public static final String[] KEY_ARRAY = { KEY_NAME };
+        public static final String[] KEY_ARRAY = { KEY_NAME, KEY_SPECIES, KEY_CULTIVAR,
+                KEY_STAGE, KEY_AGE, KEY_HEIGHT };
 
         public static final String TABLE_CREATE =
                      CT + TABLE_NAME + OB
-                        + KEY_ID + IPKA
-                        + KEY_NAME + TXT
-                        + KEY_CULTIVAR + TXT
-                        + KEY_CULTIGEN + TXT
-                        + KEY_HEIGHT + TXF
+                        + KEY_ID + IPKA + KEY_NAME + TXT + KEY_SPECIES + TXT + KEY_CULTIVAR + TXT
+                        + KEY_STAGE + TXT + KEY_AGE + TXT + KEY_HEIGHT + TXT
+                             + KEY_SUBSTRATE + TXT
+                             + KEY_POTSIZE + TXF
                         + CLOSE;
 
         public static final Uri CONTENT_URI = Uri.withAppendedPath(DatabaseContract.CONTENT_URI, TABLE_NAME);

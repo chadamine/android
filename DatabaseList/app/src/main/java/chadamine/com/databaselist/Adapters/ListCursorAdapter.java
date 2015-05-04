@@ -12,8 +12,6 @@ import android.widget.TextView;
 
 import java.util.HashMap;
 
-import android.widget.*;
-
 import chadamine.com.databaselist.Database.DatabaseContract;
 import chadamine.com.databaselist.R;
 
@@ -26,6 +24,7 @@ public class ListCursorAdapter extends CursorAdapter {
     private int mID;
 	private String mKeyID;
 	private String[] mKeyArray;
+    private Object mObject;
 	
     Context mContext;
     private HashMap<Integer, Long> mIds;
@@ -44,9 +43,8 @@ public class ListCursorAdapter extends CursorAdapter {
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
 
-		
 		HashMap<String, TextView> map = new HashMap<>();
-		
+
         switch(DatabaseContract.URI_MATCHER.match(mUri)) {
 
             case DatabaseContract.PRODUCTS:
@@ -63,10 +61,31 @@ public class ListCursorAdapter extends CursorAdapter {
             case DatabaseContract.JOURNALS:
                 ((TextView) view.findViewById(R.id.textview_journallist_name)).setText(
                         cursor.getString(cursor.getColumnIndex(DatabaseContract.Journals.KEY_NAME)));
-
                 break;
 
-            default:
+            case DatabaseContract.PLANTS:
+
+                String name = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseContract.Plants.KEY_NAME));
+                if(!name.isEmpty())
+                    ((TextView) view.findViewById(R.id.textview_plants_item_name)).setText(name );
+
+                String species = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseContract.Plants.KEY_SPECIES));
+                //if(species == "")
+                    ((TextView) view.findViewById(R.id.textview_plants_item_species)).setText(species);
+
+
+                String cultivar = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseContract.Plants.KEY_CULTIVAR));
+                //if(cultivar == "")
+                    ((TextView) view.findViewById(R.id.textview_plants_item_cultivar)).setText(cultivar);
+
+                String stage = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseContract.Plants.KEY_STAGE));
+                //if(stage == "")
+                    ((TextView) view.findViewById(R.id.textview_plants_item_stage)).setText(stage);
+
+                String age = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseContract.Plants.KEY_AGE));
+                //if(age == "")
+                    ((TextView) view.findViewById(R.id.textview_plants_item_age)).setText(age);
+                break;
         }
     }
 	
@@ -84,11 +103,12 @@ public class ListCursorAdapter extends CursorAdapter {
 				mUri = DatabaseContract.Journals.CONTENT_URI;
 				mKeyArray = DatabaseContract.Journals.KEY_ID_ARRAY;
 				break;
-				
-			default:
-				mKeyID = "";
-                mUri = null;
-				mKeyArray = null;
+
+            case DatabaseContract.PLANTS:
+                mKeyID = DatabaseContract.Plants.KEY_ID;
+                mUri = DatabaseContract.Plants.CONTENT_URI;
+                mKeyArray = DatabaseContract.Plants.KEY_ID_ARRAY;
+                break;
         }
 	}
 
