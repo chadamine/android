@@ -127,12 +127,6 @@ public class Plant extends Organism implements DatabaseAdapter {
 
     }
 
-    // TODO: REMOVE
-    @Override
-    public void insertValues(Context context, Uri uri) {
-        mContext.getContentResolver().insert(DatabaseContract.Plants.CONTENT_URI, getValues());
-    }
-
     @Override
     public String[] getKeyIdArray() {
         return KEY_ID_ARRAY;

@@ -196,7 +196,6 @@ public class ProductNewFragment extends Fragment {
             name = "";
         try {
             mProduct.setName(name);
-            mPhoto.setName(name);
         }
             catch (NullPointerException e) {
                 e.printStackTrace();

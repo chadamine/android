@@ -78,11 +78,6 @@ public class Photo implements DatabaseAdapter {
     }
 
     @Override
-    public void insertValues(Context context, Uri uri) {
-
-    }
-
-    @Override
     public String[] getKeyIdArray() {
         return KEY_ID_ARRAY;
     }
