@@ -45,7 +45,7 @@ public class JournalsFragment extends ListFragment implements LoaderManager.Load
                 getFragmentManager()
                         .beginTransaction()
                         .addToBackStack("newJournal")
-                        .replace(R.id.container, new NewJournalFragment())
+                        .replace(R.id.container, new JournalNewFragment())
                         .commit();
             }
         });

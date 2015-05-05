@@ -45,12 +45,6 @@ public class PlantsFragment extends ListFragment
         return view;
     }
 
-    /**
-     * Attach to list view once the view hierarchy has been created.
-     *
-     * @param view
-     * @param savedInstanceState
-     */
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);

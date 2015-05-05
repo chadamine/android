@@ -1,5 +1,6 @@
 package chadamine.com.databaselist.Fragments;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -25,7 +26,7 @@ import chadamine.com.databaselist.R;
 /**
  * Created by chadamine on 4/10/2015.
  */
-public class NewProductFragment extends Fragment {
+public class ProductNewFragment extends Fragment {
 
     private Product mProduct;
     private View mView;
@@ -33,18 +34,20 @@ public class NewProductFragment extends Fragment {
     private EditText mEditTextName;
     private Photo mPhoto;
     private List<Photo> mPhotos;
+    private Context mContext;
 
     static final int REQUEST_IMAGE_CAPTURE = 1;
 
-    public NewProductFragment() {}
+    public ProductNewFragment() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater,
                              @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_product_new, container, false);
-        mProduct = new Product();
+        mProduct = new Product(mContext);
         mFields = new ArrayList<>();
         mPhotos = new ArrayList<>();
+        mContext = getActivity();
 
 
         mEditTextName = (EditText) mView.findViewById(R.id.edittext_newproduct_name);
@@ -59,6 +62,9 @@ public class NewProductFragment extends Fragment {
                 //mProduct.setName(mEditTextName.getText().toString());
                 //saveFields();
 
+                createProduct();
+                //saveToDB();
+
                 if(mProduct.hasName()) {
                     savePictures();
                     saveFields();
@@ -66,7 +72,7 @@ public class NewProductFragment extends Fragment {
                     getFragmentManager().popBackStack();
                 }
                 else
-                    Toast.makeText(getActivity(),
+                    Toast.makeText(mContext,
                             "Product must have a name to save", Toast.LENGTH_LONG).show();
             }
         });
@@ -80,12 +86,17 @@ public class NewProductFragment extends Fragment {
                 if (mProduct.hasName()) {
                     startCamera();
                 } else
-                    Toast.makeText(getActivity(),
+                    Toast.makeText(mContext,
                             "Product must have a name to take a photo", Toast.LENGTH_LONG).show();
             }
         });
 
         return mView;
+    }
+    private void createProduct() {
+
+        mProduct = new Product(mContext);
+        mProduct.setName((mEditTextName).getText().toString());
     }
 
     @Override
@@ -96,7 +107,7 @@ public class NewProductFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        Toast.makeText(getActivity(),
+        Toast.makeText(mContext,
                 "Product image saved as " + mProduct.getName()
                     + "\nin the following folder: " + mPhoto.getPhotoFolder(),
                 Toast.LENGTH_LONG).show();
@@ -126,8 +137,8 @@ public class NewProductFragment extends Fragment {
     private void startCamera() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
-        if(takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
-            mPhoto = new Photo(mProduct);
+        if(takePictureIntent.resolveActivity(mContext.getPackageManager()) != null) {
+            mPhoto = new Photo(mContext, mProduct);
             mPhotos.add(mPhoto);
 
             takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, mPhoto.getUri());
@@ -145,30 +156,30 @@ public class NewProductFragment extends Fragment {
         for(Photo picture : mPhotos) {
             if(picture.getName() != mProduct.getName()) {
                 // Rename picture file
-                Toast.makeText(getActivity(), "names not equal", Toast.LENGTH_LONG).show();
+                Toast.makeText(mContext, "names not equal", Toast.LENGTH_LONG).show();
                 File photo = new File(picture.getPhotoFolder(), picture.getCurrentPhotoFullName());
-                Toast.makeText(getActivity(), "current photo full name: "
+                Toast.makeText(mContext, "current photo full name: "
                         + picture.getCurrentPhotoFullName(), Toast.LENGTH_LONG).show();
 
                 if(photo != null) {
                     photo.renameTo(new File(picture.getPhotoFolder(), mProduct.getName()));
-                    Toast.makeText(getActivity(), "photo not null", Toast.LENGTH_LONG).show();
+                    Toast.makeText(mContext, "photo not null", Toast.LENGTH_LONG).show();
 
                 }
                 else {
-                    Toast.makeText(getActivity(), "photo not renamed", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, "photo not renamed", Toast.LENGTH_SHORT).show();
                 }
 
                 picture.setName(mProduct.getName());
-                picture.dbInsertPictures(getActivity());
+                picture.dbInsertPictures(mContext);
             } else {
-                picture.dbInsertPictures(getActivity());
+                picture.dbInsertPictures(mContext);
               }
         }
     }
 
     private void dbInsertFields() {
-            getActivity().getContentResolver()
+            mContext.getContentResolver()
                 .insert(DatabaseContract.Products.CONTENT_URI, mProduct.getValues());
     }
 

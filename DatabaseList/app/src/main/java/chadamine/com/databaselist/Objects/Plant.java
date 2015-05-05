@@ -45,21 +45,26 @@ public class Plant extends Organism implements DatabaseAdapter {
 
     public Plant (Context context) {
         mContext = context;
-        mCursor = context.getContentResolver().query(getUri(), getKeyIdArray(), null, null, null);
+        mCursor = mContext.getContentResolver()
+                .query(getUri(), getKeyIdArray(), null, null, null);
     }
 
     public int getListItemLayoutId() {
-        return mContext.getResources().getIdentifier("list_item_plant", "layout", mContext.getPackageName());
+        return mContext.getResources()
+                .getIdentifier("list_item_plant", "layout", mContext.getPackageName());
     }
 
     public int getViewPlantLayoutId() {
-        return mContext.getResources().getIdentifier("fragment_new_plant", "layout", mContext.getPackageName());
+        return mContext.getResources()
+                .getIdentifier("fragment_new_plant", "layout", mContext.getPackageName());
     }
 
     public int getNewPlantLayoutId() {
-        return mContext.getResources().getIdentifier("fragment_view_plant", "layout", mContext.getPackageName());
+        return mContext.getResources()
+                .getIdentifier("fragment_view_plant", "layout", mContext.getPackageName());
     }
 
+    // TODO: REMOVE
     public void setContext(Context context) {
         mContext = context;
     }
@@ -84,6 +89,7 @@ public class Plant extends Organism implements DatabaseAdapter {
     public void setListItemContent(View view, Cursor c) {
         //mCursor = cursor;
 
+        // this check is pointless but need something to compare Views
         if(view.getResources().getIdentifier("list_item_plant", "layout", mContext.getPackageName())
                 == getListItemLayoutId()) {
 
@@ -116,9 +122,10 @@ public class Plant extends Organism implements DatabaseAdapter {
             return;
     }
 
+    // TODO: REMOVE
     @Override
     public void insertValues(Context context, Uri uri) {
-        context.getContentResolver().insert(DatabaseContract.Plants.CONTENT_URI, getValues());
+        mContext.getContentResolver().insert(DatabaseContract.Plants.CONTENT_URI, getValues());
     }
 
     @Override
@@ -129,6 +136,11 @@ public class Plant extends Organism implements DatabaseAdapter {
     @Override
     public String getName() {
         return mName;
+    }
+
+    @Override
+    public String getPhotoDir() {
+        return Plants.DIR_PHOTOS;
     }
 
     @Override

@@ -16,7 +16,7 @@ import chadamine.com.databaselist.R;
 /**
  * Created by chadamine on 4/12/2015.
  */
-public class NewJournalFragment extends Fragment {
+public class JournalNewFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

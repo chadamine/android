@@ -1,5 +1,6 @@
 package chadamine.com.databaselist.Fragments;
 
+import android.content.Context;
 import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.database.MergeCursor;
@@ -21,7 +22,6 @@ import android.widget.Spinner;
 
 import chadamine.com.databaselist.Adapters.ListCursorAdapter;
 import chadamine.com.databaselist.Database.DatabaseContract;
-import chadamine.com.databaselist.Database.DatabaseContract.Products;
 import chadamine.com.databaselist.Objects.Product;
 import chadamine.com.databaselist.R;
 import chadamine.com.databaselist.Adapters.SpinnerCursorAdapter;
@@ -35,6 +35,7 @@ public class ProductsFragment extends ListFragment
     private ListCursorAdapter mListCursorAdapter;
     private static final int LIST_LOADER_ID = 0;
     private Product mProduct;
+    private Context mContext;
 
     public ProductsFragment() {}
 
@@ -42,8 +43,10 @@ public class ProductsFragment extends ListFragment
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
+        mContext = getActivity();
         View thisView = inflater.inflate(R.layout.fragment_products, container, false);
-        mProduct = new Product();
+
+        mProduct = new Product(mContext);
 
         prepareList();
         prepareSpinner(thisView);
@@ -56,7 +59,7 @@ public class ProductsFragment extends ListFragment
                         getFragmentManager()
                                 .beginTransaction()
                                 .addToBackStack("newProduct")
-                                .replace(R.id.container, new NewProductFragment())
+                                .replace(R.id.container, new ProductNewFragment())
                                 .commit();
                     }
                 });
@@ -68,17 +71,17 @@ public class ProductsFragment extends ListFragment
         getLoaderManager().initLoader(LIST_LOADER_ID, null, this);
 
         mListCursorAdapter
-                = new ListCursorAdapter(getActivity(), null,
+                = new ListCursorAdapter(mContext, null,
                 0, mProduct);
         setListAdapter(mListCursorAdapter);
     }
 
     private void prepareSpinner(View view) {
-        final Cursor cursor =  getActivity().getContentResolver().query(
+        final Cursor cursor =  mContext.getContentResolver().query(
                 DatabaseContract.Journals.CONTENT_URI,
                 null, null, null, null);
 
-        final SpinnerCursorAdapter spinnerCursorAdapter = new SpinnerCursorAdapter(getActivity(),
+        final SpinnerCursorAdapter spinnerCursorAdapter = new SpinnerCursorAdapter(mContext,
                 getMergedCursor(cursor));
 
         final Spinner spinner = (Spinner) view.findViewById(R.id.spinner_sample);
@@ -155,7 +158,7 @@ public class ProductsFragment extends ListFragment
     @Override
     public Loader onCreateLoader(int id, Bundle args) {
 
-        return new CursorLoader(getActivity(),
+        return new CursorLoader(mContext,
             DatabaseContract.Products.CONTENT_URI,
             DatabaseContract.Products.KEY_ID_ARRAY,
             null, null, null);

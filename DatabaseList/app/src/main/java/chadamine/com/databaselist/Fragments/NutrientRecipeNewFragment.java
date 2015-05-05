@@ -13,12 +13,12 @@ import chadamine.com.databaselist.R;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link NewNutrientRecipeFragment.OnFragmentInteractionListener} interface
+ * {@link NutrientRecipeNewFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link NewNutrientRecipeFragment#newInstance} factory method to
+ * Use the {@link NutrientRecipeNewFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class NewNutrientRecipeFragment extends Fragment {
+public class NutrientRecipeNewFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -39,8 +39,8 @@ public class NewNutrientRecipeFragment extends Fragment {
      * @return A new instance of fragment newNutrientRecipe.
      */
     // TODO: Rename and change types and number of parameters
-    public static NewNutrientRecipeFragment newInstance(String param1, String param2) {
-        NewNutrientRecipeFragment fragment = new NewNutrientRecipeFragment();
+    public static NutrientRecipeNewFragment newInstance(String param1, String param2) {
+        NutrientRecipeNewFragment fragment = new NutrientRecipeNewFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -48,7 +48,7 @@ public class NewNutrientRecipeFragment extends Fragment {
         return fragment;
     }
 
-    public NewNutrientRecipeFragment() {
+    public NutrientRecipeNewFragment() {
         // Required empty public constructor
     }
 

@@ -76,6 +76,9 @@ public class DatabaseContract {
         public static final String KEY_ID = "_id";
         public static final String KEY_NAME = "name";
 
+        public static final String DIR_PHOTOS = Photos.DIR_PHOTOS + "Journals/";
+
+
         public static final String[] KEY_ID_ARRAY = { KEY_ID, KEY_NAME };
 
         public static final Uri CONTENT_URI = Uri.withAppendedPath(DatabaseContract.CONTENT_URI, TABLE_NAME);
@@ -123,6 +126,8 @@ public class DatabaseContract {
         public static final String KEY_SUBSTRATE = "substrate";
         public static final String KEY_POTSIZE = "potSize";
 
+        public static final String DIR_PHOTOS = Photos.DIR_PHOTOS + "Plants/";
+
         public static final String[] KEY_ID_ARRAY = { KEY_ID, KEY_NAME, KEY_SPECIES, KEY_CULTIVAR,
                 KEY_STAGE, KEY_AGE, KEY_HEIGHT };
 
@@ -152,6 +157,8 @@ public class DatabaseContract {
         public static final String KEY_LINE = "line";
         public static final String KEY_TYPE = "type";
 
+        public static final String DIR_PHOTOS = Photos.DIR_PHOTOS + "Products/";
+
         public static final String[] KEY_ID_ARRAY = {
                 KEY_ID, KEY_NAME, KEY_MANUFACTURER, KEY_LINE, KEY_TYPE };
 
@@ -174,7 +181,9 @@ public class DatabaseContract {
     public static final class Photos implements BaseColumns {
 
         public static final String DATE_FORMAT = "yyyy_MM_Ddd_HH_mm_ss";
-        public static final String DIR_PRODUCT_PHOTOS = "/DatabaseListPictures/Photos/";
+
+        public static final String DIR_PHOTOS = "/DatabaseListPictures/Photos/";
+
         public static final String EXTENSION_PNG = ".png";
 
         public static final String TABLE_NAME = "photos";

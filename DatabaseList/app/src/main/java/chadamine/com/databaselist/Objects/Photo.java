@@ -5,36 +5,47 @@ import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Environment;
+import android.view.View;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import chadamine.com.databaselist.Adapters.DatabaseAdapter;
 import chadamine.com.databaselist.Database.DatabaseContract;
+import chadamine.com.databaselist.Database.DatabaseContract.Photos;
+
 
 /**
  * Created by chadamine on 4/29/2015.
  */
-public class Photo extends Product {
+public class Photo implements DatabaseAdapter {
 
     private String mPhotoName;
     private String mDirPhoto;
     private String mPhotoFullName;
     private String mTimestamp;
     private String mType;
+    private Context mContext;
+    private DatabaseAdapter mDatabaseObject;
 
-    public static final String TYPE_PRODUCT = "product";
+    private static final Uri CONTENT_URI = Photos.CONTENT_URI;
 
-    public Photo(Product product) {
-        super(product);
-        mType = TYPE_PRODUCT;
+    private static final String EXT_DIR = Environment.getExternalStorageDirectory().toString();
+/*
+    // TODO: REMOVE
+    public static final String TYPE_PRODUCT = DatabaseContract.Products.TABLE_NAME;
+    public static final String TYPE_PLANT = DatabaseContract.Plants.TABLE_NAME;
 
-        mDirPhoto = Environment.getExternalStorageDirectory()
-                + DatabaseContract.Photos.DIR_PRODUCT_PHOTOS;
-    }
+*/
 
-    public Photo(Plant plant) {
+    public Photo(Context c, DatabaseAdapter databaseObject) {
+        mContext = c;
+        //mType = TYPE_PRODUCT;
+        mDatabaseObject = databaseObject;
 
+        mDirPhoto = EXT_DIR
+                + getPhotoDir();
     }
 
     public void setID(Context activity, int id) {
@@ -47,17 +58,15 @@ public class Photo extends Product {
         if (cursor != null) {
             cursor.moveToFirst();
             // TODO: use id to label picture?
-            setID(cursor.getInt(cursor
+            setID(mContext, cursor.getInt(cursor
                     .getColumnIndexOrThrow(DatabaseContract.Photos.KEY_ID)));
-        } else {
-            super.setID(id);
         }
-
     }
 
+/*    // TODO: REMOVE
     public void setType(String type) {
         mType = type;
-    }
+    }*/
 
     public String getType() {
         return mType;
@@ -68,7 +77,7 @@ public class Photo extends Product {
                 DatabaseContract.Photos.DATE_FORMAT).format(new Date());
 
         mPhotoFullName =
-                this.getName() + "_"
+                mDatabaseObject.getName() + "_"
                         + mTimestamp
                         + DatabaseContract.Photos.EXTENSION_PNG;
         return mPhotoFullName;
@@ -85,6 +94,16 @@ public class Photo extends Product {
         Uri imageUri = Uri.fromFile(new File(getPhotoFolder(), getNewPhotoFullName()));
 
         return imageUri;
+    }
+
+    @Override
+    public void insertValues(Context context, Uri uri) {
+
+    }
+
+    @Override
+    public String[] getKeyIdArray() {
+        return new String[0];
     }
 
     public String getPhotoFolder() {
@@ -113,5 +132,38 @@ public class Photo extends Product {
         values.put(DatabaseContract.Photos.KEY_TYPE, mType);
 
         return values;
+    }
+
+    @Override
+    public String getKeyID() {
+        return null;
+    }
+
+    @Override
+    public Cursor getCursor() {
+        return null;
+    }
+
+    public void setName(String name) {
+        mPhotoName = name;
+    }
+    @Override
+    public String getName() {
+        return mPhotoFullName;
+    }
+
+    @Override
+    public String getPhotoDir() {
+        return Photos.DIR_PHOTOS;
+    }
+
+    @Override
+    public void setListItemContent(View view, Cursor cursor) {
+
+    }
+
+    @Override
+    public int getListItemLayoutId() {
+        return 0;
     }
 }

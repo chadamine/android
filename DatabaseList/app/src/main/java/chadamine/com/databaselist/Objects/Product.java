@@ -22,37 +22,44 @@ public class Product implements DatabaseAdapter {
     private String mName;
     private Photo mPhoto;
     private Double mSize;
-    private Uri mUri;
+    private static final Uri CONTENT_URI = Products.CONTENT_URI;
     private static final String[] KEY_ID_ARRAY = Products.KEY_ID_ARRAY;
     private Cursor mCursor;
     private String mManufacturer;
     private String mType;
     private String mProductLine;
-    private String mKeyID;
-    private String mKeyName;
-    private String mKeyManufacturer;
-    private String mKeyLine;
-    private String mKeyType;
+
+    private Context mContext;
+
+    private static final String KEY_ID = KEY_ID_ARRAY[0];
+    private static final String KEY_NAME = KEY_ID_ARRAY[1];
+    private static final String KEY_MANUFACTURER = KEY_ID_ARRAY[2];
+    private static final String KEY_LINE = KEY_ID_ARRAY[3];
+    private static final String KEY_TYPE = KEY_ID_ARRAY[4];
 
     //private Manufacturer mManufacturer;
     //private Supplier mSupplier;
 
-    public Product() {}
+    //public Product() {}
+
+    public Product(Context c) {
+        mContext = c;
+        /*mCursor = mContext.getContentResolver()
+                .query(getUri(), getKeyIdArray(), null, null, null);*/
+    }
 
     public Product(Product product) {
         mID = product.getID();
         mName = product.getName();
-        mUri = Products.CONTENT_URI;
-
-        mKeyID = KEY_ID_ARRAY[0];
-        mKeyName = KEY_ID_ARRAY[1];
-        mKeyManufacturer = KEY_ID_ARRAY[2];
-        mKeyLine = KEY_ID_ARRAY[3];
-        mKeyType = KEY_ID_ARRAY[4];
     }
 
     public String getName() throws NullPointerException {
         return mName;
+    }
+
+    @Override
+    public String getPhotoDir() {
+        return Products.DIR_PHOTOS;
     }
 
     public int getID() {
@@ -77,12 +84,12 @@ public class Product implements DatabaseAdapter {
 
     @Override
     public Uri getUri() {
-        return null;
+        return CONTENT_URI;
     }
 
     @Override
     public void insertValues(Context context, Uri uri) {
-
+        mContext.getContentResolver().insert(CONTENT_URI, getValues());
     }
 
     @Override
@@ -93,24 +100,27 @@ public class Product implements DatabaseAdapter {
     public ContentValues getValues() throws NullPointerException {
 
         ContentValues values = new ContentValues();
-        values.put(DatabaseContract.Products.KEY_NAME, getName());
+        values.put(KEY_NAME, getName());
 
         return values;
     }
 
     @Override
     public String getKeyID() {
-        return null;
+        return KEY_ID;
     }
 
     @Override
     public Cursor getCursor() {
-        return null;
+        return mCursor;
     }
 
     @Override
-    public void setListItemContent(View view, Cursor cursor) {
+    public void setListItemContent(View view, Cursor c) {
+        String name = c.getString(c.getColumnIndexOrThrow(KEY_NAME));
 
+        if (!name.isEmpty())
+            ((TextView) view.findViewById(R.id.textview_productlist_name)).setText(name);
     }
 
     public void setListItemContent(View view) {
@@ -118,7 +128,8 @@ public class Product implements DatabaseAdapter {
     }
 
     public int getListItemLayoutId() {
-        return 0;
+        return mContext.getResources()
+                .getIdentifier("list_item_product", "layout", mContext.getPackageName());
     }
 
     public Double getSize() {

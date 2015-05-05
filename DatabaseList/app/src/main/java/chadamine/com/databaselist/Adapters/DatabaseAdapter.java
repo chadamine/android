@@ -23,6 +23,10 @@ public interface DatabaseAdapter {
 
     Cursor getCursor();
 
+    String getName();
+
+    String getPhotoDir();
+
     void setListItemContent(View view, Cursor cursor);
 
     int getListItemLayoutId();

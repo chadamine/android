@@ -21,6 +21,8 @@ public class Journal implements DatabaseAdapter {
     private static final String KEY_ID = Journals.KEY_ID;
     private Cursor mCursor;
 
+    private String mName;
+
     @Override
     public Uri getUri() {
         return mUri;
@@ -49,6 +51,16 @@ public class Journal implements DatabaseAdapter {
     @Override
     public Cursor getCursor() {
         return mCursor;
+    }
+
+    @Override
+    public String getName() {
+        return mName;
+    }
+
+    @Override
+    public String getPhotoDir() {
+        return Journals.DIR_PHOTOS;
     }
 
     @Override
