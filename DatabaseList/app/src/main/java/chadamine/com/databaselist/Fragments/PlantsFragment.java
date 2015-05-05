@@ -7,7 +7,6 @@ import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.support.v4.widget.SimpleCursorAdapter;
 import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -38,10 +37,8 @@ public class PlantsFragment extends ListFragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_plants, container, false);
-        //View itemView = inflater.inflate(R.layout.list_item_plant, container, false);
 
         mPlant = new Plant(getActivity());
-        //mPlant.setListItemContent(itemView);
 
         prepareList();
 
@@ -65,8 +62,7 @@ public class PlantsFragment extends ListFragment
 
         mListCursorAdapter
                 = new ListCursorAdapter(getActivity(), null, 0, mPlant);
-                /*= new ListCursorAdapter(getActivity(), null,
-                Plants.CONTENT_URI, R.layout.list_item_plant);*/
+
         setListAdapter(mListCursorAdapter);
     }
 
@@ -81,7 +77,7 @@ public class PlantsFragment extends ListFragment
             @Override
             public boolean onCreateActionMode(ActionMode mode, Menu menu) {
 
-                mode.getMenuInflater().inflate(R.menu.menu_fragment_plants, menu);
+                mode.getMenuInflater().inflate(R.menu.menu_action_mode_plants, menu);
                 return true;
             }
 
@@ -93,7 +89,7 @@ public class PlantsFragment extends ListFragment
             @Override
             public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
                 switch (item.getItemId()) {
-                    case R.id.delete:
+                    case R.id.delete_plant:
 
                         for (int i = (getListView().getCheckedItemCount() - 1); i >= 0; i--) {
                             int checkedItemKey = getListView()

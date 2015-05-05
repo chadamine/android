@@ -4,10 +4,10 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
+import chadamine.com.databaselist.Adapters.DatabaseAdapter;
 import chadamine.com.databaselist.Database.DatabaseContract;
 import chadamine.com.databaselist.Database.DatabaseContract.Plants;
 import chadamine.com.databaselist.R;
@@ -15,7 +15,7 @@ import chadamine.com.databaselist.R;
 /**
  * Created by chadamine on 4/30/2015.
  */
-public class Plant extends Organism implements DatabaseObject {
+public class Plant extends Organism implements DatabaseAdapter {
 
     private int mID;
 
@@ -45,15 +45,25 @@ public class Plant extends Organism implements DatabaseObject {
 
     public Plant (Context context) {
         mContext = context;
+        mCursor = context.getContentResolver().query(getUri(), getKeyIdArray(), null, null, null);
     }
 
     public int getListItemLayoutId() {
         return mContext.getResources().getIdentifier("list_item_plant", "layout", mContext.getPackageName());
     }
 
+    public int getViewPlantLayoutId() {
+        return mContext.getResources().getIdentifier("fragment_new_plant", "layout", mContext.getPackageName());
+    }
+
+    public int getNewPlantLayoutId() {
+        return mContext.getResources().getIdentifier("fragment_view_plant", "layout", mContext.getPackageName());
+    }
+
     public void setContext(Context context) {
         mContext = context;
     }
+
     @Override
     public Uri getUri() {
         return CONTENT_URI;
@@ -69,29 +79,41 @@ public class Plant extends Organism implements DatabaseObject {
         return mCursor;
     }
 
-    public void setListItemContent(View view, Cursor cursor) {
-        mCursor = cursor;
 
-        String name = mCursor.getString(mCursor.getColumnIndexOrThrow(Plants.KEY_NAME));
-        if(!name.isEmpty())
-            ((TextView) view.findViewById(R.id.textview_plants_item_name)).setText(name );
+    // TODO: CHANGE TO setLayoutContent(View view)
+    public void setListItemContent(View view, Cursor c) {
+        //mCursor = cursor;
 
-        String species = mCursor.getString(mCursor.getColumnIndexOrThrow(DatabaseContract.Plants.KEY_SPECIES));
-        if(!species.isEmpty())
-            ((TextView) view.findViewById(R.id.textview_plants_item_species)).setText(species);
+        if(view.getResources().getIdentifier("list_item_plant", "layout", mContext.getPackageName())
+                == getListItemLayoutId()) {
+
+            String name = c.getString(c.getColumnIndexOrThrow(Plants.KEY_NAME));
+
+            if (!name.isEmpty())
+                ((TextView) view.findViewById(R.id.textview_plants_item_name)).setText(name);
+
+            String species = c.getString(c.getColumnIndexOrThrow(DatabaseContract.Plants.KEY_SPECIES));
+            if (!species.isEmpty())
+                ((TextView) view.findViewById(R.id.textview_plants_item_species)).setText(species);
 
 
-        String cultivar = mCursor.getString(mCursor.getColumnIndexOrThrow(DatabaseContract.Plants.KEY_CULTIVAR));
-        //if(cultivar == "")
-        ((TextView) view.findViewById(R.id.textview_plants_item_cultivar)).setText(cultivar);
+            String cultivar = c.getString(c.getColumnIndexOrThrow(DatabaseContract.Plants.KEY_CULTIVAR));
+            //if(cultivar == "")
+            ((TextView) view.findViewById(R.id.textview_plants_item_cultivar)).setText(cultivar);
 
-        String stage = mCursor.getString(mCursor.getColumnIndexOrThrow(DatabaseContract.Plants.KEY_STAGE));
-        //if(stage == "")
-        ((TextView) view.findViewById(R.id.textview_plants_item_stage)).setText(stage);
+            String stage = c.getString(c.getColumnIndexOrThrow(DatabaseContract.Plants.KEY_STAGE));
+            //if(stage == "")
+            ((TextView) view.findViewById(R.id.textview_plants_item_stage)).setText(stage);
 
-        String age = mCursor.getString(mCursor.getColumnIndexOrThrow(DatabaseContract.Plants.KEY_AGE));
-        //if(age == "")
-        ((TextView) view.findViewById(R.id.textview_plants_item_age)).setText(age);
+            String age = c.getString(c.getColumnIndexOrThrow(DatabaseContract.Plants.KEY_AGE));
+            //if(age == "")
+            ((TextView) view.findViewById(R.id.textview_plants_item_age)).setText(age);
+        }
+
+        if(view.getId() == getViewPlantLayoutId())
+            return;
+        if(view.getId() == getNewPlantLayoutId())
+            return;
     }
 
     @Override
@@ -100,8 +122,8 @@ public class Plant extends Organism implements DatabaseObject {
     }
 
     @Override
-    public String[] getKeyArray() {
-        return KEY_ARRAY;
+    public String[] getKeyIdArray() {
+        return KEY_ID_ARRAY;
     }
 
     @Override

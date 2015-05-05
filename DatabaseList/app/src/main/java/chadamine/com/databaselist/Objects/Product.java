@@ -7,22 +7,23 @@ import android.net.Uri;
 import android.view.View;
 import android.widget.TextView;
 
-import java.util.List;
-
+import chadamine.com.databaselist.Adapters.DatabaseAdapter;
 import chadamine.com.databaselist.Database.DatabaseContract;
+import chadamine.com.databaselist.Database.DatabaseContract.Products;
+
 import chadamine.com.databaselist.R;
 
 /**
  * Created by chadamine on 4/29/2015.
  */
-public class Product implements DatabaseObject{
+public class Product implements DatabaseAdapter {
 
     private int mID;
     private String mName;
     private Photo mPhoto;
     private Double mSize;
     private Uri mUri;
-    private String[] mKeyArray;
+    private static final String[] KEY_ID_ARRAY = Products.KEY_ID_ARRAY;
     private Cursor mCursor;
     private String mManufacturer;
     private String mType;
@@ -41,14 +42,13 @@ public class Product implements DatabaseObject{
     public Product(Product product) {
         mID = product.getID();
         mName = product.getName();
-        mUri = DatabaseContract.Products.CONTENT_URI;
+        mUri = Products.CONTENT_URI;
 
-        mKeyArray = DatabaseContract.Products.KEY_ID_ARRAY;
-        mKeyID = mKeyArray[0];
-        mKeyName = mKeyArray[1];
-        mKeyManufacturer = mKeyArray[2];
-        mKeyLine = mKeyArray[3];
-        mKeyType = mKeyArray[4];
+        mKeyID = KEY_ID_ARRAY[0];
+        mKeyName = KEY_ID_ARRAY[1];
+        mKeyManufacturer = KEY_ID_ARRAY[2];
+        mKeyLine = KEY_ID_ARRAY[3];
+        mKeyType = KEY_ID_ARRAY[4];
     }
 
     public String getName() throws NullPointerException {
@@ -86,8 +86,8 @@ public class Product implements DatabaseObject{
     }
 
     @Override
-    public String[] getKeyArray() {
-        return new String[0];
+    public String[] getKeyIdArray() {
+        return KEY_ID_ARRAY;
     }
 
     public ContentValues getValues() throws NullPointerException {

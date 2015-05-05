@@ -27,9 +27,9 @@
         android:layout_marginRight="10dp">
 
         <Button
-            android:layout_height="wrap_content"
+            android:layout_height="100dp"
             android:text="Journals"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:textSize="10sp"
             android:layout_margin="10dp"
             android:layout_marginRight="0dp"
@@ -37,9 +37,9 @@
             />
 
         <Button
-            android:layout_height="wrap_content"
+            android:layout_height="100dp"
             android:text="Schedule"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:textSize="10sp"
             android:layout_margin="10dp"
             android:layout_marginRight="0dp"/>
@@ -49,9 +49,9 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
             <Button
-                android:layout_height="wrap_content"
+                android:layout_height="100dp"
                 android:text="Materials"
-                android:layout_width="wrap_content"
+                android:layout_width="100dp"
                 android:textSize="10sp"
                 android:layout_margin="10dp"
                 android:layout_marginRight="0dp"
@@ -59,9 +59,9 @@
                 />
 
             <Button
-                android:layout_height="wrap_content"
+                android:layout_height="100dp"
                 android:text="Analysis"
-                android:layout_width="wrap_content"
+                android:layout_width="100dp"
                 android:textSize="10sp"
                 android:layout_margin="10dp"/>
     </LinearLayout>
@@ -84,19 +84,19 @@
         android:layout_marginRight="10dp">
 
         <Button
-            android:layout_height="wrap_content"
+            android:layout_height="100dp"
             android:text="Plants"
             android:id="@+id/button_toplants"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:textSize="10sp"
             android:layout_margin="10dp"
             android:padding="0dp"
             android:layout_marginRight="0dp"/>
 
         <Button
-            android:layout_height="wrap_content"
+            android:layout_height="100dp"
             android:text="Nutrients"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:textSize="10sp"
             android:layout_margin="10dp"
             android:layout_marginRight="0dp"/>
@@ -107,17 +107,17 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <Button
-            android:layout_height="wrap_content"
+            android:layout_height="100dp"
             android:text="Environment"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:textSize="10sp"
             android:layout_margin="10dp"
             android:layout_marginRight="0dp"/>
 
         <Button
-            android:layout_height="wrap_content"
+            android:layout_height="100dp"
             android:text="Pest &amp; Disease"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:textSize="10sp"
             android:layout_margin="10dp"/>
     </LinearLayout>
@@ -140,17 +140,17 @@
         android:layout_marginRight="10dp">
 
         <Button
-            android:layout_height="wrap_content"
+            android:layout_height="100dp"
             android:text="NutriSolver"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:textSize="10sp"
             android:layout_margin="10dp"
             android:layout_marginRight="0dp"/>
 
         <Button
-            android:layout_height="wrap_content"
+            android:layout_height="100dp"
             android:text="Comparison"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:textSize="10sp"
             android:layout_margin="10dp"
             android:layout_marginRight="0dp"/>
@@ -161,17 +161,17 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <Button
-                android:layout_height="wrap_content"
+                android:layout_height="100dp"
                 android:text="CO2 Calculator"
-                android:layout_width="wrap_content"
+                android:layout_width="100dp"
                 android:textSize="10sp"
                 android:layout_margin="10dp"
                 android:layout_marginRight="0dp"/>
 
             <Button
-                android:layout_height="wrap_content"
+                android:layout_height="100dp"
                 android:text="Conversion Calculator"
-                android:layout_width="wrap_content"
+                android:layout_width="100dp"
                 android:textSize="10sp"
                 android:layout_margin="10dp"/>
         </LinearLayout>

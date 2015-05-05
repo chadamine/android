@@ -10,16 +10,13 @@ import android.widget.CursorAdapter;
 
 import java.util.HashMap;
 
-import chadamine.com.databaselist.Objects.DatabaseObject;
-import chadamine.com.databaselist.R;
-
 /**
  * Created by chadamine  on 4/12/2015.
  */
 public class ListCursorAdapter extends CursorAdapter {
 
     private int mID;
-    private DatabaseObject mDatabaseObject;
+    private DatabaseAdapter mDatabaseObject;
     private View mView;
     private Cursor mCursor;
 	
@@ -27,12 +24,19 @@ public class ListCursorAdapter extends CursorAdapter {
     private HashMap<Integer, Long> mIds;
     private SparseBooleanArray mSelectedItems;
 
-    public ListCursorAdapter(Context context, Cursor c, int flags, DatabaseObject dbObject) {
+    public ListCursorAdapter(Context context, Cursor c, int flags, DatabaseAdapter dbObject) {
         super(context, c, flags);
         mContext = context;
         mDatabaseObject = dbObject;
         mIds = new HashMap<>();
-        mCursor = c;
+        mSelectedItems = new SparseBooleanArray();
+
+        if(c != null)
+            mCursor = c;
+        else
+            mCursor = mContext.getContentResolver()
+                    .query(mDatabaseObject.getUri(),
+                            mDatabaseObject.getKeyIdArray(), null, null, null);
     }
 
     @Override
@@ -43,21 +47,22 @@ public class ListCursorAdapter extends CursorAdapter {
 
 	@Override
 	public Cursor getCursor() {
+
         return mCursor;
                 //mDatabaseObject.getCursor();
 	}
 
     public void toggleSelection(int position) {
         boolean checked = !mSelectedItems.get(position);
-		Cursor cursor = getCursor();
+		//Cursor cursor = getCursor();
 
-        cursor.moveToPosition(position);
-		
+        mCursor.moveToPosition(position);
+
         if(checked) {
             mSelectedItems.put(position, checked);
             mIds.put(position,
-                    cursor.getLong(
-                            cursor.getColumnIndex(mDatabaseObject.getKeyID())));
+                    mCursor.getLong(
+                            mCursor.getColumnIndex(mDatabaseObject.getKeyID())));
         } else {
             mIds.remove(position);
             mSelectedItems.delete(position);

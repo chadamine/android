@@ -1,4 +1,4 @@
-package chadamine.com.databaselist.Objects;
+package chadamine.com.databaselist.Adapters;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -9,13 +9,13 @@ import android.view.View;
 /**
  * Created by chadamine on 5/4/2015.
  */
-public interface DatabaseObject {
+public interface DatabaseAdapter {
 
     Uri getUri();
 
     void insertValues(Context context, Uri uri);
 
-    String[] getKeyArray();
+    String[] getKeyIdArray();
 
     ContentValues getValues();
 
