@@ -21,7 +21,6 @@ import chadamine.com.databaselist.Database.DatabaseContract.Photos;
  */
 public class Photo implements DatabaseAdapter {
 
-    private String mPhotoName;
     private String mDirPhoto;
     private String mPhotoFullName;
     private String mTimestamp;
@@ -72,14 +71,6 @@ public class Photo implements DatabaseAdapter {
         return mPhotoFullName;
     }
 
-    public void setPhotoName(String name) {
-        mPhotoName = name;
-    }
-
-    public String getPhotoName() {
-       return mPhotoName;
-    }
-
     public Uri getUri() {
         Uri imageUri = Uri.fromFile(new File(getPhotoFolder() + mDatabaseObject.getPhotoDir(), getNewPhotoFullName()));
 
@@ -98,10 +89,6 @@ public class Photo implements DatabaseAdapter {
 
     public String getPhotoFolder() {
         return mDirPhoto;
-    }
-
-    public String getCurrentPhotoName() {
-        return mPhotoName;
     }
 
     public String getCurrentPhotoFullName() {
@@ -134,9 +121,6 @@ public class Photo implements DatabaseAdapter {
         return null;
     }
 
-    public void setName(String name) {
-        mPhotoName = name;
-    }
     @Override
     public String getName() {
         return mPhotoFullName;

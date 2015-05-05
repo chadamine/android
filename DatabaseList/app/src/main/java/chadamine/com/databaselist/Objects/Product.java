@@ -88,11 +88,6 @@ public class Product implements DatabaseAdapter {
     }
 
     @Override
-    public void insertValues(Context context, Uri uri) {
-        mContext.getContentResolver().insert(CONTENT_URI, getValues());
-    }
-
-    @Override
     public String[] getKeyIdArray() {
         return KEY_ID_ARRAY;
     }
@@ -105,14 +100,9 @@ public class Product implements DatabaseAdapter {
         return values;
     }
 
-    @Override
-    public String getKeyID() {
-        return KEY_ID;
-    }
-
-    @Override
-    public Cursor getCursor() {
-        return mCursor;
+    public int getListItemLayoutId() {
+        return mContext.getResources()
+                .getIdentifier("list_item_product", "layout", mContext.getPackageName());
     }
 
     @Override
@@ -128,13 +118,44 @@ public class Product implements DatabaseAdapter {
 
     }
 
-    public void setListItemContent(View view) {
+    public void setProductFields(View view, Cursor cursor, int position) {
+        mCursor = cursor;
+        loadFromDatabase(position);
 
+        ((TextView) view.findViewById(R.id.textview_productlist_name)).setText(getName());
+        //mCursor.getString(mCursor.getColumnIndex(DatabaseContract.Products.KEY_NAME)));
+        ((TextView) view.findViewById(R.id.textview_productlist_manufacturer)).setText(getManufacturer());
+        //mCursor.getString(mCursor.getColumnIndex(DatabaseContract.Products.KEY_MANUFACTURER)));
+        ((TextView) view.findViewById(R.id.textview_productlist_type)).setText(getType());
+        //mCursor.getString(mCursor.getColumnIndex(DatabaseContract.Products.KEY_TYPE)));
+        ((TextView) view.findViewById(R.id.textview_productlist_line)).setText(getProductLine());
+        //mCursor.getString(mCursor.getColumnIndex(DatabaseContract.Products.KEY_LINE)));
     }
 
-    public int getListItemLayoutId() {
-        return mContext.getResources()
-                .getIdentifier("list_item_product", "layout", mContext.getPackageName());
+    public void loadFromDatabase(int position) {
+
+        if (mCursor != null) {
+            mCursor.moveToPosition(position);
+
+            mID = mCursor.getInt(mCursor.getColumnIndexOrThrow(DatabaseContract.Products.KEY_ID));
+            mName = mCursor.getString(mCursor.getColumnIndexOrThrow(DatabaseContract.Products.KEY_NAME));
+            mManufacturer = mCursor.getString(mCursor.getColumnIndexOrThrow(DatabaseContract.Products.KEY_MANUFACTURER));
+            mType = mCursor.getString(mCursor.getColumnIndexOrThrow(DatabaseContract.Products.KEY_TYPE));
+            // TODO: mPhoto from file using location, name, and timestamp fields
+        }
+    }
+    @Override
+    public String getKeyID() {
+        return KEY_ID;
+    }
+
+    @Override
+    public Cursor getCursor() {
+        return mCursor;
+    }
+
+    public void setListItemContent(View view) {
+
     }
 
     public Double getSize() {
@@ -153,33 +174,6 @@ public class Product implements DatabaseAdapter {
         mPhoto = photo;
     }
 
-    public void setProductFields(View view, Cursor cursor, int position) {
-        mCursor = cursor;
-        loadFromDatabase(position);
-
-        ((TextView) view.findViewById(R.id.textview_productlist_name)).setText(getName());
-            //mCursor.getString(mCursor.getColumnIndex(DatabaseContract.Products.KEY_NAME)));
-        ((TextView) view.findViewById(R.id.textview_productlist_manufacturer)).setText(getManufacturer());
-                //mCursor.getString(mCursor.getColumnIndex(DatabaseContract.Products.KEY_MANUFACTURER)));
-        ((TextView) view.findViewById(R.id.textview_productlist_type)).setText(getType());
-                //mCursor.getString(mCursor.getColumnIndex(DatabaseContract.Products.KEY_TYPE)));
-        ((TextView) view.findViewById(R.id.textview_productlist_line)).setText(getProductLine());
-                //mCursor.getString(mCursor.getColumnIndex(DatabaseContract.Products.KEY_LINE)));
-    }
-
-    public void loadFromDatabase(int position) {
-
-        if (mCursor != null) {
-            mCursor.moveToPosition(position);
-
-            mID = mCursor.getInt(mCursor.getColumnIndexOrThrow(DatabaseContract.Products.KEY_ID));
-            mName = mCursor.getString(mCursor.getColumnIndexOrThrow(DatabaseContract.Products.KEY_NAME));
-            mManufacturer = mCursor.getString(mCursor.getColumnIndexOrThrow(DatabaseContract.Products.KEY_MANUFACTURER));
-            mType = mCursor.getString(mCursor.getColumnIndexOrThrow(DatabaseContract.Products.KEY_TYPE));
-            // TODO: mPhoto from file using location, name, and timestamp fields
-        }
-    }
-
     public void setManufacturer(String manufacturer) {
         mManufacturer = manufacturer;
     }
@@ -191,6 +185,7 @@ public class Product implements DatabaseAdapter {
     public void setType(String type) {
         mType = type;
     }
+
     public String getType() {
         return mType;
     }
@@ -198,6 +193,7 @@ public class Product implements DatabaseAdapter {
     public void setProductLine(String line) {
         mProductLine = line;
     }
+
     public String getProductLine() {
         return mProductLine;
     }

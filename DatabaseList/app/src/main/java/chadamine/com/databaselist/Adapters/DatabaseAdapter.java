@@ -15,8 +15,6 @@ public interface DatabaseAdapter {
 
     Uri getUri();
 
-    void insertValues(Context context, Uri uri);
-
     String[] getKeyIdArray();
 
     ContentValues getValues();
