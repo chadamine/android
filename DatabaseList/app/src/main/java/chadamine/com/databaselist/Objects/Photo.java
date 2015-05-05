@@ -30,20 +30,14 @@ public class Photo implements DatabaseAdapter {
     private DatabaseAdapter mDatabaseObject;
 
     private static final Uri CONTENT_URI = Photos.CONTENT_URI;
+    private static final String[] KEY_ID_ARRAY = Photos.KEY_ID_ARRAY;
+    private static final String KEY_ID = Photos.KEY_ID;
 
     private static final String EXT_DIR = Environment.getExternalStorageDirectory().toString();
-/*
-    // TODO: REMOVE
-    public static final String TYPE_PRODUCT = DatabaseContract.Products.TABLE_NAME;
-    public static final String TYPE_PLANT = DatabaseContract.Plants.TABLE_NAME;
-
-*/
 
     public Photo(Context c, DatabaseAdapter databaseObject) {
         mContext = c;
-        //mType = TYPE_PRODUCT;
         mDatabaseObject = databaseObject;
-
         mDirPhoto = EXT_DIR
                 + getPhotoDir();
     }
@@ -63,11 +57,6 @@ public class Photo implements DatabaseAdapter {
         }
     }
 
-/*    // TODO: REMOVE
-    public void setType(String type) {
-        mType = type;
-    }*/
-
     public String getType() {
         return mType;
     }
@@ -86,12 +75,13 @@ public class Photo implements DatabaseAdapter {
     public void setPhotoName(String name) {
         mPhotoName = name;
     }
+
     public String getPhotoName() {
        return mPhotoName;
     }
 
     public Uri getUri() {
-        Uri imageUri = Uri.fromFile(new File(getPhotoFolder(), getNewPhotoFullName()));
+        Uri imageUri = Uri.fromFile(new File(getPhotoFolder() + mDatabaseObject.getPhotoDir(), getNewPhotoFullName()));
 
         return imageUri;
     }
@@ -103,7 +93,7 @@ public class Photo implements DatabaseAdapter {
 
     @Override
     public String[] getKeyIdArray() {
-        return new String[0];
+        return KEY_ID_ARRAY;
     }
 
     public String getPhotoFolder() {
@@ -120,23 +110,23 @@ public class Photo implements DatabaseAdapter {
 
     public void dbInsertPictures(Context activity) {
         activity.getContentResolver()
-                .insert(DatabaseContract.Photos.CONTENT_URI, getValues());
+                .insert(CONTENT_URI, getValues());
     }
 
     @Override
     public ContentValues getValues() throws NullPointerException {
         ContentValues values = new ContentValues();
-        values.put(DatabaseContract.Photos.KEY_NAME, getName());
-        values.put(DatabaseContract.Photos.KEY_DIRECTORY, mDirPhoto);
-        values.put(DatabaseContract.Photos.KEY_TIMESTAMP, mTimestamp);
-        values.put(DatabaseContract.Photos.KEY_TYPE, mType);
+        values.put(Photos.KEY_NAME, getName());
+        values.put(Photos.KEY_DIRECTORY, mDirPhoto);
+        values.put(Photos.KEY_TIMESTAMP, mTimestamp);
+        //values.put(Photos.KEY_TYPE, mType);
 
         return values;
     }
 
     @Override
     public String getKeyID() {
-        return null;
+        return KEY_ID;
     }
 
     @Override
@@ -159,6 +149,11 @@ public class Photo implements DatabaseAdapter {
 
     @Override
     public void setListItemContent(View view, Cursor cursor) {
+
+    }
+
+    @Override
+    public void setContent(Cursor cursor) {
 
     }
 

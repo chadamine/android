@@ -33,8 +33,8 @@ public class DatabaseContract {
     public static final int PRODUCTS = 1;
     public static final int PRODUCT_ID = 2;
 
-    public static final int PRODUCT_PHOTOS = 3;
-    public static final int PRODUCT_PHOTO_ID = 4;
+    public static final int PHOTOS = 3;
+    public static final int PHOTO_ID = 4;
 
     public static final int JOURNALS = 5;
     public static final int JOURNAL_ID = 6;
@@ -50,8 +50,8 @@ public class DatabaseContract {
         URI_MATCHER.addURI(AUTHORITY, Products.TABLE_NAME, PRODUCTS);
         URI_MATCHER.addURI(AUTHORITY, Products.TABLE_NAME + "/#", PRODUCT_ID);
 
-        URI_MATCHER.addURI(AUTHORITY, Photos.TABLE_NAME, PRODUCT_PHOTOS);
-        URI_MATCHER.addURI(AUTHORITY, Photos.TABLE_NAME + "/#", PRODUCT_PHOTO_ID);
+        URI_MATCHER.addURI(AUTHORITY, Photos.TABLE_NAME, PHOTOS);
+        URI_MATCHER.addURI(AUTHORITY, Photos.TABLE_NAME + "/#", PHOTO_ID);
 
         URI_MATCHER.addURI(AUTHORITY, Journals.TABLE_NAME, JOURNALS);
         URI_MATCHER.addURI(AUTHORITY, Journals.TABLE_NAME + "/#", JOURNAL_ID);
@@ -76,7 +76,7 @@ public class DatabaseContract {
         public static final String KEY_ID = "_id";
         public static final String KEY_NAME = "name";
 
-        public static final String DIR_PHOTOS = Photos.DIR_PHOTOS + "Journals/";
+        public static final String DIR_PHOTOS = "Journals/";
 
 
         public static final String[] KEY_ID_ARRAY = { KEY_ID, KEY_NAME };
@@ -157,7 +157,7 @@ public class DatabaseContract {
         public static final String KEY_LINE = "line";
         public static final String KEY_TYPE = "type";
 
-        public static final String DIR_PHOTOS = Photos.DIR_PHOTOS + "Products/";
+        public static final String DIR_PHOTOS = "Products/";
 
         public static final String[] KEY_ID_ARRAY = {
                 KEY_ID, KEY_NAME, KEY_MANUFACTURER, KEY_LINE, KEY_TYPE };

@@ -49,34 +49,38 @@ public class ProductNewFragment extends Fragment {
         mPhotos = new ArrayList<>();
         mContext = getActivity();
 
-
         mEditTextName = (EditText) mView.findViewById(R.id.edittext_newproduct_name);
         mFields.add(mEditTextName);
 
+        setSaveButton();
+        setPictureButton();
+
+        return mView;
+    }
+
+    private void setSaveButton() {
         Button btnSave = (Button) mView.findViewById(R.id.button_newproduct_save);
         btnSave.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
 
-                //mProduct.setName(mEditTextName.getText().toString());
-                //saveFields();
-
                 createProduct();
                 //saveToDB();
 
-                if(mProduct.hasName()) {
+                if (mProduct.hasName()) {
                     savePictures();
                     saveFields();
                     dbInsertFields();
                     getFragmentManager().popBackStack();
-                }
-                else
+                } else
                     Toast.makeText(mContext,
                             "Product must have a name to save", Toast.LENGTH_LONG).show();
             }
         });
+    }
 
+    private void setPictureButton() {
         (mView.findViewById(R.id.button_takepicture)).setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -90,8 +94,6 @@ public class ProductNewFragment extends Fragment {
                             "Product must have a name to take a photo", Toast.LENGTH_LONG).show();
             }
         });
-
-        return mView;
     }
     private void createProduct() {
 
@@ -150,10 +152,11 @@ public class ProductNewFragment extends Fragment {
 
         // TODO: check for mProductName changed,
         // TODO: adjust names of pictures in list as needed before save
-
-        mProduct.setName(mEditTextName.getText().toString());
+        createProduct();
 
         for(Photo picture : mPhotos) {
+            picture.dbInsertPictures(mContext);
+/*
             if(picture.getName() != mProduct.getName()) {
                 // Rename picture file
                 Toast.makeText(mContext, "names not equal", Toast.LENGTH_LONG).show();
@@ -172,9 +175,9 @@ public class ProductNewFragment extends Fragment {
 
                 picture.setName(mProduct.getName());
                 picture.dbInsertPictures(mContext);
+
             } else {
-                picture.dbInsertPictures(mContext);
-              }
+              }*/
         }
     }
 

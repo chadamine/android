@@ -39,10 +39,10 @@ public class DatabaseContentProvider extends ContentProvider {
                 queryBuilder.setTables(DatabaseContract.Products.TABLE_NAME);
                 break;
 
-            case DatabaseContract.PRODUCT_PHOTO_ID:
+            case DatabaseContract.PHOTO_ID:
                 queryBuilder.appendWhere(DatabaseContract.Photos.KEY_ID + "=" + uri.getLastPathSegment());
 
-            case DatabaseContract.PRODUCT_PHOTOS:
+            case DatabaseContract.PHOTOS:
                 queryBuilder.setTables(DatabaseContract.Photos.TABLE_NAME);
                 break;
 
@@ -98,7 +98,7 @@ public class DatabaseContentProvider extends ContentProvider {
                 tableName = DatabaseContract.Plants.TABLE_NAME;
                 break;
 
-            case DatabaseContract.PRODUCT_PHOTOS:
+            case DatabaseContract.PHOTOS:
                 id = database.insert(DatabaseContract.Photos.TABLE_NAME, null, values);
                 tableName = DatabaseContract.Photos.TABLE_NAME;
                 break;
@@ -143,6 +143,7 @@ public class DatabaseContentProvider extends ContentProvider {
                 rowsDeleted = database.delete(DatabaseContract.Journals.TABLE_NAME,
                         selection, selectionArgs);
                 break;
+
             case DatabaseContract.JOURNAL_ID:
                 id = uri.getLastPathSegment();
 
@@ -155,6 +156,7 @@ public class DatabaseContentProvider extends ContentProvider {
                     rowsDeleted = database.delete(DatabaseContract.Journals.TABLE_NAME,
                             DatabaseContract.Journals.KEY_ID + "=" + id + " and " + selection, selectionArgs);
                 }
+                break;
 
             case DatabaseContract.PLANTS:
                 rowsDeleted = database.delete(DatabaseContract.Plants.TABLE_NAME,
