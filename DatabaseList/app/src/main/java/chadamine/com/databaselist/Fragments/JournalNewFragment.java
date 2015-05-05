@@ -1,6 +1,7 @@
 package chadamine.com.databaselist.Fragments;
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -11,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import chadamine.com.databaselist.Database.DatabaseContract;
+import chadamine.com.databaselist.Objects.Journal;
 import chadamine.com.databaselist.R;
 
 /**
@@ -18,28 +20,48 @@ import chadamine.com.databaselist.R;
  */
 public class JournalNewFragment extends Fragment {
 
+    private View mView;
+    private ContentValues mValues;
+    private Journal mJournal;
+    private Context mContext;
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        final View thisView = inflater.inflate(R.layout.fragment_journal_new, container, false);
-        final ContentValues values = new ContentValues();
+        mView = inflater.inflate(R.layout.fragment_journal_new, container, false);
+        mValues = new ContentValues();
+        mContext = getActivity();
 
-        Button btnSave = (Button) thisView.findViewById(R.id.button_newjournal_save);
+        setUpButton();
+
+        return mView;
+    }
+
+    private void setUpButton() {
+
+        Button btnSave = (Button) mView.findViewById(R.id.button_newjournal_save);
         btnSave.setOnClickListener(new View.OnClickListener() {
-            /**
-             * Called when a view has been clicked.
-             *
-             * @param v The view that was clicked.
-             */
+
             @Override
             public void onClick(View v) {
-                values.put(DatabaseContract.Products.KEY_NAME, ((EditText) thisView.findViewById(R.id.edittext_newjournal_name)).getText().toString());
 
-                getActivity().getContentResolver().insert(DatabaseContract.Journals.CONTENT_URI, values);
+                createJournal();
+
+                mValues.put(DatabaseContract.Products.KEY_NAME,
+                        ((EditText) mView.findViewById(R.id.edittext_newjournal_name))
+                                .getText().toString());
+
+                getActivity().getContentResolver().insert(mJournal.getUri(), mJournal.getValues());
                 getFragmentManager().popBackStack();
             }
         });
+    }
 
-        return thisView;
+    private void createJournal() {
+        mJournal = new Journal(mContext);
+        mJournal.setName(
+                ((EditText) mView.findViewById(R.id.edittext_newjournal_name))
+                        .getText().toString());
     }
 }

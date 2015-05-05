@@ -1,5 +1,6 @@
 package chadamine.com.databaselist.Fragments;
 
+import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,7 +10,10 @@ import android.view.*;
 import android.widget.*;
 
 import chadamine.com.databaselist.Database.DatabaseContract;
+import chadamine.com.databaselist.Database.DatabaseContract.Journals;
+
 import chadamine.com.databaselist.Adapters.ListCursorAdapter;
+
 import chadamine.com.databaselist.Objects.Journal;
 import chadamine.com.databaselist.R;
 
@@ -21,21 +25,19 @@ public class JournalsFragment extends ListFragment implements LoaderManager.Load
     private ListCursorAdapter mListCursorAdapter;
     private ListCursorAdapter mSpinnerCursorAdapter;
     private Journal mJournal;
+    private Context mContext; 
+    
+    private static final int LIST_LOADER_ID = 0;
 
     public JournalsFragment() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View thisView = inflater.inflate(R.layout.fragment_journals, container, false);
+        mContext = getActivity();
 
-        getLoaderManager().initLoader(0, null, this);
-
-        mListCursorAdapter
-                = new ListCursorAdapter(getActivity(),
-                null, 0, mJournal);
-        //DatabaseContract.Journals.CONTENT_URI, R.layout.list_item_journal);
-        setListAdapter(mListCursorAdapter);
-
+        mJournal = new Journal(mContext);
+        prepareList();
 
         Button btnAdd = (Button) thisView.findViewById(R.id.button_addjournal);
         btnAdd.setOnClickListener(new View.OnClickListener() {
@@ -51,6 +53,16 @@ public class JournalsFragment extends ListFragment implements LoaderManager.Load
         });
 
         return thisView;
+    }
+
+    private void prepareList() {
+
+        getLoaderManager().initLoader(LIST_LOADER_ID, null, this);
+
+        mListCursorAdapter
+                = new ListCursorAdapter(mContext, null, 0, mJournal);
+
+        setListAdapter(mListCursorAdapter);
     }
 
     @Override
@@ -119,15 +131,18 @@ public class JournalsFragment extends ListFragment implements LoaderManager.Load
     public Loader onCreateLoader(int id, Bundle args) {
 
         String[] projection = {
-                DatabaseContract.Journals.KEY_ID,
+                Journals.KEY_ID,
                 //   products.KEY_MANUFACTURER,
                 //   products.KEY_TYPE,
                 //   products.KEY_PRODUCTLINE,
-                DatabaseContract.Journals.KEY_NAME
+                Journals.KEY_NAME
         };
 
-        CursorLoader cursorLoader = new CursorLoader(getActivity(), DatabaseContract.Journals.CONTENT_URI, projection, null, null, null);
-        return cursorLoader;
+        CursorLoader cursorLoader =
+                new CursorLoader(mContext,
+                        Journals.CONTENT_URI, Journals.KEY_ID_ARRAY, null, null, null);
+
+            return cursorLoader;
     }
 
     @Override

@@ -42,6 +42,9 @@ public class ListCursorAdapter extends CursorAdapter {
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
         mDatabaseObject.setListItemContent(view, cursor);
+
+        // TODO: MAKE THIS WORK
+        //mDatabaseObject.setContent();
         mView = view;
     }
 

@@ -52,7 +52,6 @@ public class PlantNewFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         mView = inflater.inflate(R.layout.fragment_plant_new_info, container, false);
 
         setUpButton();

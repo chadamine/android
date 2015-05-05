@@ -122,6 +122,11 @@ public class Plant extends Organism implements DatabaseAdapter {
             return;
     }
 
+    @Override
+    public void setContent(Cursor cursor) {
+
+    }
+
     // TODO: REMOVE
     @Override
     public void insertValues(Context context, Uri uri) {

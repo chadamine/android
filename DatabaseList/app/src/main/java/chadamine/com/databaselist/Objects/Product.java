@@ -123,6 +123,11 @@ public class Product implements DatabaseAdapter {
             ((TextView) view.findViewById(R.id.textview_productlist_name)).setText(name);
     }
 
+    @Override
+    public void setContent(Cursor cursor) {
+
+    }
+
     public void setListItemContent(View view) {
 
     }
