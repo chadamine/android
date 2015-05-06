@@ -1,229 +1,232 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_height="match_parent"
-    android:layout_width="match_parent">
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_height="match_parent"
+	android:layout_width="match_parent">
 
-    <FrameLayout
-        android:layout_height="80dp"
-        android:layout_width="80dp"
-        android:layout_margin="20dp"
-        android:id="@+id/framelayout_plant_view_info_photo"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="10dp"
-        android:background="#ffffff" />
+	<FrameLayout
+		android:layout_height="80dp"
+		android:layout_width="80dp"
+		android:layout_margin="20dp"
+		android:id="@+id/framelayout_plant_view_info_photo"
+		android:layout_marginRight="10dp"
+		android:layout_marginBottom="10dp"
+		android:background="#ffffff"/>
 
-    <TextView
-        android:layout_height="wrap_content"
-        android:text="Name:"
-        android:layout_width="wrap_content"
-        android:layout_toRightOf="@id/framelayout_plant_view_info_photo"
-        android:id="@+id/textview_plant_view_info_name_title"
-        android:layout_margin="10dp"
-        android:layout_marginRight="0dp"
-        android:padding="3dp"/>
+	<TextView
+		android:layout_height="wrap_content"
+		android:text="Name:"
+		android:layout_width="wrap_content"
+		android:layout_toRightOf="@id/framelayout_plant_view_info_photo"
+		android:id="@+id/textview_plant_view_info_name_title"
+		android:layout_margin="10dp"
+		android:layout_marginRight="0dp"
+		android:padding="3dp"/>
 
-    <TextView
-        android:layout_height="wrap_content"
-        android:text="Species:"
-        android:layout_width="wrap_content"
-        android:layout_toRightOf="@id/framelayout_plant_view_info_photo"
-        android:layout_below="@id/textview_plant_view_info_name_title"
-        android:id="@+id/textview_plant_view_info_species_title"
-        android:layout_margin="10dp"
-        android:layout_marginTop="0dp"
-        android:layout_marginRight="0dp"
-        android:padding="3dp"/>
+	<TextView
+		android:layout_height="wrap_content"
+		android:text="Species:"
+		android:layout_width="wrap_content"
+		android:layout_toRightOf="@id/framelayout_plant_view_info_photo"
+		android:layout_below="@id/textview_plant_view_info_name_title"
+		android:id="@+id/textview_plant_view_info_species_title"
+		android:layout_margin="10dp"
+		android:layout_marginTop="0dp"
+		android:layout_marginRight="0dp"
+		android:padding="3dp"/>
 
-    <TextView
-        android:layout_height="wrap_content"
-        android:text="Cultivar:"
-        android:layout_width="wrap_content"
-        android:layout_below="@id/textview_plant_view_info_species_title"
-        android:layout_alignLeft="@id/textview_plant_view_info_species_title"
-        android:id="@+id/textview_plant_view_info_cultivar_title"
-        android:padding="3dp"/>
+	<TextView
+		android:layout_height="wrap_content"
+		android:text="Cultivar:"
+		android:layout_width="wrap_content"
+		android:layout_below="@id/textview_plant_view_info_species_title"
+		android:layout_alignLeft="@id/textview_plant_view_info_species_title"
+		android:id="@+id/textview_plant_view_info_cultivar_title"
+		android:padding="3dp"/>
 
-    <TextView
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:layout_toRightOf="@id/textview_plant_view_info_name_title"
-        android:id="@+id/textview_plant_view_info_name_value"
-        android:padding="3dp"
-        android:layout_marginRight="20dp"
-        android:layout_alignBottom="@+id/textview_plant_view_info_name_title" />
+	<TextView
+		android:layout_height="wrap_content"
+		android:layout_width="match_parent"
+		android:layout_toRightOf="@id/textview_plant_view_info_name_title"
+		android:id="@+id/textview_plant_view_info_name_value"
+		android:padding="3dp"
+		android:layout_marginRight="20dp"
+		android:layout_alignBottom="@+id/textview_plant_view_info_name_title"/>
 
-    <TextView
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:layout_toRightOf="@+id/textview_plant_view_info_species_title"
-        android:id="@+id/textview_plant_view_info_species_value"
-        android:padding="3dp"
-        android:layout_alignBottom="@+id/textview_plant_view_info_species_title"
-        android:layout_marginRight="20dp" />
+	<TextView
+		android:layout_height="wrap_content"
+		android:layout_width="match_parent"
+		android:layout_toRightOf="@+id/textview_plant_view_info_species_title"
+		android:id="@+id/textview_plant_view_info_species_value"
+		android:padding="3dp"
+		android:layout_alignBottom="@+id/textview_plant_view_info_species_title"
+		android:layout_marginRight="20dp"/>
 
-    <TextView
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:layout_toRightOf="@id/textview_plant_view_info_cultivar_title"
-        android:padding="3dp"
-        android:id="@+id/textview_plant_view_info_cultivar_value"
-        android:layout_alignBottom="@+id/textview_plant_view_info_cultivar_title"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="20dp" />
+	<TextView
+		android:layout_height="wrap_content"
+		android:layout_width="match_parent"
+		android:layout_toRightOf="@id/textview_plant_view_info_cultivar_title"
+		android:padding="3dp"
+		android:id="@+id/textview_plant_view_info_cultivar_value"
+		android:layout_alignBottom="@+id/textview_plant_view_info_cultivar_title"
+		android:layout_marginLeft="10dp"
+		android:layout_marginRight="20dp"/>
 
-    <TextView
-        android:layout_height="wrap_content"
-        android:text="Stage:"
-        android:layout_width="wrap_content"
-        android:layout_below="@+id/textview_plant_view_info_cultivar_title"
-        android:id="@+id/textview_plant_view_info_stage_title"
-        android:layout_marginBottom="0dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginLeft="10dp" />
+	<TextView
+		android:layout_height="wrap_content"
+		android:text="Stage:"
+		android:layout_width="wrap_content"
+		android:layout_below="@+id/textview_plant_view_info_cultivar_title"
+		android:id="@+id/textview_plant_view_info_stage_title"
+		android:layout_marginBottom="0dp"
+		android:layout_marginTop="30dp"
+		android:layout_marginLeft="10dp"/>
 
-    <TextView
-        android:layout_height="wrap_content"
-        android:layout_width="100dp"
-        android:layout_toRightOf="@id/textview_plant_view_info_stage_title"
-        android:layout_alignBottom="@id/textview_plant_view_info_stage_title"
-        android:id="@+id/textview_plant_view_info_stage_value"
-        android:padding="3dp" />
+	<TextView
+		android:layout_height="wrap_content"
+		android:layout_width="100dp"
+		android:layout_toRightOf="@id/textview_plant_view_info_stage_title"
+		android:layout_alignBottom="@id/textview_plant_view_info_stage_title"
+		android:id="@+id/textview_plant_view_info_stage_value"
+		android:padding="3dp"/>
 
-    <TextView
-        android:layout_height="wrap_content"
-        android:text="Age:"
-        android:layout_width="wrap_content"
-        android:layout_below="@id/textview_plant_view_info_stage_title"
-        android:id="@+id/textview_plant_view_info_age_title"
-        android:layout_margin="10dp"
-        android:layout_marginRight="0dp"
-        android:layout_marginBottom="0dp"/>
+	<TextView
+		android:layout_height="wrap_content"
+		android:text="Age:"
+		android:layout_width="wrap_content"
+		android:layout_below="@id/textview_plant_view_info_stage_title"
+		android:id="@+id/textview_plant_view_info_age_title"
+		android:layout_margin="10dp"
+		android:layout_marginRight="0dp"
+		android:layout_marginBottom="0dp"/>
 
-    <TextView
-        android:layout_height="wrap_content"
-        android:layout_width="100dp"
-        android:layout_toRightOf="@id/textview_plant_view_info_age_title"
-        android:id="@+id/textview_plant_view_info_age_value"
-        android:layout_alignBottom="@+id/textview_plant_view_info_age_title"
-        android:padding="3dp" />
+	<TextView
+		android:layout_height="wrap_content"
+		android:layout_width="100dp"
+		android:layout_toRightOf="@id/textview_plant_view_info_age_title"
+		android:id="@+id/textview_plant_view_info_age_value"
+		android:layout_alignBottom="@+id/textview_plant_view_info_age_title"
+		android:padding="3dp"/>
 
-    <TextView
-        android:layout_height="wrap_content"
-        android:text="Height:"
-        android:layout_width="wrap_content"
-        android:layout_below="@id/textview_plant_view_info_age_title"
-        android:layout_margin="10dp"
-        android:id="@+id/textview_plant_view_info_height_title"
-        android:layout_marginRight="0dp"
-        android:layout_marginBottom="0dp"/>
+	<TextView
+		android:layout_height="wrap_content"
+		android:text="Height:"
+		android:layout_width="wrap_content"
+		android:layout_below="@id/textview_plant_view_info_age_title"
+		android:layout_margin="10dp"
+		android:id="@+id/textview_plant_view_info_height_title"
+		android:layout_marginRight="0dp"
+		android:layout_marginBottom="0dp"/>
 
-    <TextView
-        android:layout_height="wrap_content"
-        android:layout_width="50dp"
-        android:layout_toRightOf="@id/textview_plant_view_info_height_title"
-        android:id="@+id/textview_plant_view_info_height_value_1"
-        android:gravity="right"
-        android:padding="3dp"
-        android:layout_alignBottom="@+id/textview_plant_view_info_height_title"
-        android:layout_marginLeft="10dp" />
+	<TextView
+		android:layout_height="wrap_content"
+		android:layout_width="50dp"
+		android:layout_toRightOf="@id/textview_plant_view_info_height_title"
+		android:id="@+id/textview_plant_view_info_height_value_1"
+		android:gravity="right"
+		android:padding="3dp"
+		android:layout_alignBottom="@+id/textview_plant_view_info_height_title"
+		android:layout_marginLeft="10dp"
+		android:layout_below="@id/textview_plant_view_info_age_value"/>
 
-    <Spinner
-        android:layout_height="20dp"
-        android:layout_width="50dp"
-        android:layout_toRightOf="@id/textview_plant_view_info_height_value_1"
-        android:layout_below="@id/textview_plant_view_info_age_title"
-        android:layout_margin="10dp"
-        android:id="@+id/spinner_plant_view_info_height_units"/>
+	<Spinner
+		android:layout_height="20dp"
+		android:layout_width="50dp"
+		android:layout_toRightOf="@id/textview_plant_view_info_height_value_1"
+		android:layout_below="@id/textview_plant_view_info_age_title"
+		android:layout_margin="10dp"
+		android:id="@+id/spinner_plant_view_info_height_units"/>
 
-    <TextView
-        android:layout_height="wrap_content"
-        android:text="Substrate:"
-        android:layout_width="wrap_content"
-        android:layout_below="@id/textview_plant_view_info_height_title"
-        android:layout_margin="10dp"
-        android:id="@+id/textview_plant_view_info_substrate_title"
-        android:layout_marginBottom="0dp"
-        android:layout_marginRight="0dp"/>
+	<TextView
+		android:layout_height="wrap_content"
+		android:text="Substrate:"
+		android:layout_width="wrap_content"
+		android:layout_below="@id/textview_plant_view_info_height_title"
+		android:layout_margin="10dp"
+		android:id="@+id/textview_plant_view_info_substrate_title"
+		android:layout_marginBottom="0dp"
+		android:layout_marginRight="0dp"/>
 
-    <TextView
-        android:layout_height="wrap_content"
-        android:text="Pot Size:"
-        android:layout_width="wrap_content"
-        android:layout_below="@id/textview_plant_view_info_substrate_title"
-        android:layout_margin="10dp"
-        android:id="@+id/textview_plant_view_info_potsize_title"
-        android:layout_marginRight="0dp"
-        android:layout_marginBottom="10dp"/>
+	<TextView
+		android:layout_height="wrap_content"
+		android:text="Pot Size:"
+		android:layout_width="wrap_content"
+		android:layout_below="@id/textview_plant_view_info_substrate_title"
+		android:layout_margin="10dp"
+		android:id="@+id/textview_plant_view_info_potsize_title"
+		android:layout_marginRight="0dp"
+		android:layout_marginBottom="10dp"/>
 
-    <TextView
-        android:layout_height="wrap_content"
-        android:layout_width="100dp"
-        android:layout_toRightOf="@id/textview_plant_view_info_substrate_title"
-        android:id="@+id/textview_plant_view_info_substrate_value"
-        android:padding="3dp"
-        android:layout_marginLeft="10dp"
-        android:layout_alignBottom="@+id/textview_plant_view_info_substrate_title" />
+	<TextView
+		android:layout_height="wrap_content"
+		android:layout_width="100dp"
+		android:layout_toRightOf="@id/textview_plant_view_info_substrate_title"
+		android:id="@+id/textview_plant_view_info_substrate_value"
+		android:padding="3dp"
+		android:layout_marginLeft="10dp"
+		android:layout_alignBottom="@+id/textview_plant_view_info_substrate_title"/>
 
-    <TextView
-        android:layout_height="wrap_content"
-        android:layout_width="100dp"
-        android:layout_toRightOf="@id/textview_plant_view_info_potsize_title"
-        android:id="@+id/textview_plant_view_info_potsize_value"
-        android:padding="3dp"
-        android:layout_marginLeft="10dp"
-        android:layout_alignBottom="@+id/textview_plant_view_info_potsize_title" />
+	<TextView
+		android:layout_height="wrap_content"
+		android:layout_width="100dp"
+		android:layout_toRightOf="@id/textview_plant_view_info_potsize_title"
+		android:id="@+id/textview_plant_view_info_potsize_value"
+		android:padding="3dp"
+		android:layout_marginLeft="10dp"
+		android:layout_alignBottom="@+id/textview_plant_view_info_potsize_title"/>
 
-    <TextView
-        android:layout_height="wrap_content"
-        android:text="Irrigation Schedule"
-        android:layout_width="wrap_content"
-        android:layout_below="@id/textview_plant_view_info_potsize_title"
-        android:layout_margin="10dp"
-        android:id="@+id/textview_plant_view_info_irrigationschedule_title"
-        android:layout_marginBottom="0dp"/>
+	<TextView
+		android:layout_height="wrap_content"
+		android:text="Irrigation Schedule"
+		android:layout_width="wrap_content"
+		android:layout_below="@id/textview_plant_view_info_potsize_title"
+		android:layout_margin="10dp"
+		android:id="@+id/textview_plant_view_info_irrigationschedule_title"
+		android:layout_marginBottom="0dp"/>
 
-    <FrameLayout
-        android:layout_height="80dp"
-        android:layout_width="match_parent"
-        android:layout_below="@id/textview_plant_view_info_irrigationschedule_title"
-        android:layout_margin="10dp"
-        android:id="@+id/framelayout_plant_view_info_irrigationschedule"
-        android:layout_marginTop="3dp"
-        android:layout_marginBottom="0dp"/>
+	<FrameLayout
+		android:layout_height="80dp"
+		android:layout_width="match_parent"
+		android:layout_below="@id/textview_plant_view_info_irrigationschedule_title"
+		android:layout_margin="10dp"
+		android:id="@+id/framelayout_plant_view_info_irrigationschedule"
+		android:layout_marginTop="3dp"
+		android:layout_marginBottom="0dp"/>
 
-    <TextView
-        android:layout_height="wrap_content"
-        android:text="Progress"
-        android:layout_width="wrap_content"
-        android:layout_below="@id/framelayout_plant_view_info_irrigationschedule"
-        android:layout_margin="10dp"
-        android:id="@+id/textview_plant_view_info_progress_title"
-        android:layout_marginBottom="0dp"/>
+	<TextView
+		android:layout_height="wrap_content"
+		android:text="Progress"
+		android:layout_width="wrap_content"
+		android:layout_below="@id/framelayout_plant_view_info_irrigationschedule"
+		android:layout_margin="10dp"
+		android:id="@+id/textview_plant_view_info_progress_title"
+		android:layout_marginBottom="0dp"/>
 
-    <FrameLayout
-        android:layout_height="80dp"
-        android:layout_width="match_parent"
-        android:layout_below="@id/textview_plant_view_info_progress_title"
-        android:layout_margin="10dp"
-        android:layout_marginTop="3dp"
-        android:id="@+id/framelayout_plant_view_info_progress"/>
+	<FrameLayout
+		android:layout_height="80dp"
+		android:layout_width="match_parent"
+		android:layout_below="@id/textview_plant_view_info_progress_title"
+		android:layout_margin="10dp"
+		android:layout_marginTop="3dp"
+		android:id="@+id/framelayout_plant_view_info_progress"/>
 
-    <TextView
-        android:layout_height="wrap_content"
-        android:layout_width="50dp"
-        android:layout_toRightOf="@id/spinner_plant_view_info_height_units"
-        android:id="@+id/fragmentviewplantinfoTextView17"
-        android:padding="3dp"
-        android:layout_alignBottom="@+id/textview_plant_view_info_height_title" />
+	<TextView
+		android:layout_height="wrap_content"
+		android:layout_width="50dp"
+		android:layout_toRightOf="@id/spinner_plant_view_info_height_units"
+		android:id="@+id/fragmentviewplantinfoTextView17"
+		android:padding="3dp"
+		android:layout_alignBottom="@+id/textview_plant_view_info_height_title"
+		android:layout_below="@id/textview_plant_view_info_age_value"/>
 
-    <TextView
-        android:layout_height="wrap_content"
-        android:text="in."
-        android:layout_width="wrap_content"
-        android:layout_toRightOf="@id/fragmentviewplantinfoTextView17"
-        android:id="@+id/textview_plant_view_info_height_value_2"
-        android:layout_alignBottom="@+id/textview_plant_view_info_height_title"
-        android:layout_marginLeft="10dp" />
+	<TextView
+		android:layout_height="wrap_content"
+		android:text="in."
+		android:layout_width="wrap_content"
+		android:layout_toRightOf="@id/fragmentviewplantinfoTextView17"
+		android:id="@+id/textview_plant_view_info_height_value_2"
+		android:layout_alignBottom="@+id/textview_plant_view_info_height_title"
+		android:layout_marginLeft="10dp"/>
 
 </RelativeLayout>
+
