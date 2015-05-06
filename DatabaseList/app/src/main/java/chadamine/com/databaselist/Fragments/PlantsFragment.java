@@ -1,5 +1,6 @@
 package chadamine.com.databaselist.Fragments;
 
+import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -32,6 +33,7 @@ public class PlantsFragment extends ListFragment
     //private SimpleCursorAdapter mListCursorAdapter;
     private static final int LIST_LOADER_ID = 0;
     private Plant mPlant;
+    private Context mContext;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -39,6 +41,7 @@ public class PlantsFragment extends ListFragment
         View view = inflater.inflate(R.layout.fragment_plants, container, false);
 
         mPlant = new Plant(getActivity());
+        mContext = getActivity();
 
         prepareList();
 
@@ -50,6 +53,15 @@ public class PlantsFragment extends ListFragment
         super.onViewCreated(view, savedInstanceState);
     }
 
+    @Override
+    public void onListItemClick(ListView l, View v, int position, long id) {
+        super.onListItemClick(l, v, position, id);
+
+        getFragmentManager().beginTransaction()
+                .replace(R.id.frame_plant_activity, PlantViewFragment.newInstance(position))
+                .addToBackStack("plant_view").commit();
+    }
+
     private void prepareList() {
 
         getLoaderManager().initLoader(LIST_LOADER_ID, null, this);
@@ -58,6 +70,7 @@ public class PlantsFragment extends ListFragment
                 = new ListCursorAdapter(getActivity(), null, 0, mPlant);
 
         setListAdapter(mListCursorAdapter);
+
     }
 
     @Override

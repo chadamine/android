@@ -6,6 +6,9 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.List;
 
 import chadamine.com.databaselist.Adapters.DatabaseAdapter;
 import chadamine.com.databaselist.Database.DatabaseContract;
@@ -124,6 +127,23 @@ public class Plant extends Organism implements DatabaseAdapter {
 
     @Override
     public void setContent(Cursor cursor) {
+    }
+
+    public void setContent(List<View> views, int position) {
+        mCursor.moveToPosition(position);
+
+        int s = 0;
+        while(s < views.size() - 1){
+            //for(int i = 0; i < mCursor.getCount(); ++i) {
+                for (int j = 0; j < mCursor.getColumnCount() - 2; j++) {
+                    //if (views.get(i).getClass().toString().equals(TextView.class.toString())) {
+                    ((TextView) views.get(j)).setText(mCursor.getString(mCursor.getColumnIndexOrThrow(KEY_ARRAY[j])));
+                    //}
+
+                }
+            s++;
+
+        }
 
     }
 
