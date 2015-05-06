@@ -27,24 +27,28 @@ public class DatabaseContract {
             Photos.TABLE_CREATE,
             Journals.TABLE_CREATE,
             Plants.TABLE_CREATE,
-            Substrates.TABLE_CREATE
+            Substrates.TABLE_CREATE,
+            Nutrients.TABLE_CREATE
             // TODO: add all tables
     };
 
-    public static final int PRODUCTS = 1;
-    public static final int PRODUCT_ID = 2;
+    public static final int JOURNALS = 1;
+    public static final int JOURNAL_ID = 2;
 
-    public static final int PHOTOS = 3;
-    public static final int PHOTO_ID = 4;
+    public static final int NUTRIENTS = 3;
+    public static final int NUTRIENT_ID = 4;
 
-    public static final int JOURNALS = 5;
-    public static final int JOURNAL_ID = 6;
+    public static final int PHOTOS = 5;
+    public static final int PHOTO_ID = 6;
 
     public static final int PLANTS = 7;
     public static final int PLANT_ID = 8;
 
-    public static final int SUBSTRATES = 9;
-    public static final int SUBSTRATE_ID = 10;
+    public static final int PRODUCTS = 9;
+    public static final int PRODUCT_ID = 10;
+
+    public static final int SUBSTRATES = 11;
+    public static final int SUBSTRATE_ID = 12;
 
     // TODO: ADD REMAINING TABLES
 
@@ -65,6 +69,9 @@ public class DatabaseContract {
 
         URI_MATCHER.addURI(AUTHORITY, Substrates.TABLE_NAME, SUBSTRATES);
         URI_MATCHER.addURI(AUTHORITY, Substrates.TABLE_NAME + "/#", SUBSTRATE_ID);
+
+        URI_MATCHER.addURI(AUTHORITY, Nutrients.TABLE_NAME, NUTRIENTS);
+        URI_MATCHER.addURI(AUTHORITY, Nutrients.TABLE_NAME + "/#", NUTRIENT_ID);
         // TODO: ADD REMAINING TABLES TO URI_MATCHER
 
     }
@@ -79,6 +86,7 @@ public class DatabaseContract {
     }
 
     public static final class Journals implements BaseColumns {
+
         public static final String TABLE_NAME = "journals";
         public static final String KEY_ID = "_id";
         public static final String KEY_NAME = "name";
@@ -101,6 +109,23 @@ public class DatabaseContract {
     }
 
     public static final class Nutrients implements BaseColumns {
+
+        public static final String TABLE_NAME = "nutrients";
+        public static final String KEY_ID = "_id";
+        public static final String KEY_NAME = "name";
+
+        public static final String DIR_PHOTOS = "Nutrients/";
+
+
+        public static final String[] KEY_ID_ARRAY = { KEY_ID, KEY_NAME };
+
+        public static final Uri CONTENT_URI = Uri.withAppendedPath(DatabaseContract.CONTENT_URI, TABLE_NAME);
+
+        public static final String TABLE_CREATE =
+                CT + TABLE_NAME + OB
+                        + KEY_ID + IPKA
+                        + KEY_NAME + TXF
+                        + CLOSE;
     }
 
     public static final class NutrientRecipes implements BaseColumns {

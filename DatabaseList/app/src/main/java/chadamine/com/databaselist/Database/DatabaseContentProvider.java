@@ -35,15 +35,11 @@ public class DatabaseContentProvider extends ContentProvider {
 
         switch(DatabaseContract.URI_MATCHER.match(uri)) {
 
-            case DatabaseContract.PRODUCT_ID:
-                queryBuilder.appendWhere(DatabaseContract.Products.KEY_ID + "=" + uri.getLastPathSegment());
-                //keyId = DatabaseContract.Products.KEY_ID;
-                //isItem = true;
+            case DatabaseContract.JOURNAL_ID:
+                queryBuilder.appendWhere(DatabaseContract.Journals.KEY_ID + "=" + uri.getLastPathSegment());
 
-            case DatabaseContract.PRODUCTS:
-                queryBuilder.setTables(DatabaseContract.Products.TABLE_NAME);
-                //tableName = DatabaseContract.Products.TABLE_NAME;
-
+            case DatabaseContract.JOURNALS:
+                queryBuilder.setTables(DatabaseContract.Journals.TABLE_NAME);
                 break;
 
             case DatabaseContract.PHOTO_ID:
@@ -60,11 +56,15 @@ public class DatabaseContentProvider extends ContentProvider {
                 queryBuilder.setTables(DatabaseContract.Plants.TABLE_NAME);
                 break;
 
-            case DatabaseContract.JOURNAL_ID:
-                queryBuilder.appendWhere(DatabaseContract.Journals.KEY_ID + "=" + uri.getLastPathSegment());
+            case DatabaseContract.PRODUCT_ID:
+                queryBuilder.appendWhere(DatabaseContract.Products.KEY_ID + "=" + uri.getLastPathSegment());
+                //keyId = DatabaseContract.Products.KEY_ID;
+                //isItem = true;
 
-            case DatabaseContract.JOURNALS:
-                queryBuilder.setTables(DatabaseContract.Journals.TABLE_NAME);
+            case DatabaseContract.PRODUCTS:
+                queryBuilder.setTables(DatabaseContract.Products.TABLE_NAME);
+                //tableName = DatabaseContract.Products.TABLE_NAME;
+
                 break;
 
             case DatabaseContract.SUBSTRATE_ID:
@@ -102,14 +102,19 @@ public class DatabaseContentProvider extends ContentProvider {
 
         switch(DatabaseContract.URI_MATCHER.match(uri)) {
 
-            case DatabaseContract.PRODUCTS:
-                id = mDatabase.insert(DatabaseContract.Products.TABLE_NAME, null, values);
-                tableName = DatabaseContract.Products.TABLE_NAME;
-                break;
-
             case DatabaseContract.JOURNALS:
                 id = mDatabase.insert(DatabaseContract.Journals.TABLE_NAME, null, values);
                 tableName = DatabaseContract.Journals.TABLE_NAME;
+                break;
+
+            case DatabaseContract.NUTRIENTS:
+                id = mDatabase.insert(DatabaseContract.Nutrients.TABLE_NAME, null, values);
+                tableName = DatabaseContract.Nutrients.TABLE_NAME;
+                break;
+
+            case DatabaseContract.PHOTOS:
+                id = mDatabase.insert(DatabaseContract.Photos.TABLE_NAME, null, values);
+                tableName = DatabaseContract.Photos.TABLE_NAME;
                 break;
 
             case DatabaseContract.PLANTS:
@@ -117,9 +122,9 @@ public class DatabaseContentProvider extends ContentProvider {
                 tableName = DatabaseContract.Plants.TABLE_NAME;
                 break;
 
-            case DatabaseContract.PHOTOS:
-                id = mDatabase.insert(DatabaseContract.Photos.TABLE_NAME, null, values);
-                tableName = DatabaseContract.Photos.TABLE_NAME;
+            case DatabaseContract.PRODUCTS:
+                id = mDatabase.insert(DatabaseContract.Products.TABLE_NAME, null, values);
+                tableName = DatabaseContract.Products.TABLE_NAME;
                 break;
 
             case DatabaseContract.SUBSTRATES:
@@ -144,24 +149,6 @@ public class DatabaseContentProvider extends ContentProvider {
 
         switch(DatabaseContract.URI_MATCHER.match(uri)) {
 
-            case DatabaseContract.PRODUCTS:
-                rowsDeleted = mDatabase.delete(DatabaseContract.Products.TABLE_NAME,
-                        selection, selectionArgs);
-                break;
-            case DatabaseContract.PRODUCT_ID:
-                id = uri.getLastPathSegment();
-
-                if (TextUtils.isEmpty(selection)) {
-                    rowsDeleted = mDatabase.
-                            delete(DatabaseContract.Products.TABLE_NAME,
-                                    DatabaseContract.Products.KEY_ID
-                                            + "=" + id, null);
-                } else {
-                    rowsDeleted = mDatabase.delete(DatabaseContract.Products.TABLE_NAME,
-                            DatabaseContract.Products.KEY_ID + "=" + id + " and " + selection, selectionArgs);
-                }
-
-                break;
 
             case DatabaseContract.JOURNALS:
                 rowsDeleted = mDatabase.delete(DatabaseContract.Journals.TABLE_NAME,
@@ -182,6 +169,27 @@ public class DatabaseContentProvider extends ContentProvider {
                 }
                 break;
 
+            case DatabaseContract.NUTRIENTS:
+                rowsDeleted = mDatabase.delete(DatabaseContract.Nutrients.TABLE_NAME,
+                        selection, selectionArgs);
+                break;
+
+            case DatabaseContract.NUTRIENT_ID:
+                id = uri.getLastPathSegment();
+
+                if (TextUtils.isEmpty(selection)) {
+                    rowsDeleted = mDatabase.
+                            delete(DatabaseContract.Nutrients.TABLE_NAME,
+                                    DatabaseContract.Nutrients.KEY_ID
+                                            + "=" + id, null);
+                } else {
+                    rowsDeleted = mDatabase.delete(DatabaseContract.Nutrients.TABLE_NAME,
+                            DatabaseContract.Nutrients.KEY_ID + "=" + id + " and " + selection, selectionArgs);
+                }
+                break;
+
+            //TODO: Delete case for photos
+
             case DatabaseContract.PLANTS:
                 rowsDeleted = mDatabase.delete(DatabaseContract.Plants.TABLE_NAME,
                         selection, selectionArgs);
@@ -190,14 +198,32 @@ public class DatabaseContentProvider extends ContentProvider {
                 id = uri.getLastPathSegment();
 
                 if (TextUtils.isEmpty(selection)) {
-                    rowsDeleted = mDatabase.
-                            delete(DatabaseContract.Plants.TABLE_NAME,
-                                    DatabaseContract.Plants.KEY_ID
-                                            + "=" + id, null);
+                    rowsDeleted = mDatabase.delete(DatabaseContract.Plants.TABLE_NAME,
+                            DatabaseContract.Plants.KEY_ID + "=" + id, null);
                 } else {
                     rowsDeleted = mDatabase.delete(DatabaseContract.Plants.TABLE_NAME,
-                            DatabaseContract.Plants.KEY_ID + "=" + id + " and " + selection, selectionArgs);
+                            DatabaseContract.Plants.KEY_ID + "=" + id
+                                    + " and " + selection, selectionArgs);
                 }
+                break;
+
+            case DatabaseContract.PRODUCTS:
+                rowsDeleted = mDatabase.delete(DatabaseContract.Products.TABLE_NAME,
+                        selection, selectionArgs);
+                break;
+            case DatabaseContract.PRODUCT_ID:
+                id = uri.getLastPathSegment();
+
+                if (TextUtils.isEmpty(selection)) {
+                    rowsDeleted = mDatabase.
+                            delete(DatabaseContract.Products.TABLE_NAME,
+                                    DatabaseContract.Products.KEY_ID
+                                            + "=" + id, null);
+                } else {
+                    rowsDeleted = mDatabase.delete(DatabaseContract.Products.TABLE_NAME,
+                            DatabaseContract.Products.KEY_ID + "=" + id + " and " + selection, selectionArgs);
+                }
+
                 break;
 
             case DatabaseContract.SUBSTRATES:
@@ -217,11 +243,12 @@ public class DatabaseContentProvider extends ContentProvider {
                             DatabaseContract.Substrates.KEY_ID + "=" + id + " and " + selection, selectionArgs);
                 }
                 break;
-            //TODO: Delete case for pictures
+
 
             default:
                 throw new IllegalArgumentException("Unknown URI: " + uri);
         }
+
         getContext().getContentResolver().notifyChange(uri, null);
         return rowsDeleted;
     }
