@@ -10,7 +10,9 @@
 		android:layout_margin="10dp"
 		android:id="@+id/framelayout_plant_view_info_photo"
 		android:layout_marginRight="0dp"
-		android:layout_marginBottom="10dp"/>
+		android:layout_marginBottom="10dp"
+		android:background="#000000"
+		/>
 
 	<TextView
 		android:layout_height="wrap_content"
@@ -135,6 +137,7 @@
 		android:layout_marginRight="20dp" />
 
 	<EditText
+		android:id="@+id/edittext_plant_new_info_stage"
 		android:layout_height="wrap_content"
 		android:ems="10"
 		android:layout_width="100dp"
@@ -142,25 +145,28 @@
 		android:layout_marginBottom="0dp"
 		android:layout_marginLeft="10dp"
 		android:layout_alignBaseline="@+id/textview_plant_view_info_stage_title"
-		android:id="@+id/edittext_plant_new_info_stage" />
+		/>
 
 	<EditText
+		android:id="@+id/edittext_plant_new_info_age"
 		android:layout_height="wrap_content"
 		android:ems="10"
 		android:layout_width="50dp"
 		android:layout_toRightOf="@id/textview_plant_view_info_age_title"
 		android:layout_margin="0dp"
 		android:layout_marginBottom="0dp"
-		android:id="@+id/edittext_plant_new_info_age"
 		android:layout_marginLeft="10dp"
-		android:layout_alignBaseline="@+id/textview_plant_view_info_age_title" />
+		android:layout_alignBaseline="@+id/textview_plant_view_info_age_title"
+		android:padding="0dp"
+		android:gravity="right"
+		/>
 
 	<Spinner
-		android:layout_width="100dp"
-		android:layout_height="40dp"
 		android:id="@+id/spinner_plant_new_info_age_units"
+		android:layout_width="wrap_content"
+		android:layout_height="40dp"
 		android:layout_toRightOf="@+id/edittext_plant_new_info_age"
-		android:layout_alignBottom="@+id/textview_plant_view_info_age_title" />
+		android:layout_alignBaseline="@+id/textview_plant_view_info_age_title" />
 
 	<EditText
 		android:layout_height="wrap_content"
@@ -172,11 +178,11 @@
 		android:layout_alignBaseline="@+id/textview_plant_view_info_height_title" />
 
 	<Spinner
-		android:layout_height="40dp"
-		android:layout_width="100dp"
-		android:layout_toRightOf="@+id/edittext_plant_new_info_height_1"
-		android:layout_alignBottom="@+id/textview_plant_view_info_height_title"
 		android:id="@+id/spinner_plant_new_info_height_units"
+		android:layout_height="40dp"
+		android:layout_width="wrap_content"
+		android:layout_toRightOf="@+id/edittext_plant_new_info_height_1"
+		android:layout_alignBaseline="@+id/textview_plant_view_info_height_title"
 		android:layout_marginBottom="0dp"
 		android:layout_marginLeft="10dp" />
 
@@ -201,25 +207,26 @@
 		android:id="@+id/textview_plant_new_info_height_2_unit" />
 
 	<Spinner
+		android:id="@+id/spinner_plant_new_info_irrigationschedule"
 		android:layout_height="wrap_content"
 		android:layout_width="wrap_content"
 		android:layout_below="@id/textview_plant_view_info_potsize_title"
 		android:layout_margin="10dp"
-		android:id="@+id/spinner_plant_new_info_irrigationschedule"/>
-
+		/>
 	<Spinner
 		android:layout_height="40dp"
-		android:layout_width="100dp"
+		android:layout_width="wrap_content"
 		android:layout_toRightOf="@+id/textview_plant_view_info_substrate_title"
 		android:id="@+id/spinner_plant_new_info_substrate"
-		android:layout_alignBottom="@+id/textview_plant_view_info_substrate_title" />
+		android:layout_alignBaseline="@+id/textview_plant_view_info_substrate_title" />
 
 	<Spinner
+		android:id="@+id/spinner_plant_new_info_potsize"
 		android:layout_height="40dp"
-		android:layout_width="100dp"
+		android:layout_width="wrap_content"
 		android:layout_toRightOf="@+id/textview_plant_view_info_potsize_title"
 		android:layout_alignBottom="@+id/textview_plant_view_info_potsize_title"
-		android:id="@+id/spinner_plant_new_info_potsize" />
+		/>
 
 	<Spinner
 		android:layout_height="25dp"

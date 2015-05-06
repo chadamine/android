@@ -44,8 +44,8 @@ public class Product implements DatabaseAdapter {
 
     public Product(Context c) {
         mContext = c;
-        /*mCursor = mContext.getContentResolver()
-                .query(getUri(), getKeyIdArray(), null, null, null);*/
+        mCursor = mContext.getContentResolver()
+                .query(getUri(), getKeyIdArray(), null, null, null);
     }
 
     public Product(Product product) {

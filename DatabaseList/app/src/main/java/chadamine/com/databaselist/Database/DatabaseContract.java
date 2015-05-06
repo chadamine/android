@@ -26,7 +26,8 @@ public class DatabaseContract {
             Products.TABLE_CREATE,
             Photos.TABLE_CREATE,
             Journals.TABLE_CREATE,
-            Plants.TABLE_CREATE
+            Plants.TABLE_CREATE,
+            Substrates.TABLE_CREATE
             // TODO: add all tables
     };
 
@@ -41,6 +42,9 @@ public class DatabaseContract {
 
     public static final int PLANTS = 7;
     public static final int PLANT_ID = 8;
+
+    public static final int SUBSTRATES = 9;
+    public static final int SUBSTRATE_ID = 10;
 
     // TODO: ADD REMAINING TABLES
 
@@ -58,6 +62,9 @@ public class DatabaseContract {
 
         URI_MATCHER.addURI(AUTHORITY, Plants.TABLE_NAME, PLANTS);
         URI_MATCHER.addURI(AUTHORITY, Plants.TABLE_NAME + "/#", PLANT_ID);
+
+        URI_MATCHER.addURI(AUTHORITY, Substrates.TABLE_NAME, SUBSTRATES);
+        URI_MATCHER.addURI(AUTHORITY, Substrates.TABLE_NAME + "/#", SUBSTRATE_ID);
         // TODO: ADD REMAINING TABLES TO URI_MATCHER
 
     }
@@ -237,9 +244,12 @@ public class DatabaseContract {
         public static final String KEY_DENSITY = "density";
         public static final String KEY_CEC = "cec";
 
-        public static final String[] KEY_ID_ARRAY = {
-                KEY_ID, KEY_NAME, KEY_MATERIAL, KEY_FORM, KEY_SIZE };
-        public static final String[] KEY_ARRAY = { KEY_NAME };
+        public static final String[] KEY_ID_ARRAY =
+                { KEY_ID, KEY_NAME, KEY_MATERIAL, KEY_FORM, KEY_SIZE,
+                        KEY_POROSITY, KEY_DENSITY, KEY_CEC};
+
+        public static final String[] KEY_ARRAY =
+                { KEY_NAME, KEY_MATERIAL, KEY_FORM, KEY_SIZE, KEY_POROSITY, KEY_DENSITY, KEY_CEC };
 
         public static final String TABLE_CREATE =
                 CT+ TABLE_NAME + OB

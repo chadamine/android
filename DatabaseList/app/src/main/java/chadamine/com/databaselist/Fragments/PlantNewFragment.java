@@ -1,16 +1,23 @@
 package chadamine.com.databaselist.Fragments;
 
+import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import chadamine.com.databaselist.Adapters.SpinnerCursorAdapter;
 import chadamine.com.databaselist.Database.DatabaseContract;
 import chadamine.com.databaselist.Objects.Plant;
+import chadamine.com.databaselist.Objects.Substrate;
 import chadamine.com.databaselist.R;
 
 public class PlantNewFragment extends Fragment {
@@ -25,8 +32,10 @@ public class PlantNewFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;*/
 
-    View mView;
-    Plant mPlant;
+    private View mView;
+    private Plant mPlant;
+    private Substrate mSubstrate;
+    private Context mContext;
 
     // TODO: Rename and change types and number of parameters
     public static PlantNewFragment newInstance(/*String param1, String param2*/) {
@@ -53,8 +62,12 @@ public class PlantNewFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_plant_new_info, container, false);
-
+        mContext = getActivity();
+        mSubstrate = new Substrate(getActivity());
         setUpButton();
+        setSpinnerAgeUnits();
+        setSpinnerHeightUnits();
+        setSpinnerSubstrates();
 
         return mView;
     }
@@ -74,8 +87,49 @@ public class PlantNewFragment extends Fragment {
         });
     }
 
+    private void setSpinnerAgeUnits() {
+
+        List<String> ageUnits = new ArrayList<>();
+        ageUnits.add("seconds");
+        ageUnits.add("minutes");
+        ageUnits.add("hours");
+        ageUnits.add("days") ;
+        ageUnits.add("weeks");
+        ageUnits.add("months");
+        ageUnits.add("years");
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
+                android.R.layout.simple_spinner_dropdown_item, ageUnits);
+
+        Spinner spinner = (Spinner) mView.findViewById(R.id.spinner_plant_new_info_age_units);
+        spinner.setAdapter(adapter);
+        spinner.setSelection(3);
+
+        //new SpinnerCursorAdapter(getActivity(), mProduct.getCursor()));
+    }
+
+    private void setSpinnerHeightUnits() {
+        List<String> l = new ArrayList<String>();
+
+        l.add("mm");
+        l.add("cm");
+        l.add("in");
+        l.add("ft");
+        l.add("m");
+        l.add("yd");
+
+        Spinner spinner = (Spinner) mView.findViewById(R.id.spinner_plant_new_info_height_units);
+        spinner.setAdapter(new ArrayAdapter<>(getActivity(),
+                        android.R.layout.simple_spinner_dropdown_item, l));
+        spinner.setSelection(3);
+    }
+
+    private void setSpinnerSubstrates() {
+        Spinner spinner = (Spinner) mView.findViewById(R.id.spinner_plant_new_info_substrate);
+        spinner.setAdapter(new SpinnerCursorAdapter(getActivity(), mSubstrate.getCursor()));
+    }
+
     private void createPlant() {
-        mPlant = new Plant();
+        mPlant = new Plant(mContext);
         mPlant.setName(((EditText) mView.findViewById(R.id.edittext_plant_new_info_name))
                 .getText().toString());
         mPlant.setSpecies(((EditText) mView.findViewById(R.id.edittext_plant_new_info_species))
