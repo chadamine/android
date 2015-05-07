@@ -2,20 +2,15 @@ package chadamine.com.databaselist;
 
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.zip.Inflater;
 
 import chadamine.com.databaselist.Database.DatabaseContract;
 import chadamine.com.databaselist.Fragments.PlantNewFragment;
@@ -49,13 +44,38 @@ public class PlantsActivity extends ActionBarActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
-        getMenuInflater().inflate(R.menu.menu_plants, menu);
-
+        final Menu mMenu = menu;
+        getMenuInflater().inflate(R.menu.menu_plants_options, menu);
+/*
         Spinner spinner = (Spinner) MenuItemCompat.getActionView(menu.findItem(R.id.spinner_plant_menu));
         SpinnerAdapter mSpinnerAdapter = ArrayAdapter.createFromResource(this,
                 R.array.plant_sort_items, android.R.layout.simple_spinner_dropdown_item);
 
         spinner.setAdapter(mSpinnerAdapter);
+        spinner.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                switch(position) {
+                    case 0:
+
+                        break;
+                    case 1:
+                        break;
+                }
+            }
+        });
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });*/
         return true;
     }
 
@@ -66,25 +86,24 @@ public class PlantsActivity extends ActionBarActivity {
         // as you specify a parent activity in AndroidManifest.xml.
 
         switch(item.getItemId()) {
+
             case R.id.action_settings:
                 return true;
+
             case R.id.add_plant:
                 Toast.makeText(this, " add plant ", Toast.LENGTH_SHORT).show();
                 getSupportFragmentManager().beginTransaction()
                         .addToBackStack("new plant fragment")
                         .replace(R.id.frame_plant_activity, new PlantNewFragment()).commit();
                 return true;
+
+            case R.id.spinner_plant_menu:
+
         }
 
         //return super.onOptionsItemSelected(item);
         return true;
     }
-
- /*   private List<Object> getPlants() {
-
-        return loadPlants();
-    }*/
-
 
     private void loadPlants() {
 

@@ -102,6 +102,7 @@ public class Plant extends Organism implements DatabaseAdapter {
                 ((TextView) view.findViewById(R.id.textview_plants_item_name)).setText(name);
 
             String species = c.getString(c.getColumnIndexOrThrow(DatabaseContract.Plants.KEY_SPECIES));
+
             if (!species.isEmpty())
                 ((TextView) view.findViewById(R.id.textview_plants_item_species)).setText(species);
 
