@@ -69,7 +69,7 @@ public class Substrate implements DatabaseAdapter {
     }
 
     @Override
-    public void setContent(Cursor cursor) {
+    public void setContent(View view) {
 
     }
 

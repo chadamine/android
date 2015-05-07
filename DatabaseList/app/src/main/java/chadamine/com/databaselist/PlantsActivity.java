@@ -22,6 +22,8 @@ public class PlantsActivity extends ActionBarActivity {
     ViewPager mViewPager;
     String[] mPageData;
     List<Object> mPlants;
+    Bundle mBundle;
+    String mSortOrder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,8 +39,26 @@ public class PlantsActivity extends ActionBarActivity {
         //mViewPager = (ViewPager) findViewById(R.id.frame_plant_activity);
         //mViewPager.setAdapter(new SwipePagerAdapter(this, mPlants, DatabaseContract.Plants.CONTENT_URI));
 
+        if (savedInstanceState != null) {
+            mBundle = savedInstanceState;
+            mSortOrder = savedInstanceState.getString("sort_order");
+        }
+
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.frame_plant_activity, new PlantsFragment()).commit();
+    }
+
+    /**
+     * Save all appropriate fragment state.
+     *
+     * @param outState
+     */
+        @Override
+    protected void onSaveInstanceState(Bundle outState) {
+            outState.putString("sort_order", mSortOrder);
+
+        super.onSaveInstanceState(outState);
+
     }
 
     @Override

@@ -15,22 +15,29 @@ public interface DatabaseAdapter {
 
     Uri getUri();
 
+    String getKeyID();
+
     String[] getKeyIdArray();
 
     ContentValues getValues();
 
-    String getKeyID();
-
+    // TODO: MAKE NEWCURSOR OR REMOVE
     Cursor getCursor();
 
+    // TODO: THIS SHOULD JUST BE ASSOCIATED WITH KEY_ID
     String getName();
 
     String getPhotoDir();
 
+    // SET LIST ITEMS USING CURSOR FROM LISTCURSORADAPTER
     void setListItemContent(View view, Cursor cursor);
 
-    void setContent(Cursor cursor);
+    // SET CONTENT OF FRAGMENTS
+    // TODO: SET WITH CURSOR FOR PAGERADAPTER?
+    void setContent(View view);
 
     int getListItemLayoutId();
+
+    // TODO: ADD GETNEWITEMLAYOUT
 
 }

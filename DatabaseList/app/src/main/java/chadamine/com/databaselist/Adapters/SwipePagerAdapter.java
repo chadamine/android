@@ -105,7 +105,7 @@ public class SwipePagerAdapter extends FragmentStatePagerAdapter {
         switch(DatabaseContract.URI_MATCHER.match(mUri)) {
 
             case DatabaseContract.PRODUCTS:
-                view = mInflater.inflate(R.layout.fragment_plant_new_info, null);
+                view = mInflater.inflate(R.layout.fragment_plant_new, null);
                 setProducts(view);
                 break;
 

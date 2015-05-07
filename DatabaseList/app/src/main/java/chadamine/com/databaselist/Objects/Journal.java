@@ -105,6 +105,11 @@ public class Journal implements DatabaseAdapter {
                 .setText(c.getString(c.getColumnIndexOrThrow(KEY_NAME)));
     }
 
+    @Override
+    public void setContent(View view) {
+
+    }
+
     public int getListItemLayoutId() {
         return mContext.getResources()
                 .getIdentifier("list_item_journal", "layout", mContext.getPackageName());

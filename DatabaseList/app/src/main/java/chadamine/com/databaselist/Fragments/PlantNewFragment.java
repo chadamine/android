@@ -40,10 +40,7 @@ public class PlantNewFragment extends Fragment {
     // TODO: Rename and change types and number of parameters
     public static PlantNewFragment newInstance(/*String param1, String param2*/) {
         PlantNewFragment fragment = new PlantNewFragment();
-        /*Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);*/
+
         return fragment;
     }
 
@@ -61,7 +58,7 @@ public class PlantNewFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        mView = inflater.inflate(R.layout.fragment_plant_new_info, container, false);
+        mView = inflater.inflate(R.layout.fragment_plant_new, container, false);
         mContext = getActivity();
         mSubstrate = new Substrate(getActivity());
         setUpButton();
@@ -74,7 +71,7 @@ public class PlantNewFragment extends Fragment {
 
 
     private void setUpButton() {
-        Button btnSavePlant = (Button) mView.findViewById(R.id.button_save_plant_new_info);
+        Button btnSavePlant = (Button) mView.findViewById(R.id.button_save_plant_new);
         btnSavePlant.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -100,7 +97,7 @@ public class PlantNewFragment extends Fragment {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
                 android.R.layout.simple_spinner_dropdown_item, ageUnits);
 
-        Spinner spinner = (Spinner) mView.findViewById(R.id.spinner_plant_new_info_age_units);
+        Spinner spinner = (Spinner) mView.findViewById(R.id.spinner_plant_new_age_units);
         spinner.setAdapter(adapter);
         spinner.setSelection(3);
 
@@ -117,33 +114,33 @@ public class PlantNewFragment extends Fragment {
         l.add("m");
         l.add("yd");
 
-        Spinner spinner = (Spinner) mView.findViewById(R.id.spinner_plant_new_info_height_units);
+        Spinner spinner = (Spinner) mView.findViewById(R.id.spinner_plant_new_height_units);
         spinner.setAdapter(new ArrayAdapter<>(getActivity(),
                         android.R.layout.simple_spinner_dropdown_item, l));
         spinner.setSelection(3);
     }
 
     private void setSpinnerSubstrates() {
-        Spinner spinner = (Spinner) mView.findViewById(R.id.spinner_plant_new_info_substrate);
+        Spinner spinner = (Spinner) mView.findViewById(R.id.spinner_plant_new_substrate);
         spinner.setAdapter(new SpinnerCursorAdapter(getActivity(), mSubstrate.getCursor()));
     }
 
     private void createPlant() {
         mPlant = new Plant(mContext);
-        mPlant.setName(((EditText) mView.findViewById(R.id.edittext_plant_new_info_name))
+        mPlant.setName(((EditText) mView.findViewById(R.id.edittext_plant_new_name))
                 .getText().toString());
-        mPlant.setSpecies(((EditText) mView.findViewById(R.id.edittext_plant_new_info_species))
+        mPlant.setSpecies(((EditText) mView.findViewById(R.id.edittext_plant_new_species))
                 .getText().toString());
-        mPlant.setCultivar(((EditText) mView.findViewById(R.id.edittext_plant_new_info_cultivar))
+        mPlant.setCultivar(((EditText) mView.findViewById(R.id.edittext_plant_new_cultivar))
                 .getText().toString());
-        mPlant.setStage(((EditText) mView.findViewById(R.id.edittext_plant_new_info_stage))
+        mPlant.setStage(((EditText) mView.findViewById(R.id.edittext_plant_new_stage))
                 .getText().toString());
-        mPlant.setAge(((EditText) mView.findViewById(R.id.edittext_plant_new_info_age))
+        mPlant.setAge(((EditText) mView.findViewById(R.id.edittext_plant_new_age))
                 .getText().toString());
-        mPlant.setHeight(((EditText) mView.findViewById(R.id.edittext_plant_new_info_height_1))
+        mPlant.setHeight(((EditText) mView.findViewById(R.id.edittext_plant_new_height_1))
                 .getText().toString());
         // TODO: Create Substrate, Pot, Taxonomy classes
-        /*plant.setSubstrate(((Spinner) mView.findViewById(R.id.spinner_plant_new_info_substrate))
+        /*plant.setSubstrate(((Spinner) mView.findViewById(R.id.spinner_plant_new_substrate))
                 .getSelectedItem().toString());*/
         /*plant.setPotSize();*/
     }
