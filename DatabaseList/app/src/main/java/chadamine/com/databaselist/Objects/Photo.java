@@ -132,7 +132,7 @@ public class Photo implements DatabaseAdapter {
     }
 
     @Override
-    public void setContent(Cursor cursor) {
+    public void setContent(View view) {
 
     }
 

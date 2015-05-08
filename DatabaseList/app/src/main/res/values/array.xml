@@ -1,8 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="plant_sort_items">
-        <item>Name, Ascending</item>
-        <item>Name, Descending</item>
+
+        <!-- ASCENDING -->
+        <item>Date Added</item>
+        <item>Name</item>
+        <item>Species</item>
+        <item>Cultivar</item>
+        <item>Stage</item>
+        <item>Age</item>
+        <item>Height</item>
+        <item>Substrate</item>
+        <item>Pot Size</item>
+
+        <!-- DESCENDING -->
+        <item>Date Added, Desc</item>
+        <item>Name, Desc</item>
+        <item>Species, Desc</item>
+        <item>Cultivar, Desc</item>
+        <item>Stage, Desc</item>
+        <item>Age, Desc</item>
+        <item>Height, Desc</item>
+        <item>Substrate, Desc</item>
+        <item>Pot Size, Desc</item>
 
     </string-array>
 </resources>

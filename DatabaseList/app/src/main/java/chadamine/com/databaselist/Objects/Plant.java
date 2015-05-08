@@ -4,14 +4,11 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
+import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import java.util.List;
 
 import chadamine.com.databaselist.Adapters.DatabaseAdapter;
-import chadamine.com.databaselist.Database.DatabaseContract;
 import chadamine.com.databaselist.Database.DatabaseContract.Plants;
 import chadamine.com.databaselist.R;
 
@@ -48,8 +45,7 @@ public class Plant extends Organism implements DatabaseAdapter {
 
     public Plant (Context context) {
         mContext = context;
-        mCursor = mContext.getContentResolver()
-                .query(getUri(), getKeyIdArray(), null, null, null);
+        mCursor = getNewCursor(getKeyIdArray(), null, null, null);
     }
 
     public int getListItemLayoutId() {
@@ -57,9 +53,13 @@ public class Plant extends Organism implements DatabaseAdapter {
                 .getIdentifier("list_item_plant", "layout", mContext.getPackageName());
     }
 
-    public int getViewPlantLayoutId() {
-        return mContext.getResources()
-                .getIdentifier("fragment_new_plant", "layout", mContext.getPackageName());
+    public int getViewItemLayoutId() {
+        return  R.layout.fragment_plant_new;
+                //mContext.getResources().getIdentifier("fragment_plant_view_info", "layout", mContext.getPackageName());
+    }
+
+    public int getNewItemLayoutId() {
+        return mContext.getResources().getIdentifier("fragment_plant_new", "layout", mContext.getPackageName());
     }
 
     public int getNewPlantLayoutId() {
@@ -87,48 +87,94 @@ public class Plant extends Organism implements DatabaseAdapter {
         return mCursor;
     }
 
+    public Cursor getNewCursor(@Nullable String[] idArray,
+                               @Nullable String selection,
+                               @Nullable String[] selectionArgs,
+                               @Nullable String sortOrder) {
+        String[] idA;
+
+        if(idArray == null)
+            idA = KEY_ID_ARRAY;
+        else
+            idA = idArray;
+
+        Cursor cursor = mContext.getContentResolver().query(CONTENT_URI, idA, selection, selectionArgs, sortOrder);
+        cursor.moveToFirst();
+
+        return cursor;
+    }
+
 
     // TODO: CHANGE TO setLayoutContent(View view)
     public void setListItemContent(View view, Cursor c) {
-        //mCursor = cursor;
 
-        // this check is pointless but need something to compare Views
-        if(view.getResources().getIdentifier("list_item_plant", "layout", mContext.getPackageName())
-                == getListItemLayoutId()) {
+        String name = c.getString(c.getColumnIndexOrThrow(Plants.KEY_NAME));
+        ((TextView) view.findViewById(R.id.textview_plants_item_name))
+                .setText(name.isEmpty() ? "" : name);
 
-            String name = c.getString(c.getColumnIndexOrThrow(Plants.KEY_NAME));
+        String species = c.getString(c.getColumnIndexOrThrow(Plants.KEY_SPECIES));
+        ((TextView) view.findViewById(R.id.textview_plants_item_species))
+                .setText(species.isEmpty() ? "" : species);
 
-            if (!name.isEmpty())
-                ((TextView) view.findViewById(R.id.textview_plants_item_name)).setText(name);
+        String cultivar = c.getString(c.getColumnIndexOrThrow(Plants.KEY_CULTIVAR));
+        ((TextView) view.findViewById(R.id.textview_plants_item_cultivar))
+                .setText(cultivar.isEmpty() ? "" : cultivar);
 
-            String species = c.getString(c.getColumnIndexOrThrow(DatabaseContract.Plants.KEY_SPECIES));
-            if (!species.isEmpty())
-                ((TextView) view.findViewById(R.id.textview_plants_item_species)).setText(species);
+        String stage = c.getString(c.getColumnIndexOrThrow(Plants.KEY_STAGE));
+        ((TextView) view.findViewById(R.id.textview_plants_item_stage))
+                .setText(stage.isEmpty() ? "" : stage);
+
+        String age = c.getString(c.getColumnIndexOrThrow(Plants.KEY_AGE));
+        ((TextView) view.findViewById(R.id.textview_plants_item_age))
+                .setText(age.isEmpty() ? "" : age);
 
 
-            String cultivar = c.getString(c.getColumnIndexOrThrow(DatabaseContract.Plants.KEY_CULTIVAR));
-            //if(cultivar == "")
-            ((TextView) view.findViewById(R.id.textview_plants_item_cultivar)).setText(cultivar);
-
-            String stage = c.getString(c.getColumnIndexOrThrow(DatabaseContract.Plants.KEY_STAGE));
-            //if(stage == "")
-            ((TextView) view.findViewById(R.id.textview_plants_item_stage)).setText(stage);
-
-            String age = c.getString(c.getColumnIndexOrThrow(DatabaseContract.Plants.KEY_AGE));
-            //if(age == "")
-            ((TextView) view.findViewById(R.id.textview_plants_item_age)).setText(age);
-        }
-
-        if(view.getId() == getViewPlantLayoutId())
-            return;
-        if(view.getId() == getNewPlantLayoutId())
-            return;
     }
 
     @Override
-    public void setContent(Cursor cursor) {
+    public void setContent(View view) {
+
+    // TODO: FIND A BETTER WAY TO CHECK VIEWS THAN BY TRYING TO CREATE ONE
+/*        if((view.findViewById(R.id.textview_plant_view_info_name)) != null) {
+            setViewItemContent(view);
+        }
+
+        if((view.findViewById(R.id.textview_plant_new_name_title)) != null) {
+            setNewItemContent(view);
+        }*/
     }
 
+    public void setViewItemContent(View view, int position) {
+
+        mCursor.moveToPosition(position);
+
+        String name = mCursor.getString(mCursor.getColumnIndexOrThrow(Plants.KEY_NAME));
+        ((TextView) view.findViewById(R.id.textview_plant_view_info_name))
+                .setText(name.isEmpty() ? "" : name);
+
+        String species = mCursor.getString(mCursor.getColumnIndexOrThrow(Plants.KEY_SPECIES));
+        ((TextView) view.findViewById(R.id.textview_plant_view_info_species))
+                .setText(species.isEmpty() ? "" : species);
+
+        String cultivar = mCursor.getString(mCursor.getColumnIndexOrThrow(Plants.KEY_CULTIVAR));
+        ((TextView) view.findViewById(R.id.textview_plant_view_info_cultivar))
+                .setText(cultivar.isEmpty() ? "" : cultivar);
+
+        String stage = mCursor.getString(mCursor.getColumnIndexOrThrow(Plants.KEY_STAGE));
+        ((TextView) view.findViewById(R.id.textview_plant_view_info_stage))
+                .setText(stage.isEmpty() ? "" : stage);
+
+        String age = mCursor.getString(mCursor.getColumnIndexOrThrow(Plants.KEY_AGE));
+        ((TextView) view.findViewById(R.id.textview_plant_view_info_age))
+                .setText(age.isEmpty() ? "" : age);
+
+        mCursor.moveToNext();
+    }
+
+    public void setNewItemContent(View view) {
+
+    }
+/*
     public void setContent(List<View> views, int position) {
         mCursor.moveToPosition(position);
 
@@ -145,7 +191,7 @@ public class Plant extends Organism implements DatabaseAdapter {
 
         }
 
-    }
+    }*/
 
     @Override
     public String[] getKeyIdArray() {

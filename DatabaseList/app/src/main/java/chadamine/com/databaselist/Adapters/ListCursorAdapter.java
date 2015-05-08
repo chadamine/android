@@ -31,12 +31,12 @@ public class ListCursorAdapter extends CursorAdapter {
         mIds = new HashMap<>();
         mSelectedItems = new SparseBooleanArray();
 
-        if(c != null)
+        //if(c != null)
             mCursor = c;
-        else
+        /*else
             mCursor = mContext.getContentResolver()
                     .query(mDatabaseObject.getUri(),
-                            mDatabaseObject.getKeyIdArray(), null, null, null);
+                            mDatabaseObject.getKeyIdArray(), null, null, null);*/
     }
 
     @Override
@@ -45,14 +45,13 @@ public class ListCursorAdapter extends CursorAdapter {
 
         // TODO: MAKE THIS WORK
         //mDatabaseObject.setContent();
+
         mView = view;
     }
 
 	@Override
 	public Cursor getCursor() {
-
         return mCursor;
-                //mDatabaseObject.getCursor();
 	}
 
     public void toggleSelection(int position) {

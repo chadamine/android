@@ -52,15 +52,13 @@ public class PlantViewFragment extends Fragment {
         mView = inflater.inflate(R.layout.fragment_plant_view, container, false);
         mContext = getActivity();
         mPlant = new Plant(mContext);
-        mFields = new ArrayList<>();
 
-        mFields.add(mView.findViewById(R.id.textview_plant_view_info_name));
-        mFields.add(mView.findViewById(R.id.textview_plant_view_info_species));
-        mFields.add(mView.findViewById(R.id.textview_plant_view_info_cultivar));
-        mFields.add(mView.findViewById(R.id.textview_plant_view_info_stage));
-        mFields.add(mView.findViewById(R.id.textview_plant_view_info_age));
 
-        mPlant.setContent(mFields, mPosition);
+
+        if(savedInstanceState != null)
+            mPlant.setViewItemContent(mView, savedInstanceState.getInt("position"));
+        else
+            mPlant.setViewItemContent(mView, mPosition);
 
         return mView;
     }
@@ -73,6 +71,15 @@ public class PlantViewFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
+
+        mFields = new ArrayList<>();
+
+        mFields.add(mView.findViewById(R.id.textview_plant_view_info_name));
+        mFields.add(mView.findViewById(R.id.textview_plant_view_info_species));
+        mFields.add(mView.findViewById(R.id.textview_plant_view_info_cultivar));
+        mFields.add(mView.findViewById(R.id.textview_plant_view_info_stage));
+        mFields.add(mView.findViewById(R.id.textview_plant_view_info_age));
+
         for(View view : mFields)
             ((TextView) view).setText("");
 
