@@ -2,6 +2,7 @@ package chadamine.com.databaselist;
 
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
@@ -14,6 +15,7 @@ import java.util.List;
 
 import chadamine.com.databaselist.Database.DatabaseContract;
 import chadamine.com.databaselist.Fragments.PlantNewFragment;
+import chadamine.com.databaselist.Fragments.PlantViewFragment;
 import chadamine.com.databaselist.Fragments.PlantsFragment;
 import chadamine.com.databaselist.Objects.Plant;
 
@@ -24,6 +26,8 @@ public class PlantsActivity extends ActionBarActivity {
     List<Object> mPlants;
     Bundle mBundle;
     String mSortOrder;
+    Fragment mContent;
+    Fragment mCurrentFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +48,9 @@ public class PlantsActivity extends ActionBarActivity {
             mSortOrder = savedInstanceState.getString("sort_order");
         }
 
+        /*mContent = getSupportFragmentManager().getFragment(
+                savedInstanceState, "mContent");*/
+
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.frame_plant_activity, new PlantsFragment()).commit();
     }
@@ -56,46 +63,42 @@ public class PlantsActivity extends ActionBarActivity {
         @Override
     protected void onSaveInstanceState(Bundle outState) {
             outState.putString("sort_order", mSortOrder);
-
         super.onSaveInstanceState(outState);
+
+
 
     }
 
     @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        //mCurrentFragment = getFragmentManager().findFragmentById(R.layout.fragment_plant_view);
+
+        /*if(mCurrentFragment != null) {
+            Toast.makeText(this, mCurrentFragment.getId() + " " + R.layout.fragment_plant_view + " " + mSortOrder,
+                    Toast.LENGTH_LONG).show();
+            if(mCurrentFragment instanceof PlantViewFragment) {
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.frame_plant_activity, PlantsFragment.newInstance(mSortOrder)).commit();
+            }
+        }*/
+    }
+
+    /**
+     * Called when a fragment is attached to the activity.
+     *
+     * @param fragment
+     */
+    @Override
+    public void onAttachFragment(Fragment fragment) {
+        super.onAttachFragment(fragment);
+        mCurrentFragment = fragment;
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-
-        final Menu mMenu = menu;
         getMenuInflater().inflate(R.menu.menu_plants_options, menu);
-/*
-        Spinner spinner = (Spinner) MenuItemCompat.getActionView(menu.findItem(R.id.spinner_plant_menu));
-        SpinnerAdapter mSpinnerAdapter = ArrayAdapter.createFromResource(this,
-                R.array.plant_sort_items, android.R.layout.simple_spinner_dropdown_item);
 
-        spinner.setAdapter(mSpinnerAdapter);
-        spinner.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                switch(position) {
-                    case 0:
-
-                        break;
-                    case 1:
-                        break;
-                }
-            }
-        });
-
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });*/
         return true;
     }
 

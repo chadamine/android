@@ -3,6 +3,7 @@ package chadamine.com.databaselist.Fragments;
 import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +26,7 @@ public class PlantViewFragment extends Fragment {
     private static int mPosition;
 
     private TextView mTextViewName;
+    private static String mSortOrder;
 
     public PlantViewFragment() {
 
@@ -35,7 +37,7 @@ public class PlantViewFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
-    public static PlantViewFragment newInstance(int position) {
+    public static PlantViewFragment newInstance(int position, String sortOrder) {
 
         mPosition = position;
         PlantViewFragment f = new PlantViewFragment();
@@ -43,6 +45,7 @@ public class PlantViewFragment extends Fragment {
         args.putInt("position", position);
         f.setArguments(args);
 
+        mSortOrder = sortOrder;
         return f;
     }
 
@@ -56,9 +59,9 @@ public class PlantViewFragment extends Fragment {
 
 
         if(savedInstanceState != null)
-            mPlant.setViewItemContent(mView, savedInstanceState.getInt("position"));
+            mPlant.setViewItemContent(mView, savedInstanceState.getInt("position"), mSortOrder);
         else
-            mPlant.setViewItemContent(mView, mPosition);
+            mPlant.setViewItemContent(mView, mPosition, mSortOrder);
 
         return mView;
     }

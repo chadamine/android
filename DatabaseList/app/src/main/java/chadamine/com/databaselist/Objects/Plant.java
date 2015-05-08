@@ -45,7 +45,7 @@ public class Plant extends Organism implements DatabaseAdapter {
 
     public Plant (Context context) {
         mContext = context;
-        mCursor = getNewCursor(getKeyIdArray(), null, null, null);
+
     }
 
     public int getListItemLayoutId() {
@@ -144,8 +144,9 @@ public class Plant extends Organism implements DatabaseAdapter {
         }*/
     }
 
-    public void setViewItemContent(View view, int position) {
+    public void setViewItemContent(View view, int position, String sortOrder) {
 
+        mCursor = getNewCursor(getKeyIdArray(), null, null, sortOrder);
         mCursor.moveToPosition(position);
 
         String name = mCursor.getString(mCursor.getColumnIndexOrThrow(Plants.KEY_NAME));
