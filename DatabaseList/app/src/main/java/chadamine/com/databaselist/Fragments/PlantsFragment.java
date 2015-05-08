@@ -66,9 +66,17 @@ public class PlantsFragment extends ListFragment
             mContext = getActivity();
             mLoaderManager = this;
 
-            if(savedInstanceState != null)
+            if(savedInstanceState != null) {
                 //mSortOrder = savedInstanceState.getString("sort_order");
                 mSortOrder = "name Desc";
+            }
+            mSortOrder = "name Desc";
+
+
+            Bundle loaderBundle = new Bundle();
+            loaderBundle.putString("sort_order", mSortOrder);
+
+            getLoaderManager().restartLoader(LIST_LOADER_ID, loaderBundle, this);
             // no longer seems necessary?
             //getLoaderManager().initLoader(LIST_LOADER_ID, null, this);
 
@@ -93,7 +101,6 @@ public class PlantsFragment extends ListFragment
     private void prepareList() {
 
         mListCursorAdapter = new ListCursorAdapter(getActivity(), null, 0, mPlant);
-
         setListAdapter(mListCursorAdapter);
     }
 
@@ -262,7 +269,7 @@ public class PlantsFragment extends ListFragment
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
 
-        mListCursorAdapter.notifyDataSetChanged();
+        //mListCursorAdapter.notifyDataSetChanged();
 
         mListCursorAdapter.swapCursor(data);
     }
