@@ -16,9 +16,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import chadamine.com.databaselist.Database.DatabaseContract;
+import chadamine.com.databaselist.Database.DatabaseSchema;
 import chadamine.com.databaselist.Fragments.PlantViewFragment;
-import chadamine.com.databaselist.Objects.Plant;
 import chadamine.com.databaselist.Objects.Product;
 import chadamine.com.databaselist.R;
 
@@ -80,8 +79,8 @@ public class SwipePagerAdapter extends FragmentStatePagerAdapter {
         final String objectClass = plantClass;
 
         for(DatabaseAdapter dbObject : mObjects) {
-            switch(DatabaseContract.URI_MATCHER.match(dbObject.getUri())) {
-                case DatabaseContract.PLANTS:
+            switch(DatabaseSchema.URI_MATCHER.match(dbObject.getUri())) {
+                case DatabaseSchema.PLANTS:
                     fragment = new PlantViewFragment();
                     break;
             }
@@ -102,18 +101,18 @@ public class SwipePagerAdapter extends FragmentStatePagerAdapter {
 
         // TODO: SET ALL FIELDS IN FRAGMENT BASED ON LAYOUT
 
-        switch(DatabaseContract.URI_MATCHER.match(mUri)) {
+        switch(DatabaseSchema.URI_MATCHER.match(mUri)) {
 
-            case DatabaseContract.PRODUCTS:
+            case DatabaseSchema.PRODUCTS:
                 view = mInflater.inflate(R.layout.fragment_plant_new, null);
                 setProducts(view);
                 break;
 
-            case DatabaseContract.JOURNALS:
+            case DatabaseSchema.JOURNALS:
                 setJournals(view);
                 break;
 
-            case DatabaseContract.PLANTS:
+            case DatabaseSchema.PLANTS:
                 setPlants(view);
                 break;
 
@@ -151,7 +150,7 @@ public class SwipePagerAdapter extends FragmentStatePagerAdapter {
 
     private void setJournals(View view) {
         ((TextView) view.findViewById(R.id.textview_journallist_name)).setText(
-                mCursor.getString(mCursor.getColumnIndex(DatabaseContract.Journals.KEY_NAME)));
+                mCursor.getString(mCursor.getColumnIndex(DatabaseSchema.Journals.KEY_NAME)));
                 /*((TextView) view.findViewById(android.R.id.text1)).setText(
                         mCursor.getString(mCursor.getColumnIndex(DatabaseContract.Journals.KEY_NAME)));*/
     }
@@ -160,24 +159,24 @@ public class SwipePagerAdapter extends FragmentStatePagerAdapter {
 
         mCursor = mActivity.getContentResolver().query(mUri, mKeyArray, null, null, null);
 
-        switch(DatabaseContract.URI_MATCHER.match(mUri)) {
+        switch(DatabaseSchema.URI_MATCHER.match(mUri)) {
 
-            case DatabaseContract.PRODUCTS:
+            case DatabaseSchema.PRODUCTS:
                 //mKeyID = DatabaseContract.Products.KEY_ID;
-                mKeyArray = DatabaseContract.Products.KEY_ID_ARRAY;
-                mUri = DatabaseContract.Products.CONTENT_URI;
+                mKeyArray = DatabaseSchema.Products.KEY_ID_ARRAY;
+                mUri = DatabaseSchema.Products.CONTENT_URI;
                 mObjects = new ArrayList<>();
                 break;
 
-            case DatabaseContract.JOURNALS:
+            case DatabaseSchema.JOURNALS:
                 //mKeyID = DatabaseContract.Journals.KEY_ID;
-                mUri = DatabaseContract.Journals.CONTENT_URI;
-                mKeyArray = DatabaseContract.Journals.KEY_ID_ARRAY;
+                mUri = DatabaseSchema.Journals.CONTENT_URI;
+                mKeyArray = DatabaseSchema.Journals.KEY_ID_ARRAY;
                 break;
 
-            case DatabaseContract.PLANTS:
-                mUri = DatabaseContract.Plants.CONTENT_URI;
-                mKeyArray = DatabaseContract.Plants.KEY_ID_ARRAY;
+            case DatabaseSchema.PLANTS:
+                mUri = DatabaseSchema.Plants.CONTENT_URI;
+                mKeyArray = DatabaseSchema.Plants.KEY_ID_ARRAY;
                 break;
 
             default:

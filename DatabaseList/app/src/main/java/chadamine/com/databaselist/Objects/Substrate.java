@@ -7,8 +7,7 @@ import android.net.Uri;
 import android.view.View;
 
 import chadamine.com.databaselist.Adapters.DatabaseAdapter;
-import chadamine.com.databaselist.Database.DatabaseContract;
-import chadamine.com.databaselist.Database.DatabaseContract.Substrates;
+import chadamine.com.databaselist.Database.DatabaseSchema.Substrates;
 
 
 /**

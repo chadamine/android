@@ -33,45 +33,52 @@ public class DatabaseContentProvider extends ContentProvider {
 //        String tableName = "";
 //        boolean isItem = false;
 
-        switch(DatabaseContract.URI_MATCHER.match(uri)) {
+        switch(DatabaseSchema.URI_MATCHER.match(uri)) {
 
-            case DatabaseContract.JOURNAL_ID:
-                queryBuilder.appendWhere(DatabaseContract.Journals.KEY_ID + "=" + uri.getLastPathSegment());
+            case DatabaseSchema.JOURNAL_ID:
+                queryBuilder.appendWhere(DatabaseSchema.Journals.KEY_ID + "=" + uri.getLastPathSegment());
 
-            case DatabaseContract.JOURNALS:
-                queryBuilder.setTables(DatabaseContract.Journals.TABLE_NAME);
+            case DatabaseSchema.JOURNALS:
+                queryBuilder.setTables(DatabaseSchema.Journals.TABLE_NAME);
                 break;
 
-            case DatabaseContract.PHOTO_ID:
-                queryBuilder.appendWhere(DatabaseContract.Photos.KEY_ID + "=" + uri.getLastPathSegment());
+            case DatabaseSchema.NUTRIENT_ID:
+                queryBuilder.appendWhere(DatabaseSchema.Nutrients.KEY_ID + "=" + uri.getLastPathSegment());
 
-            case DatabaseContract.PHOTOS:
-                queryBuilder.setTables(DatabaseContract.Photos.TABLE_NAME);
+            case DatabaseSchema.NUTRIENTS:
+                queryBuilder.setTables(DatabaseSchema.Nutrients.TABLE_NAME);
                 break;
 
-            case DatabaseContract.PLANT_ID:
-                queryBuilder.appendWhere(DatabaseContract.Plants.KEY_ID + "=" + uri.getLastPathSegment());
+            case DatabaseSchema.PHOTO_ID:
+                queryBuilder.appendWhere(DatabaseSchema.Photos.KEY_ID + "=" + uri.getLastPathSegment());
 
-            case DatabaseContract.PLANTS:
-                queryBuilder.setTables(DatabaseContract.Plants.TABLE_NAME);
+            case DatabaseSchema.PHOTOS:
+                queryBuilder.setTables(DatabaseSchema.Photos.TABLE_NAME);
                 break;
 
-            case DatabaseContract.PRODUCT_ID:
-                queryBuilder.appendWhere(DatabaseContract.Products.KEY_ID + "=" + uri.getLastPathSegment());
+            case DatabaseSchema.PLANT_ID:
+                queryBuilder.appendWhere(DatabaseSchema.Plants.KEY_ID + "=" + uri.getLastPathSegment());
+
+            case DatabaseSchema.PLANTS:
+                queryBuilder.setTables(DatabaseSchema.Plants.TABLE_NAME);
+                break;
+
+            case DatabaseSchema.PRODUCT_ID:
+                queryBuilder.appendWhere(DatabaseSchema.Products.KEY_ID + "=" + uri.getLastPathSegment());
                 //keyId = DatabaseContract.Products.KEY_ID;
                 //isItem = true;
 
-            case DatabaseContract.PRODUCTS:
-                queryBuilder.setTables(DatabaseContract.Products.TABLE_NAME);
+            case DatabaseSchema.PRODUCTS:
+                queryBuilder.setTables(DatabaseSchema.Products.TABLE_NAME);
                 //tableName = DatabaseContract.Products.TABLE_NAME;
 
                 break;
 
-            case DatabaseContract.SUBSTRATE_ID:
-                queryBuilder.appendWhere(DatabaseContract.Substrates.KEY_ID + "=" + uri.getLastPathSegment());
+            case DatabaseSchema.SUBSTRATE_ID:
+                queryBuilder.appendWhere(DatabaseSchema.Substrates.KEY_ID + "=" + uri.getLastPathSegment());
 
-            case DatabaseContract.SUBSTRATES:
-                queryBuilder.setTables(DatabaseContract.Substrates.TABLE_NAME);
+            case DatabaseSchema.SUBSTRATES:
+                queryBuilder.setTables(DatabaseSchema.Substrates.TABLE_NAME);
                 break;
 
             default:
@@ -100,36 +107,36 @@ public class DatabaseContentProvider extends ContentProvider {
         long id;
         String tableName;
 
-        switch(DatabaseContract.URI_MATCHER.match(uri)) {
+        switch(DatabaseSchema.URI_MATCHER.match(uri)) {
 
-            case DatabaseContract.JOURNALS:
-                id = mDatabase.insert(DatabaseContract.Journals.TABLE_NAME, null, values);
-                tableName = DatabaseContract.Journals.TABLE_NAME;
+            case DatabaseSchema.JOURNALS:
+                id = mDatabase.insert(DatabaseSchema.Journals.TABLE_NAME, null, values);
+                tableName = DatabaseSchema.Journals.TABLE_NAME;
                 break;
 
-            case DatabaseContract.NUTRIENTS:
-                id = mDatabase.insert(DatabaseContract.Nutrients.TABLE_NAME, null, values);
-                tableName = DatabaseContract.Nutrients.TABLE_NAME;
+            case DatabaseSchema.NUTRIENTS:
+                id = mDatabase.insert(DatabaseSchema.Nutrients.TABLE_NAME, null, values);
+                tableName = DatabaseSchema.Nutrients.TABLE_NAME;
                 break;
 
-            case DatabaseContract.PHOTOS:
-                id = mDatabase.insert(DatabaseContract.Photos.TABLE_NAME, null, values);
-                tableName = DatabaseContract.Photos.TABLE_NAME;
+            case DatabaseSchema.PHOTOS:
+                id = mDatabase.insert(DatabaseSchema.Photos.TABLE_NAME, null, values);
+                tableName = DatabaseSchema.Photos.TABLE_NAME;
                 break;
 
-            case DatabaseContract.PLANTS:
-                id = mDatabase.insert(DatabaseContract.Plants.TABLE_NAME, null, values);
-                tableName = DatabaseContract.Plants.TABLE_NAME;
+            case DatabaseSchema.PLANTS:
+                id = mDatabase.insert(DatabaseSchema.Plants.TABLE_NAME, null, values);
+                tableName = DatabaseSchema.Plants.TABLE_NAME;
                 break;
 
-            case DatabaseContract.PRODUCTS:
-                id = mDatabase.insert(DatabaseContract.Products.TABLE_NAME, null, values);
-                tableName = DatabaseContract.Products.TABLE_NAME;
+            case DatabaseSchema.PRODUCTS:
+                id = mDatabase.insert(DatabaseSchema.Products.TABLE_NAME, null, values);
+                tableName = DatabaseSchema.Products.TABLE_NAME;
                 break;
 
-            case DatabaseContract.SUBSTRATES:
-                id = mDatabase.insert(DatabaseContract.Substrates.TABLE_NAME, null, values);
-                tableName = DatabaseContract.Substrates.TABLE_NAME;
+            case DatabaseSchema.SUBSTRATES:
+                id = mDatabase.insert(DatabaseSchema.Substrates.TABLE_NAME, null, values);
+                tableName = DatabaseSchema.Substrates.TABLE_NAME;
                 break;
 
             default:
@@ -147,100 +154,100 @@ public class DatabaseContentProvider extends ContentProvider {
        int rowsDeleted;
        String id;
 
-        switch(DatabaseContract.URI_MATCHER.match(uri)) {
+        switch(DatabaseSchema.URI_MATCHER.match(uri)) {
 
 
-            case DatabaseContract.JOURNALS:
-                rowsDeleted = mDatabase.delete(DatabaseContract.Journals.TABLE_NAME,
+            case DatabaseSchema.JOURNALS:
+                rowsDeleted = mDatabase.delete(DatabaseSchema.Journals.TABLE_NAME,
                         selection, selectionArgs);
                 break;
 
-            case DatabaseContract.JOURNAL_ID:
+            case DatabaseSchema.JOURNAL_ID:
                 id = uri.getLastPathSegment();
 
                 if (TextUtils.isEmpty(selection)) {
                     rowsDeleted = mDatabase.
-                            delete(DatabaseContract.Journals.TABLE_NAME,
-                                    DatabaseContract.Journals.KEY_ID
+                            delete(DatabaseSchema.Journals.TABLE_NAME,
+                                    DatabaseSchema.Journals.KEY_ID
                                             + "=" + id, null);
                 } else {
-                    rowsDeleted = mDatabase.delete(DatabaseContract.Journals.TABLE_NAME,
-                            DatabaseContract.Journals.KEY_ID + "=" + id + " and " + selection, selectionArgs);
+                    rowsDeleted = mDatabase.delete(DatabaseSchema.Journals.TABLE_NAME,
+                            DatabaseSchema.Journals.KEY_ID + "=" + id + " and " + selection, selectionArgs);
                 }
                 break;
 
-            case DatabaseContract.NUTRIENTS:
-                rowsDeleted = mDatabase.delete(DatabaseContract.Nutrients.TABLE_NAME,
+            case DatabaseSchema.NUTRIENTS:
+                rowsDeleted = mDatabase.delete(DatabaseSchema.Nutrients.TABLE_NAME,
                         selection, selectionArgs);
                 break;
 
-            case DatabaseContract.NUTRIENT_ID:
+            case DatabaseSchema.NUTRIENT_ID:
                 id = uri.getLastPathSegment();
 
                 if (TextUtils.isEmpty(selection)) {
                     rowsDeleted = mDatabase.
-                            delete(DatabaseContract.Nutrients.TABLE_NAME,
-                                    DatabaseContract.Nutrients.KEY_ID
+                            delete(DatabaseSchema.Nutrients.TABLE_NAME,
+                                    DatabaseSchema.Nutrients.KEY_ID
                                             + "=" + id, null);
                 } else {
-                    rowsDeleted = mDatabase.delete(DatabaseContract.Nutrients.TABLE_NAME,
-                            DatabaseContract.Nutrients.KEY_ID + "=" + id + " and " + selection, selectionArgs);
+                    rowsDeleted = mDatabase.delete(DatabaseSchema.Nutrients.TABLE_NAME,
+                            DatabaseSchema.Nutrients.KEY_ID + "=" + id + " and " + selection, selectionArgs);
                 }
                 break;
 
             //TODO: Delete case for photos
 
-            case DatabaseContract.PLANTS:
-                rowsDeleted = mDatabase.delete(DatabaseContract.Plants.TABLE_NAME,
+            case DatabaseSchema.PLANTS:
+                rowsDeleted = mDatabase.delete(DatabaseSchema.Plants.TABLE_NAME,
                         selection, selectionArgs);
                 break;
-            case DatabaseContract.PLANT_ID:
+            case DatabaseSchema.PLANT_ID:
                 id = uri.getLastPathSegment();
 
                 if (TextUtils.isEmpty(selection)) {
-                    rowsDeleted = mDatabase.delete(DatabaseContract.Plants.TABLE_NAME,
-                            DatabaseContract.Plants.KEY_ID + "=" + id, null);
+                    rowsDeleted = mDatabase.delete(DatabaseSchema.Plants.TABLE_NAME,
+                            DatabaseSchema.Plants.KEY_ID + "=" + id, null);
                 } else {
-                    rowsDeleted = mDatabase.delete(DatabaseContract.Plants.TABLE_NAME,
-                            DatabaseContract.Plants.KEY_ID + "=" + id
+                    rowsDeleted = mDatabase.delete(DatabaseSchema.Plants.TABLE_NAME,
+                            DatabaseSchema.Plants.KEY_ID + "=" + id
                                     + " and " + selection, selectionArgs);
                 }
                 break;
 
-            case DatabaseContract.PRODUCTS:
-                rowsDeleted = mDatabase.delete(DatabaseContract.Products.TABLE_NAME,
+            case DatabaseSchema.PRODUCTS:
+                rowsDeleted = mDatabase.delete(DatabaseSchema.Products.TABLE_NAME,
                         selection, selectionArgs);
                 break;
-            case DatabaseContract.PRODUCT_ID:
+            case DatabaseSchema.PRODUCT_ID:
                 id = uri.getLastPathSegment();
 
                 if (TextUtils.isEmpty(selection)) {
                     rowsDeleted = mDatabase.
-                            delete(DatabaseContract.Products.TABLE_NAME,
-                                    DatabaseContract.Products.KEY_ID
+                            delete(DatabaseSchema.Products.TABLE_NAME,
+                                    DatabaseSchema.Products.KEY_ID
                                             + "=" + id, null);
                 } else {
-                    rowsDeleted = mDatabase.delete(DatabaseContract.Products.TABLE_NAME,
-                            DatabaseContract.Products.KEY_ID + "=" + id + " and " + selection, selectionArgs);
+                    rowsDeleted = mDatabase.delete(DatabaseSchema.Products.TABLE_NAME,
+                            DatabaseSchema.Products.KEY_ID + "=" + id + " and " + selection, selectionArgs);
                 }
 
                 break;
 
-            case DatabaseContract.SUBSTRATES:
-                rowsDeleted = mDatabase.delete(DatabaseContract.Substrates.TABLE_NAME,
+            case DatabaseSchema.SUBSTRATES:
+                rowsDeleted = mDatabase.delete(DatabaseSchema.Substrates.TABLE_NAME,
                         selection, selectionArgs);
                 break;
-            case DatabaseContract.SUBSTRATE_ID:
+            case DatabaseSchema.SUBSTRATE_ID:
                 id = uri.getLastPathSegment();
 
                 if (TextUtils.isEmpty(selection)) {
                     rowsDeleted = mDatabase.
-                            delete(DatabaseContract.Substrates.TABLE_NAME,
-                                    DatabaseContract.Substrates.KEY_ID
+                            delete(DatabaseSchema.Substrates.TABLE_NAME,
+                                    DatabaseSchema.Substrates.KEY_ID
                                             + "=" + id, null);
                 } else {
-                    rowsDeleted = mDatabase.delete(DatabaseContract.Substrates.TABLE_NAME,
-                            DatabaseContract.Substrates.KEY_ID + "=" + id + " and " + selection, selectionArgs);
+                    rowsDeleted = mDatabase.delete(DatabaseSchema.Substrates.TABLE_NAME,
+                            DatabaseSchema.Substrates.KEY_ID + "=" + id + " and " + selection, selectionArgs);
                 }
                 break;
 

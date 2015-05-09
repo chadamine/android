@@ -13,9 +13,8 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-import chadamine.com.databaselist.Database.DatabaseContract;
+import chadamine.com.databaselist.Database.DatabaseSchema;
 import chadamine.com.databaselist.Fragments.PlantNewFragment;
-import chadamine.com.databaselist.Fragments.PlantViewFragment;
 import chadamine.com.databaselist.Fragments.PlantsFragment;
 import chadamine.com.databaselist.Objects.Plant;
 
@@ -131,15 +130,15 @@ public class PlantsActivity extends ActionBarActivity {
     private void loadPlants() {
 
         mPlants = new ArrayList<>();
-        String[] mKeyArray = DatabaseContract.Plants.KEY_ID_ARRAY;
+        String[] mKeyArray = DatabaseSchema.Plants.KEY_ID_ARRAY;
         Plant plant = new Plant();
         Cursor cursor = getContentResolver().query(
-                DatabaseContract.Plants.CONTENT_URI, DatabaseContract.Plants.KEY_ID_ARRAY,
-                DatabaseContract.Plants.KEY_ARRAY[0], null, null);
+                DatabaseSchema.Plants.CONTENT_URI, DatabaseSchema.Plants.KEY_ID_ARRAY,
+                DatabaseSchema.Plants.KEY_ARRAY[0], null, null);
         for(int i = 0; i < cursor.getCount(); i++ ) {
             plant = new Plant();
             plant.setName(cursor.getString(
-                            cursor.getColumnIndexOrThrow(DatabaseContract.Plants.KEY_NAME)));
+                            cursor.getColumnIndexOrThrow(DatabaseSchema.Plants.KEY_NAME)));
             mPlants.add(i, plant);
             cursor.moveToNext();
         }

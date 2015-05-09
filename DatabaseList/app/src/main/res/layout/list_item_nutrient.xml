@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    
+    android:id="@+id/linearlayout_nutrient_list_row"
+    android:orientation="vertical" 
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <FrameLayout
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="#ffffff"
+        android:id="@+id/framelayout_nutrient_item"
+        android:layout_margin="10dp"
+        />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginEnd="10dp"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textview_nutrient_item_name"
+            android:text="no name"
+
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textview_nutrient_item_date"
+            android:text="no date"
+            android:layout_marginTop="5dp"
+
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginEnd="10dp"
+
+        >
+        <TextView
+            android:id="@+id/textview_nutrient_item_stage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="no stage"
+            />
+        <TextView
+            android:id="@+id/textview_nutrient_item_state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="no state"
+            android:layout_marginTop="5dp"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginEnd="10dp"
+
+        >
+        <TextView
+            android:id="@+id/textview_nutrient_item_organicstatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="inorganic"
+            android:layout_marginTop="5dp"
+            />
+        <TextView
+            android:id="@+id/textview_nutrient_item_purity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="100%"
+            android:layout_marginTop="5dp"
+            />
+    </LinearLayout>
+</LinearLayout>

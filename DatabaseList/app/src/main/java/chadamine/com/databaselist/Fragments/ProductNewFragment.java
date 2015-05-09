@@ -14,11 +14,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import chadamine.com.databaselist.Database.DatabaseContract;
+import chadamine.com.databaselist.Database.DatabaseSchema;
 import chadamine.com.databaselist.Objects.Product;
 import chadamine.com.databaselist.Objects.Photo;
 import chadamine.com.databaselist.R;
@@ -183,7 +182,7 @@ public class ProductNewFragment extends Fragment {
 
     private void dbInsertFields() {
             mContext.getContentResolver()
-                .insert(DatabaseContract.Products.CONTENT_URI, mProduct.getValues());
+                .insert(DatabaseSchema.Products.CONTENT_URI, mProduct.getValues());
     }
 
     private void saveFields() {

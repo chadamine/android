@@ -5,16 +5,13 @@ import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 import chadamine.com.databaselist.Adapters.DatabaseAdapter;
-import chadamine.com.databaselist.Database.DatabaseContract;
-import chadamine.com.databaselist.Database.DatabaseContract.Journals;
+import chadamine.com.databaselist.Database.DatabaseSchema.Journals;
 import chadamine.com.databaselist.R;
 
 /**

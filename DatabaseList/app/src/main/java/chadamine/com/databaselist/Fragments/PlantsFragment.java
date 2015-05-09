@@ -26,7 +26,7 @@ import android.widget.SpinnerAdapter;
 import android.widget.Toast;
 
 import chadamine.com.databaselist.Adapters.ListCursorAdapter;
-import chadamine.com.databaselist.Database.DatabaseContract.Plants;
+import chadamine.com.databaselist.Database.DatabaseSchema.Plants;
 import chadamine.com.databaselist.Objects.Plant;
 import chadamine.com.databaselist.R;
 
@@ -56,7 +56,6 @@ public class PlantsFragment extends ListFragment
         return f;
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -72,7 +71,6 @@ public class PlantsFragment extends ListFragment
                 mSortOrder = "name Desc";
             }
             //mSortOrder = "name Desc";
-
 
             Bundle loaderBundle = new Bundle();
             loaderBundle.putString("sort_order", mSortOrder);
@@ -94,8 +92,6 @@ public class PlantsFragment extends ListFragment
             if(mView.getParent() != null) {
 
                 ((ViewGroup)mView.getParent()).removeView(mView);
-
-
             }
         }
 

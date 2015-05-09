@@ -7,7 +7,7 @@ import android.provider.BaseColumns;
 /**
  * Created by chadamine on 4/12/2015.
  */
-public class DatabaseContract {
+public class DatabaseSchema {
 
     public static final String AUTHORITY = "chadamine.com.databaselist.database.provider";
     public static final String DATABASE_NAME = "example.db";
@@ -102,7 +102,7 @@ public class DatabaseContract {
 
         public static final String[] KEY_ID_ARRAY = { KEY_ID, KEY_NAME };
 
-        public static final Uri CONTENT_URI = Uri.withAppendedPath(DatabaseContract.CONTENT_URI, TABLE_NAME);
+        public static final Uri CONTENT_URI = Uri.withAppendedPath(DatabaseSchema.CONTENT_URI, TABLE_NAME);
 
         public static final String TABLE_CREATE =
                 "CREATE TABLE " + TABLE_NAME + "("
@@ -122,18 +122,28 @@ public class DatabaseContract {
         public static final String KEY_ID = "_id";
         public static final String KEY_NAME = "name";
         public static final String KEY_TIMESTAMP = "timestamp";
+        public static final String KEY_PURITY = "purity";
+        public static final String KEY_STATE = "state";
+        public static final String KEY_FORM = "form";
+        public static final String KEY_SOURCE = "source";
 
         public static final String DIR_PHOTOS = "Nutrients/";
 
+        public static final String[] KEY_ID_ARRAY = { KEY_ID, KEY_NAME , KEY_TIMESTAMP, KEY_PURITY,
+                KEY_STATE, KEY_FORM, KEY_SOURCE};
 
-        public static final String[] KEY_ID_ARRAY = { KEY_ID, KEY_NAME };
-
-        public static final Uri CONTENT_URI = Uri.withAppendedPath(DatabaseContract.CONTENT_URI, TABLE_NAME);
+        public static final Uri CONTENT_URI =
+                Uri.withAppendedPath(DatabaseSchema.CONTENT_URI, TABLE_NAME);
 
         public static final String TABLE_CREATE =
                 CT + TABLE_NAME + OB
                         + KEY_ID + IPKA
-                        + KEY_NAME + TXF
+                        + KEY_NAME + TXT
+                        + KEY_TIMESTAMP + TXT
+                        + KEY_PURITY + TXT
+                        + KEY_STATE + TXT
+                        + KEY_FORM + TXT
+                        + KEY_SOURCE + TXF
                         + CLOSE;
     }
 
@@ -143,69 +153,80 @@ public class DatabaseContract {
 
         public static final String KEY_ID = "_id";
         public static final String KEY_NAME = "name";
+
+
+        // SPECIAL COMPOUNDS
+        // TODO: GET FROM COMPOUNDS TABLE?
+        public static final String KEY_NO3 = "no3";
+        public static final String KEY_NH4 = "nh4";
+        public static final String KEY_P2O5 = "p2o5";
+        public static final String KEY_K2O = "k2o";
+
         public static final String KEY_H = "h";
         public static final String KEY_HE = "he";
         public static final String KEY_LI = "li";
         public static final String KEY_BE = "be";
         public static final String KEY_B = "b";
+
         public static final String KEY_C = "c";
         public static final String KEY_N = "n";
-
-        public static final String KEY_NO3 = "no3";
-        public static final String KEY_NH4 = "nh4";
-
         public static final String KEY_O = "o";
         public static final String KEY_F = "f";
         public static final String KEY_NE = "ne";
+
         public static final String KEY_NA = "na";
         public static final String KEY_MG = "mg";
         public static final String KEY_AL = "al";
         public static final String KEY_SI = "si";
-
         public static final String KEY_P = "p";
-        public static final String KEY_P2O5 = "p2o5";
 
         public static final String KEY_S = "s";
         public static final String KEY_CL = "cl";
         public static final String KEY_AR = "ar";
-
         public static final String KEY_K = "k";
-        public static final String KEY_K2O = "k2o";
-
         public static final String KEY_CA = "ca";
+
         public static final String KEY_SC = "sc";
         public static final String KEY_TI = "ti";
         public static final String KEY_V = "v";
         public static final String KEY_CR = "cr";
         public static final String KEY_MN = "mn";
+
         public static final String KEY_FE = "fe";
         public static final String KEY_CO = "co";
         public static final String KEY_NI = "ni";
         public static final String KEY_CU = "cu";
         public static final String KEY_ZN = "zn";
+
         public static final String KEY_GA = "ga";
         public static final String KEY_GE = "ge";
         public static final String KEY_AS = "as";
         public static final String KEY_SE = "se";
         public static final String KEY_BR = "br";
+
         public static final String KEY_KR = "kr";
         public static final String KEY_RB = "rb";
         public static final String KEY_SR = "sr";
         public static final String KEY_Y = "y";
         public static final String KEY_ZR = "zr";
+
         public static final String KEY_NB = "nb";
         public static final String KEY_MO = "mo";
 
         public static final String DIR_PHOTOS = "NutrientConcentrations/";
 
-        public static final String[] KEY_ID_ARRAY = { KEY_ID, KEY_NAME, KEY_H, KEY_HE,
-                KEY_LI, KEY_BE, KEY_B, KEY_C, KEY_N, KEY_O, KEY_F, KEY_NE,
-                KEY_NA, KEY_MG, KEY_AL, KEY_SI, KEY_P, KEY_S, KEY_CL, KEY_AR,
-                KEY_K, KEY_CA, KEY_SC, KEY_TI, KEY_V, KEY_CR, KEY_MN, KEY_FE,
-                KEY_CO, KEY_NI, KEY_CU, KEY_ZN, KEY_GA, KEY_GE, KEY_AS, KEY_SE, KEY_BR, KEY_KR,
-                KEY_RB, KEY_SR, KEY_Y, KEY_ZR, KEY_NB, KEY_MO };
+        public static final String[] KEY_ID_ARRAY = { KEY_ID, KEY_NAME,
+                KEY_H, KEY_HE, KEY_LI, KEY_BE, KEY_B,
+                KEY_C, KEY_N, KEY_O, KEY_F, KEY_NE,
+                KEY_NA, KEY_MG, KEY_AL, KEY_SI, KEY_P,
+                KEY_S, KEY_CL, KEY_AR, KEY_K, KEY_CA,
+                KEY_SC, KEY_TI, KEY_V, KEY_CR, KEY_MN,
+                KEY_FE, KEY_CO, KEY_NI, KEY_CU, KEY_ZN,
+                KEY_GA, KEY_GE, KEY_AS, KEY_SE, KEY_BR,
+                KEY_KR, KEY_RB, KEY_SR, KEY_Y, KEY_ZR,
+                KEY_NB, KEY_MO };
 
-        public static final Uri CONTENT_URI = Uri.withAppendedPath(DatabaseContract.CONTENT_URI, TABLE_NAME);
+        public static final Uri CONTENT_URI = Uri.withAppendedPath(DatabaseSchema.CONTENT_URI, TABLE_NAME);
 
         public static final String TABLE_CREATE =
                 CT + TABLE_NAME + OB
@@ -262,7 +283,7 @@ public class DatabaseContract {
                              + KEY_POTSIZE + TXF
                         + CLOSE;
 
-        public static final Uri CONTENT_URI = Uri.withAppendedPath(DatabaseContract.CONTENT_URI, TABLE_NAME);
+        public static final Uri CONTENT_URI = Uri.withAppendedPath(DatabaseSchema.CONTENT_URI, TABLE_NAME);
 
         public static final String DELETE = "DROP TABLE IF EXISTS " + TABLE_NAME;
     }
@@ -293,7 +314,7 @@ public class DatabaseContract {
                         + KEY_TYPE + TXF
                         + CLOSE;
 
-        public static final Uri CONTENT_URI = Uri.withAppendedPath(DatabaseContract.CONTENT_URI, TABLE_NAME);
+        public static final Uri CONTENT_URI = Uri.withAppendedPath(DatabaseSchema.CONTENT_URI, TABLE_NAME);
 
         public static final String DELETE = DTIE + TABLE_NAME;
     }
@@ -316,7 +337,7 @@ public class DatabaseContract {
         public static final String[] KEY_ID_ARRAY = {
                 KEY_ID, KEY_NAME, KEY_DIRECTORY, KEY_TIMESTAMP, KEY_TYPE };
 
-        public static final Uri CONTENT_URI = Uri.withAppendedPath(DatabaseContract.CONTENT_URI, TABLE_NAME);
+        public static final Uri CONTENT_URI = Uri.withAppendedPath(DatabaseSchema.CONTENT_URI, TABLE_NAME);
 
         public static final String TABLE_CREATE =
                 "CREATE TABLE " + TABLE_NAME + "("
@@ -376,7 +397,7 @@ public class DatabaseContract {
                         + KEY_CEC + TXF
                         + CLOSE;
 
-        public static final Uri CONTENT_URI = Uri.withAppendedPath(DatabaseContract.CONTENT_URI, TABLE_NAME);
+        public static final Uri CONTENT_URI = Uri.withAppendedPath(DatabaseSchema.CONTENT_URI, TABLE_NAME);
 
         public static final String DELETE = "DROP TABLE IF EXISTS " + TABLE_NAME;
     }

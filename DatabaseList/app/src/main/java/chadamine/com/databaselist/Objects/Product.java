@@ -8,8 +8,8 @@ import android.view.View;
 import android.widget.TextView;
 
 import chadamine.com.databaselist.Adapters.DatabaseAdapter;
-import chadamine.com.databaselist.Database.DatabaseContract;
-import chadamine.com.databaselist.Database.DatabaseContract.Products;
+import chadamine.com.databaselist.Database.DatabaseSchema;
+import chadamine.com.databaselist.Database.DatabaseSchema.Products;
 
 import chadamine.com.databaselist.R;
 
@@ -137,10 +137,10 @@ public class Product implements DatabaseAdapter {
         if (mCursor != null) {
             mCursor.moveToPosition(position);
 
-            mID = mCursor.getInt(mCursor.getColumnIndexOrThrow(DatabaseContract.Products.KEY_ID));
-            mName = mCursor.getString(mCursor.getColumnIndexOrThrow(DatabaseContract.Products.KEY_NAME));
-            mManufacturer = mCursor.getString(mCursor.getColumnIndexOrThrow(DatabaseContract.Products.KEY_MANUFACTURER));
-            mType = mCursor.getString(mCursor.getColumnIndexOrThrow(DatabaseContract.Products.KEY_TYPE));
+            mID = mCursor.getInt(mCursor.getColumnIndexOrThrow(DatabaseSchema.Products.KEY_ID));
+            mName = mCursor.getString(mCursor.getColumnIndexOrThrow(DatabaseSchema.Products.KEY_NAME));
+            mManufacturer = mCursor.getString(mCursor.getColumnIndexOrThrow(DatabaseSchema.Products.KEY_MANUFACTURER));
+            mType = mCursor.getString(mCursor.getColumnIndexOrThrow(DatabaseSchema.Products.KEY_TYPE));
             // TODO: mPhoto from file using location, name, and timestamp fields
         }
     }

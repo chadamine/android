@@ -4,6 +4,9 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.support.v4.app.Fragment;
+
+import chadamine.com.databaselist.Fragments.NutrientsFragment;
 
 
 public class NutrientsActivity extends ActionBarActivity {
@@ -12,6 +15,8 @@ public class NutrientsActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nutrients);
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.frame_nutrient_activity, NutrientsFragment.newInstance("", "")).commit();
     }
 
     @Override

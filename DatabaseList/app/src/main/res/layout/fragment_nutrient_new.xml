@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent">
+
+    <FrameLayout
+        android:layout_height="95dp"
+        android:layout_width="95dp"
+        android:layout_margin="10dp"
+        android:id="@+id/framelayout_nutrient_new_photo"
+        android:layout_marginRight="0dp"
+        android:layout_marginBottom="10dp"/>
+    <TextView
+        android:id="@+id/textview_nutrient_new_name_title"
+        android:layout_height="wrap_content"
+        android:text="Name:"
+        android:layout_width="wrap_content"
+        android:layout_toRightOf="@id/framelayout_nutrient_new_photo"
+        android:padding="3dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp" />
+    <EditText
+        android:id="@+id/edittext_nutrient_new_name"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_toRightOf="@id/textview_nutrient_new_name_title"
+        android:layout_alignBaseline="@+id/textview_nutrient_new_name_title"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="20dp" />
+    <TextView
+        android:id="@+id/edittext_nutrient_new_purity_title"
+        android:layout_height="wrap_content"
+        android:text="Purity:"
+        android:layout_width="wrap_content"
+        android:layout_toRightOf="@id/framelayout_nutrient_new_photo"
+        android:layout_below="@id/textview_nutrient_new_name_title"
+        android:layout_margin="10dp"
+        android:padding="3dp"
+        android:layout_marginBottom="0dp" />
+    <EditText
+        android:id="@+id/edittext_nutrient_new_purity"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_toRightOf="@id/edittext_nutrient_new_purity_title"
+        android:layout_below="@id/textview_nutrient_new_name_title"
+        android:layout_marginBottom="0dp"
+        android:layout_marginLeft="10dp"
+        android:layout_alignBaseline="@+id/edittext_nutrient_new_purity_title"
+        android:layout_marginRight="20dp" />
+    <TextView
+        android:id="@+id/textview_nutrient_new_state_title"
+        android:layout_height="wrap_content"
+        android:text="State:"
+        android:layout_width="wrap_content"
+        android:layout_below="@id/edittext_nutrient_new_purity_title"
+        android:padding="3dp"
+        android:layout_margin="10dp"
+        android:layout_marginBottom="0dp"
+        android:layout_toRightOf="@+id/framelayout_nutrient_new_photo" />
+    <EditText
+        android:id="@+id/edittext_nutrient_new_state"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_toRightOf="@id/textview_nutrient_new_state_title"
+        android:layout_below="@id/edittext_nutrient_new_purity_title"
+        android:layout_marginBottom="0dp"
+        android:layout_marginLeft="10dp"
+        android:layout_alignBaseline="@+id/textview_nutrient_new_state_title"
+        android:layout_marginRight="20dp" />
+</RelativeLayout>

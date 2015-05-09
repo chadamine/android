@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
-import chadamine.com.databaselist.Database.DatabaseContract;
+import chadamine.com.databaselist.Database.DatabaseSchema;
 import chadamine.com.databaselist.Objects.Journal;
 import chadamine.com.databaselist.R;
 
@@ -48,7 +48,7 @@ public class JournalNewFragment extends Fragment {
 
                 createJournal();
 
-                mValues.put(DatabaseContract.Products.KEY_NAME,
+                mValues.put(DatabaseSchema.Products.KEY_NAME,
                         ((EditText) mView.findViewById(R.id.edittext_newjournal_name))
                                 .getText().toString());
 

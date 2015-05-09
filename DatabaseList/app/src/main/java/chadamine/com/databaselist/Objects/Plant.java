@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import chadamine.com.databaselist.Adapters.DatabaseAdapter;
-import chadamine.com.databaselist.Database.DatabaseContract.Plants;
+import chadamine.com.databaselist.Database.DatabaseSchema.Plants;
 import chadamine.com.databaselist.R;
 
 /**

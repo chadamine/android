@@ -12,8 +12,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import chadamine.com.databaselist.Adapters.DatabaseAdapter;
-import chadamine.com.databaselist.Database.DatabaseContract;
-import chadamine.com.databaselist.Database.DatabaseContract.Photos;
+import chadamine.com.databaselist.Database.DatabaseSchema;
+import chadamine.com.databaselist.Database.DatabaseSchema.Photos;
 
 
 /**
@@ -44,15 +44,15 @@ public class Photo implements DatabaseAdapter {
     public void setID(Context activity, int id) {
         Cursor cursor =
                 activity.getContentResolver()
-                        .query(DatabaseContract.Photos.CONTENT_URI,
-                                new String[]{DatabaseContract.Photos.KEY_ID},
+                        .query(DatabaseSchema.Photos.CONTENT_URI,
+                                new String[]{DatabaseSchema.Photos.KEY_ID},
                                 null, null, null);
 
         if (cursor != null) {
             cursor.moveToFirst();
             // TODO: use id to label picture?
             setID(mContext, cursor.getInt(cursor
-                    .getColumnIndexOrThrow(DatabaseContract.Photos.KEY_ID)));
+                    .getColumnIndexOrThrow(DatabaseSchema.Photos.KEY_ID)));
         }
     }
 
@@ -62,12 +62,12 @@ public class Photo implements DatabaseAdapter {
 
     public String getNewPhotoFullName() {
         mTimestamp = new SimpleDateFormat(
-                DatabaseContract.Photos.DATE_FORMAT).format(new Date());
+                DatabaseSchema.Photos.DATE_FORMAT).format(new Date());
 
         mPhotoFullName =
                 mDatabaseObject.getName() + "_"
                         + mTimestamp
-                        + DatabaseContract.Photos.EXTENSION_PNG;
+                        + DatabaseSchema.Photos.EXTENSION_PNG;
         return mPhotoFullName;
     }
 

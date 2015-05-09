@@ -21,7 +21,7 @@ import android.widget.ListView;
 import android.widget.Spinner;
 
 import chadamine.com.databaselist.Adapters.ListCursorAdapter;
-import chadamine.com.databaselist.Database.DatabaseContract;
+import chadamine.com.databaselist.Database.DatabaseSchema;
 import chadamine.com.databaselist.Objects.Product;
 import chadamine.com.databaselist.R;
 import chadamine.com.databaselist.Adapters.SpinnerCursorAdapter;
@@ -78,7 +78,7 @@ public class ProductsFragment extends ListFragment
 
     private void prepareSpinner(View view) {
         final Cursor cursor =  mContext.getContentResolver().query(
-                DatabaseContract.Journals.CONTENT_URI,
+                DatabaseSchema.Journals.CONTENT_URI,
                 null, null, null, null);
 
         final SpinnerCursorAdapter spinnerCursorAdapter = new SpinnerCursorAdapter(mContext,
@@ -159,8 +159,8 @@ public class ProductsFragment extends ListFragment
     public Loader onCreateLoader(int id, Bundle args) {
 
         return new CursorLoader(mContext,
-            DatabaseContract.Products.CONTENT_URI,
-            DatabaseContract.Products.KEY_ID_ARRAY,
+            DatabaseSchema.Products.CONTENT_URI,
+            DatabaseSchema.Products.KEY_ID_ARRAY,
             null, null, null);
     }
 

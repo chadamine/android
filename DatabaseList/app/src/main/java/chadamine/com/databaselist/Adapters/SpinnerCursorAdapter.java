@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.CursorAdapter;
 import android.widget.TextView;
 
-import chadamine.com.databaselist.Database.DatabaseContract;
+import chadamine.com.databaselist.Database.DatabaseSchema;
 
 /**
  * Created by calipinski on 4/19/2015.
@@ -54,6 +54,6 @@ public class SpinnerCursorAdapter extends CursorAdapter {
     public void bindView(View view, Context context, Cursor cursor) {
 
         ((TextView) view.findViewById(android.R.id.text1)).setText(cursor.getString(
-                cursor.getColumnIndex(DatabaseContract.Journals.KEY_NAME)));
+                cursor.getColumnIndex(DatabaseSchema.Journals.KEY_NAME)));
     }
 }

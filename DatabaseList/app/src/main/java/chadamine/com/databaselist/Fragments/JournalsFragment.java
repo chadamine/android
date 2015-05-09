@@ -9,8 +9,7 @@ import android.support.v4.content.*;
 import android.view.*;
 import android.widget.*;
 
-import chadamine.com.databaselist.Database.DatabaseContract;
-import chadamine.com.databaselist.Database.DatabaseContract.Journals;
+import chadamine.com.databaselist.Database.DatabaseSchema.Journals;
 
 import chadamine.com.databaselist.Adapters.ListCursorAdapter;
 

@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="plant_sort_items">
-
         <!-- ASCENDING -->
-        <item>Date Added</item>
+        <item>Date</item>
         <item>Name</item>
         <item>Species</item>
         <item>Cultivar</item>
@@ -12,9 +11,8 @@
         <item>Height</item>
         <item>Substrate</item>
         <item>Pot Size</item>
-
         <!-- DESCENDING -->
-        <item>Date Added, Desc</item>
+        <item>Date, Desc</item>
         <item>Name, Desc</item>
         <item>Species, Desc</item>
         <item>Cultivar, Desc</item>
@@ -23,6 +21,19 @@
         <item>Height, Desc</item>
         <item>Substrate, Desc</item>
         <item>Pot Size, Desc</item>
-
+    </string-array>
+    <string-array name="nutrient_sort_items">
+        <!-- ASCENDING -->
+        <item>Date</item>
+        <item>Name</item>
+        <item>Purity</item>
+        <item>State</item>
+        <item>Form</item>
+        <!-- DESCENDING -->
+        <item>Date, Desc</item>
+        <item>Name, Desc</item>
+        <item>Purity, Desc</item>
+        <item>State, Desc</item>
+        <item>Form, Desc</item>
     </string-array>
 </resources>

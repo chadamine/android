@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="chadamine.com.databaselist.PlantsActivity">
+    <item
+        android:id="@+id/spinner_nutrients_menu"
+        android:title="SpinnerNutrientsMenu"
+        android:orderInCategory="0"
+        app:showAsAction="ifRoom"
+        app:actionViewClass="android.widget.Spinner"
+        />
+    <item
+        android:id="@+id/add_nutrient"
+        app:showAsAction="ifRoom"
+        android:orderInCategory="50"
+        android:title="Add Nutrient">
+    </item>
+</menu>
