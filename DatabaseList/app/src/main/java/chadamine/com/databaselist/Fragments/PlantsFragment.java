@@ -44,13 +44,14 @@ public class PlantsFragment extends ListFragment
     private static final String SORT_DESC = " DESC";
     private static final String SORT_ASC = " ASC";
     private LoaderManager.LoaderCallbacks<Cursor> mLoaderManager;
-    private String mSortOrder;
+    private static String mSortOrder;
 
     public static PlantsFragment newInstance(String sortOrder) {
         PlantsFragment f = new PlantsFragment();
         Bundle args = new Bundle();
         args.putString("sort_order", sortOrder);
         f.setArguments(args);
+        mSortOrder = sortOrder;
 
         return f;
     }
@@ -70,7 +71,7 @@ public class PlantsFragment extends ListFragment
                 //mSortOrder = savedInstanceState.getString("sort_order");
                 mSortOrder = "name Desc";
             }
-            mSortOrder = "name Desc";
+            //mSortOrder = "name Desc";
 
 
             Bundle loaderBundle = new Bundle();
@@ -84,14 +85,17 @@ public class PlantsFragment extends ListFragment
         }
 
         else {
+
+            Bundle loaderBundle = new Bundle();
+            loaderBundle.putString("sort_order", mSortOrder);
+
+            getLoaderManager().restartLoader(LIST_LOADER_ID, loaderBundle, this);
+
             if(mView.getParent() != null) {
 
                 ((ViewGroup)mView.getParent()).removeView(mView);
 
-                Bundle loaderBundle = new Bundle();
-                loaderBundle.putString("sort_order", mSortOrder);
 
-                getLoaderManager().restartLoader(LIST_LOADER_ID, loaderBundle, this);
             }
         }
 

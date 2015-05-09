@@ -33,18 +33,19 @@
         >
 
         <Button
+            android:id="@+id/button_tojournals"
             android:layout_height="75dp"
             android:layout_width="75dp"
             android:text="Journals"
             android:textSize="10sp"
             android:layout_margin="5dp"
             android:layout_marginRight="0dp"
-            android:id="@+id/button_tojournals"
             android:background="#ffffff"
             android:layout_weight="1"
 
             />
         <Button
+            android:id="@+id/button_toschedule"
             android:layout_height="75dp"
             android:text="Schedule"
             android:layout_width="75dp"
@@ -57,19 +58,20 @@
             android:textStyle="bold"
             />
         <Button
+            android:id="@+id/button_tomaterials"
             android:layout_height="75dp"
             android:text="Products"
             android:layout_width="75dp"
             android:textSize="10sp"
             android:layout_margin="5dp"
             android:layout_marginRight="0dp"
-            android:id="@+id/button_tomaterials"
             android:background="@drawable/button_home_default"
             android:layout_weight="1"
             android:textColor="@color/black"
             android:textStyle="bold"
             />
         <Button
+            android:id="@+id/button_toanalaysis"
             android:layout_height="75dp"
             android:text="Analysis"
             android:layout_width="75dp"
@@ -121,6 +123,7 @@
             />
 
         <Button
+            android:id="@+id/button_tonutrients"
             android:layout_height="75dp"
             android:layout_width="75dp"
             android:text="Nutrients"
@@ -133,6 +136,7 @@
             android:textStyle="bold"
             />
         <Button
+            android:id="@+id/to_environment"
             android:layout_height="75dp"
             android:layout_width="75dp"
             android:text="Environment"
@@ -146,6 +150,7 @@
             />
 
         <Button
+            android:id="@+id/to_pestdisease"
             android:layout_height="75dp"
             android:layout_width="75dp"
             android:text="Pest &amp; Disease"
@@ -182,6 +187,7 @@
         >
 
         <Button
+            android:id="@+id/button_to_nutrisolver"
             android:layout_height="75dp"
             android:text="NutriSolver"
             android:layout_width="75dp"
@@ -195,6 +201,7 @@
             />
 
         <Button
+            android:id="@+id/button_tocomparison"
             android:layout_height="75dp"
             android:text="Comparison"
             android:layout_width="75dp"
@@ -207,6 +214,7 @@
             android:textStyle="bold"
             />
         <Button
+            android:id="@+id/button_toco2calculator"
             android:layout_height="75dp"
             android:text="CO2 Calculator"
             android:layout_width="75dp"
@@ -220,6 +228,7 @@
             />
 
         <Button
+            android:id="@+id/button_toconversioncalculator"
             android:layout_height="75dp"
             android:text="Conversion Calculator"
             android:layout_width="75dp"
