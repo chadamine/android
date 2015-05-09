@@ -23,11 +23,19 @@ public class NutrientNewFragment extends Fragment {
     private Nutrient mNutrient;
     private View mView;
     private int mPosition;
+    //private String mSortOrder;
+    private int mSortSelection;
+
+    public NutrientNewFragment() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mNutrient = new Nutrient(getActivity());
         setHasOptionsMenu(true);
+
+        if(savedInstanceState != null)
+            mSortSelection = savedInstanceState.getInt("sortSelection");
+
         mView = inflater.inflate(R.layout.fragment_nutrient_new, container, false);
 
         return mView;
@@ -45,7 +53,7 @@ public class NutrientNewFragment extends Fragment {
         // TODO: SET SQL PARAMETERS
         String selection = "";
         String[] selectionArgs = { };
-        String sortOrder = "";
+        //String sortOrder = "";
 
         Bundle bundle = new Bundle();
 
@@ -53,12 +61,18 @@ public class NutrientNewFragment extends Fragment {
         bundle.putInt("position", mPosition);
         bundle.putString("selection", selection);
         bundle.putStringArray("selectionArgs", selectionArgs);
-        bundle.putString("sortOrder", sortOrder);
+        bundle.putInt("sortSelection", mSortSelection);
+
+        Fragment f = null;
 
         switch(item.getItemId()) {
             case R.id.save_nutrient:
+                f = new NutrientsFragment();
+                f.setArguments(bundle);
+
                 mNutrient.saveFields(mView, bundle);
-                getFragmentManager().popBackStack();
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.frame_nutrient_activity,f).commit();
                 break;
         }
 

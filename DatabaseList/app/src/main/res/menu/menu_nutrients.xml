@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="chadamine.com.databaselist.PlantsActivity">
     <item
-        android:id="@+id/spinner_nutrients_menu"
+        android:id="@+id/spinner_nutrients_sort"
         android:title="SpinnerNutrientsMenu"
         android:orderInCategory="0"
         app:showAsAction="ifRoom"

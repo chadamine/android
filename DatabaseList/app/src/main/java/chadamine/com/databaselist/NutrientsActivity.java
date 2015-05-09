@@ -16,7 +16,7 @@ public class NutrientsActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nutrients);
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.frame_nutrient_activity, NutrientsFragment.newInstance("", "")).commit();
+                .add(R.id.frame_nutrient_activity, new NutrientsFragment()).commit();
     }
 
     @Override
