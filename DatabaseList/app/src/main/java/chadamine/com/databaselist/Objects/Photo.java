@@ -22,6 +22,7 @@ import chadamine.com.databaselist.Database.DatabaseSchema.Photos;
 public class Photo implements DatabaseAdapter {
 
     private String mDirPhoto;
+    private String mName;
     private String mPhotoFullName;
     private String mTimestamp;
     private String mType;
@@ -38,7 +39,7 @@ public class Photo implements DatabaseAdapter {
         mContext = c;
         mDatabaseObject = databaseObject;
         mDirPhoto = EXT_DIR
-                + getPhotoDir();
+                + this.getPhotoDir() + databaseObject.getPhotoDir();
     }
 
     public void setID(Context activity, int id) {
@@ -60,6 +61,12 @@ public class Photo implements DatabaseAdapter {
         return mType;
     }
 
+    public void setName(String name) {
+        mPhotoFullName =
+                name + "_"
+                        + mTimestamp
+                        + DatabaseSchema.Photos.EXTENSION_PNG;
+    }
     public String getNewPhotoFullName() {
         mTimestamp = new SimpleDateFormat(
                 DatabaseSchema.Photos.DATE_FORMAT).format(new Date());
@@ -72,7 +79,8 @@ public class Photo implements DatabaseAdapter {
     }
 
     public Uri getUri() {
-        Uri imageUri = Uri.fromFile(new File(getPhotoFolder() + mDatabaseObject.getPhotoDir(), getNewPhotoFullName()));
+        Uri imageUri = Uri.fromFile(new File(getPhotoFolder(),
+                getNewPhotoFullName()));
 
         return imageUri;
     }
@@ -80,6 +88,11 @@ public class Photo implements DatabaseAdapter {
     @Override
     public String[] getKeyIdArray() {
         return KEY_ID_ARRAY;
+    }
+
+    @Override
+    public String getPhotoDir() {
+        return Photos.DIR_PHOTOS;
     }
 
     public String getPhotoFolder() {
@@ -99,7 +112,8 @@ public class Photo implements DatabaseAdapter {
     public ContentValues getValues() throws NullPointerException {
         ContentValues values = new ContentValues();
         values.put(Photos.KEY_NAME, getName());
-        values.put(Photos.KEY_DIRECTORY, mDirPhoto);
+        values.put(Photos.KEY_DIRECTORY, getPhotoDir()
+                + mDatabaseObject.getPhotoDir());
         values.put(Photos.KEY_TIMESTAMP, mTimestamp);
         //values.put(Photos.KEY_TYPE, mType);
 
@@ -118,13 +132,10 @@ public class Photo implements DatabaseAdapter {
 
     @Override
     public String getName() {
-        return mPhotoFullName;
+        return mDatabaseObject.getName();
     }
 
-    @Override
-    public String getPhotoDir() {
-        return Photos.DIR_PHOTOS;
-    }
+
 
     @Override
     public void setListItemContent(View view, Cursor cursor) {

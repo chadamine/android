@@ -1,8 +1,13 @@
 package chadamine.com.databaselist.Fragments;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.ParcelFileDescriptor;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -14,6 +19,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.io.File;
+import java.io.FileDescriptor;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,6 +45,8 @@ public class ProductNewFragment extends Fragment {
     private Context mContext;
 
     static final int REQUEST_IMAGE_CAPTURE = 1;
+    private static final int WRITE_REQUEST_CODE = 10;
+
 
     public ProductNewFragment() {}
 
@@ -64,9 +75,7 @@ public class ProductNewFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                createProduct();
-                //saveToDB();
-
+                //mProduct.setName((mEditTextName).getText().toString());
                 if (mProduct.hasName()) {
                     savePictures();
                     saveFields();
@@ -84,6 +93,7 @@ public class ProductNewFragment extends Fragment {
 
             @Override
             public void onClick(View v) {
+
                 mProduct.setName(mEditTextName.getText().toString());
 
                 if (mProduct.hasName()) {
@@ -93,11 +103,6 @@ public class ProductNewFragment extends Fragment {
                             "Product must have a name to take a photo", Toast.LENGTH_LONG).show();
             }
         });
-    }
-    private void createProduct() {
-
-        mProduct = new Product(mContext);
-        mProduct.setName((mEditTextName).getText().toString());
     }
 
     @Override
@@ -113,6 +118,43 @@ public class ProductNewFragment extends Fragment {
                     + "\nin the following folder: " + mPhoto.getPhotoFolder(),
                 Toast.LENGTH_LONG).show();
         // TODO: CLOSE KEYBOARD
+
+        if (requestCode == WRITE_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+
+            Uri uri = null;
+            if (data != null) {
+                uri = data.getData();
+                ParcelFileDescriptor parcelFileDescriptor = null;
+
+                try {
+                    parcelFileDescriptor = mContext.getContentResolver()
+                            .openFileDescriptor(uri, "w");
+                } catch (FileNotFoundException e) {
+                    Toast.makeText(mContext, "file not found", Toast.LENGTH_SHORT).show();
+                }
+                FileDescriptor fileDescriptor = parcelFileDescriptor.getFileDescriptor();
+                File photoFile = new File(uri.getPath());
+
+                try {
+                    parcelFileDescriptor.close();
+                } catch (IOException e) {
+                    Toast.makeText(mContext, "could not open file", Toast.LENGTH_SHORT).show();
+                }
+
+                for(Photo photo : mPhotos) {
+                    photoFile.renameTo(new File(photo.getPhotoFolder() + mProduct.getPhotoDir(),
+                            mPhoto.getCurrentPhotoFullName()));
+
+                    photo.setName(mProduct.getName());
+
+                    photoFile.renameTo(new File(photo.getPhotoFolder() + mProduct.getPhotoDir(),
+                            mPhoto.getCurrentPhotoFullName()));
+
+                    photo.dbInsertPictures(mContext);
+
+                }
+            }
+        }
     }
 
     private void clearFields() {
@@ -151,37 +193,66 @@ public class ProductNewFragment extends Fragment {
 
         // TODO: check for mProductName changed,
         // TODO: adjust names of pictures in list as needed before save
-        createProduct();
+        mProduct.setName(mEditTextName.getText().toString());
 
-        for(Photo picture : mPhotos) {
-            picture.dbInsertPictures(mContext);
+        Intent intent = new Intent(Intent.ACTION_EDIT);
+        //intent.addCategory(Intent.CATEGORY_OPENABLE);
+        intent.setType("image/*");
+        startActivityForResult(intent, WRITE_REQUEST_CODE);
+
+
+
+
 /*
-            if(picture.getName() != mProduct.getName()) {
-                // Rename picture file
-                Toast.makeText(mContext, "names not equal", Toast.LENGTH_LONG).show();
-                File photo = new File(picture.getPhotoFolder(), picture.getCurrentPhotoFullName());
-                Toast.makeText(mContext, "current photo full name: "
-                        + picture.getCurrentPhotoFullName(), Toast.LENGTH_LONG).show();
+        for(Photo photo : mPhotos) {
+            Toast.makeText(mContext,
+                    "\nphoto getName: " + photo.getName()
+                    +"\nproduct.getname: " + mProduct.getName(), Toast.LENGTH_LONG).show();
+            //if(photo.getName() != mProduct.getName()) {
+                // Rename photo file
 
-                if(photo != null) {
-                    photo.renameTo(new File(picture.getPhotoFolder(), mProduct.getName()));
-                    Toast.makeText(mContext, "photo not null", Toast.LENGTH_LONG).show();
+                File photoFile = new File(photo.getPhotoFolder() + mProduct.getPhotoDir(),
+                        photo.getCurrentPhotoFullName());
+            photoFile.setWritable(true);
+                Toast.makeText(mContext,
+                        "current photo full name: " + photo.getCurrentPhotoFullName()
+                        + "\ncurrent photo path: " + photo.getPhotoFolder() + mProduct.getPhotoDir()
+                        + "\nphotoFile path: " + photoFile.getAbsolutePath()
+                        + "\nphotoFile writability: " + photoFile.canWrite(),
+                        Toast.LENGTH_LONG).show();
+
+            if (photo != null) {
+                photo.setName(mProduct.getName());
+
+                photoFile.renameTo(new File(photo.getPhotoFolder() + mProduct.getPhotoDir(),
+                        mPhoto.getCurrentPhotoFullName()));
+                    Toast.makeText(mContext,
+                            "photo new name: " + new File(photo.getPhotoFolder()
+                                    + mProduct.getPhotoDir(), mPhoto.getCurrentPhotoFullName()).getAbsolutePath(),
+                            Toast.LENGTH_LONG).show();
 
                 }
                 else {
                     Toast.makeText(mContext, "photo not renamed", Toast.LENGTH_SHORT).show();
                 }
 
-                picture.setName(mProduct.getName());
-                picture.dbInsertPictures(mContext);
+                //photo.dbInsertPictures(mContext);
 
-            } else {
-              }*/
-        }
+            */
+/*} else {
+                //photo.dbInsertPictures(mContext);
+            }*//*
+
+
+            photo.dbInsertPictures(mContext);
+*/
+
+        //}
     }
 
     private void dbInsertFields() {
-            mContext.getContentResolver()
+        mProduct.setName((mEditTextName).getText().toString());
+        mContext.getContentResolver()
                 .insert(DatabaseSchema.Products.CONTENT_URI, mProduct.getValues());
     }
 
