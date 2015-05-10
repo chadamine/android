@@ -1,15 +1,20 @@
 package chadamine.com.databaselist.Fragments;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,9 +32,17 @@ public class PlantNewFragment extends Fragment {
     private Substrate mSubstrate;
     private Context mContext;
     private Bundle mBundle;
+    private int mPosition;
+    private String mSortOrder;
 
     public PlantNewFragment() {}
 
+    public static PlantNewFragment newInstance(Bundle savedInstanceState) {
+        PlantNewFragment f = new PlantNewFragment();
+
+        f.setArguments(savedInstanceState);
+        return f;
+    }
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,17 +53,57 @@ public class PlantNewFragment extends Fragment {
                              Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_plant_new, container, false);
         mContext = getActivity();
+        mPlant = new Plant(mContext);
+
         mSubstrate = new Substrate(getActivity());
         setUpButton();
         setSpinnerAgeUnits();
         setSpinnerHeightUnits();
         setSpinnerSubstrates();
 
-        if(savedInstanceState != null)
-            mBundle = savedInstanceState.getBundle("bundle");
+        if(savedInstanceState != null) {
+            //mBundle = savedInstanceState.getBundle("bundle");
+            mBundle = savedInstanceState;
+
+            mPosition = mBundle.getInt("position");
+            mSortOrder = mBundle.getString("sortOrder");
+
+            Cursor cursor = mContext.getContentResolver()
+                    .query(mPlant.getUri(), mPlant.getKeyIdArray(), null, null, mSortOrder);
+            cursor.moveToPosition(mPosition);
+
+            String name = cursor
+                    .getString(cursor.getColumnIndexOrThrow(DatabaseSchema.Plants.KEY_NAME));
+            ((EditText) mView.findViewById(R.id.edittext_plant_new_name))
+                    .setText(name.isEmpty() ? "" : name);
+
+        }
 
         return mView;
     }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.menu_plant_new, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        //Fragment f;
+
+        switch(item.getItemId()) {
+            case R.id.save_plant:
+                //f = new PlantsFragment();
+                //f.setArguments(mBundle);
+
+                mPlant.saveFields(mView, false);
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.frame_plant_activity, PlantsFragment.newInstance(mBundle)).commit();
+                break;
+        }
+
+        return true;    }
 
     private void setUpButton() {
         Button btnSavePlant = (Button) mView.findViewById(R.id.button_save_plant_new);
@@ -112,7 +165,6 @@ public class PlantNewFragment extends Fragment {
     }
 
     private void savePlant() {
-        mPlant = new Plant(mContext);
         mPlant.setName(((EditText) mView.findViewById(R.id.edittext_plant_new_name))
                 .getText().toString());
         mPlant.setSpecies(((EditText) mView.findViewById(R.id.edittext_plant_new_species))

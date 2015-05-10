@@ -6,6 +6,9 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -27,6 +30,7 @@ public class PlantViewFragment extends Fragment {
 
     private TextView mTextViewName;
     private static String mSortOrder;
+    private Bundle mBundle;
 
     public PlantViewFragment() {
 
@@ -35,17 +39,14 @@ public class PlantViewFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
     }
 
-    public static PlantViewFragment newInstance(int position, String sortOrder) {
-
-        mPosition = position;
+    public static PlantViewFragment newInstance(Bundle savedInstancestate) {
         PlantViewFragment f = new PlantViewFragment();
-        Bundle args = new Bundle();
-        args.putInt("position", position);
-        f.setArguments(args);
+        if(savedInstancestate != null)
+            f.setArguments(savedInstancestate);
 
-        mSortOrder = sortOrder;
         return f;
     }
 
@@ -56,21 +57,17 @@ public class PlantViewFragment extends Fragment {
         mContext = getActivity();
         mPlant = new Plant(mContext);
 
-
-
-        if(savedInstanceState != null)
+        if(savedInstanceState != null) {
+            mBundle = savedInstanceState;
             mPlant.setViewItemContent(mView, savedInstanceState.getInt("position"), mSortOrder);
-        else
+        }
+        else {
             mPlant.setViewItemContent(mView, mPosition, mSortOrder);
+        }
 
         return mView;
     }
 
-    /**
-     * Called when the Fragment is no longer resumed.  This is generally
-     * tied to {@link Activity#onPause() Activity.onPause} of the containing
-     * Activity's lifecycle.
-     */
     @Override
     public void onPause() {
         super.onPause();
@@ -87,5 +84,25 @@ public class PlantViewFragment extends Fragment {
             ((TextView) view).setText("");
 
 
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.menu_plant_view, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch(item.getItemId()) {
+            case R.id.edit_plant:
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.frame_plant_activity, PlantNewFragment.newInstance(mBundle))
+                        .addToBackStack("newPlant")
+                        .commit();
+        }
+
+        return true;
     }
 }

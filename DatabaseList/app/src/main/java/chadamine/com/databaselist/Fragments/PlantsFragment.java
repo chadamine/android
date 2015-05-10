@@ -24,7 +24,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
-import android.widget.Toast;
 
 import chadamine.com.databaselist.Adapters.ListCursorAdapter;
 import chadamine.com.databaselist.Database.DatabaseSchema.Plants;
@@ -55,6 +54,12 @@ public class PlantsFragment extends ListFragment
 
    public PlantsFragment() { }
 
+    public static PlantsFragment newInstance(Bundle savedInstanceState) {
+        PlantsFragment f = new PlantsFragment();
+        f.setArguments(savedInstanceState);
+
+        return f;
+    }
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -157,7 +162,7 @@ public class PlantsFragment extends ListFragment
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
 
-        inflater.inflate(R.menu.menu_plants_fragment_options, menu);
+        inflater.inflate(R.menu.menu_plants_plants, menu);
 
         Spinner spinner = (Spinner) MenuItemCompat.getActionView(menu.findItem(R.id.spinner_plant_menu));
         SpinnerAdapter mSpinnerAdapter = ArrayAdapter.createFromResource(mContext,
@@ -211,11 +216,11 @@ public class PlantsFragment extends ListFragment
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
 
-        Fragment f = new PlantViewFragment();
+        /*Fragment f = new PlantViewFragment();
         mBundle.putInt("sortSelection", mSortSelection);
-        f.setArguments(mBundle);
+        f.setArguments(mBundle);*/
         getFragmentManager().beginTransaction()
-                .replace(R.id.frame_plant_activity, f)
+                .replace(R.id.frame_plant_activity, PlantViewFragment.newInstance(mBundle))
                 .addToBackStack("plantView").commit();
     }
 

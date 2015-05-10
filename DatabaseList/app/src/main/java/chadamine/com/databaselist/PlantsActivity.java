@@ -1,22 +1,12 @@
 package chadamine.com.databaselist;
 
-import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import chadamine.com.databaselist.Database.DatabaseSchema;
-import chadamine.com.databaselist.Fragments.PlantNewFragment;
 import chadamine.com.databaselist.Fragments.PlantsFragment;
-import chadamine.com.databaselist.Objects.Plant;
 
 public class PlantsActivity extends ActionBarActivity {
 
@@ -58,7 +48,7 @@ public class PlantsActivity extends ActionBarActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_plants_options, menu);
+        getMenuInflater().inflate(R.menu.menu_plants_activity, menu);
 
         return true;
     }

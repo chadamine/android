@@ -175,24 +175,12 @@ public class Nutrient implements DatabaseAdapter {
 
     }
 
-    public void saveFields(View view, Bundle args) {
+    public void saveFields(View view, boolean isListItem) {
 
-/*
-        int position = 0;
-        String selection = "";
-        String[] selectionArgs = null;
-        String sortOrder = "";
-
-        position = args.getInt("position");
-        selection = args.getString("selection");
-        selectionArgs = args.getStringArray("selectionArgs");
-        sortOrder = args.getString("sortOrder");
-*/
-        if(!args.getBoolean("isListItem")) {
+        if(!isListItem) {
 
             setName(((EditText) view.findViewById(R.id.edittext_nutrient_new_name))
                     .getText().toString());
-
 
             try {
                 setPurity(Double.valueOf(((EditText) view.findViewById(R.id.edittext_nutrient_new_name))

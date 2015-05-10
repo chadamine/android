@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import chadamine.com.databaselist.Adapters.DatabaseAdapter;
@@ -134,14 +135,13 @@ public class Plant extends Organism implements DatabaseAdapter {
     @Override
     public void setContent(View view) {
 
-    // TODO: FIND A BETTER WAY TO CHECK VIEWS THAN BY TRYING TO CREATE ONE
-/*        if((view.findViewById(R.id.textview_plant_view_info_name)) != null) {
-            setViewItemContent(view);
-        }
+    }
 
-        if((view.findViewById(R.id.textview_plant_new_name_title)) != null) {
-            setNewItemContent(view);
-        }*/
+    public void saveFields(View view, boolean isListItem) {
+        if(!isListItem)
+            setName(((EditText) view.findViewById(R.id.edittext_plant_new_name))
+                    .getText().toString());
+        mContext.getContentResolver().insert(getUri(), getValues());
     }
 
     public void setViewItemContent(View view, int position, String sortOrder) {
@@ -172,31 +172,25 @@ public class Plant extends Organism implements DatabaseAdapter {
         mCursor.moveToNext();
     }
 
-    public void setNewItemContent(View view) {
-
-    }
-/*
-    public void setContent(List<View> views, int position) {
-        mCursor.moveToPosition(position);
-
-        int s = 0;
-        while(s < views.size() - 1){
-            //for(int i = 0; i < mCursor.getCount(); ++i) {
-                for (int j = 0; j < mCursor.getColumnCount() - 2; j++) {
-                    //if (views.get(i).getClass().toString().equals(TextView.class.toString())) {
-                    ((TextView) views.get(j)).setText(mCursor.getString(mCursor.getColumnIndexOrThrow(KEY_ARRAY[j])));
-                    //}
-
-                }
-            s++;
-
-        }
-
-    }*/
-
     @Override
     public String[] getKeyIdArray() {
         return KEY_ID_ARRAY;
+    }
+
+    @Override
+    public ContentValues getValues() throws NullPointerException {
+
+        ContentValues values = new ContentValues();
+        values.put(Plants.KEY_NAME, getName());
+        values.put(Plants.KEY_SPECIES, getSpecies());
+        values.put(Plants.KEY_CULTIVAR, getCultivar());
+        values.put(Plants.KEY_STAGE, getStage());
+        values.put(Plants.KEY_AGE, getAge());
+        values.put(Plants.KEY_HEIGHT, getHeight());
+        //values.put(Plants.KEY_SUBSTRATE, getSubstrate());
+        //values.put(Plants.KEY_POTSIZE, getPotSize());
+
+        return values;
     }
 
     @Override
@@ -302,19 +296,4 @@ public class Plant extends Organism implements DatabaseAdapter {
         this.mLineage = mLineage;
     }
 
-    @Override
-    public ContentValues getValues() throws NullPointerException {
-
-        ContentValues values = new ContentValues();
-        values.put(Plants.KEY_NAME, getName());
-        values.put(Plants.KEY_SPECIES, getSpecies());
-        values.put(Plants.KEY_CULTIVAR, getCultivar());
-        values.put(Plants.KEY_STAGE, getStage());
-        values.put(Plants.KEY_AGE, getAge());
-        values.put(Plants.KEY_HEIGHT, getHeight());
-        //values.put(Plants.KEY_SUBSTRATE, getSubstrate());
-        //values.put(Plants.KEY_POTSIZE, getPotSize());
-
-        return values;
-    }
 }

@@ -62,7 +62,7 @@ public class NutrientNewFragment extends Fragment {
                 f = new NutrientsFragment();
                 f.setArguments(mBundle);
 
-                mNutrient.saveFields(mView, mBundle);
+                mNutrient.saveFields(mView, false);
                 getFragmentManager().beginTransaction()
                         .replace(R.id.frame_nutrient_activity, f).commit();
                 break;
