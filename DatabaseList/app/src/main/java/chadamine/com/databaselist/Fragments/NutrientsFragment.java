@@ -55,6 +55,17 @@ public class NutrientsFragment extends ListFragment
     }
 
     @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        if(savedInstanceState != null) {
+            mBundle = savedInstanceState.getBundle("bundle");
+
+            mSortOrder = mBundle.getString("sortOrder");
+            mSortSelection = mBundle.getInt("sortSelection");
+        }
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
@@ -93,15 +104,16 @@ public class NutrientsFragment extends ListFragment
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
+        // TODO: AVOID BUNDLE WORK HERE, DO IN newInstance() OF FRAGMENT INSTEAD
+        mBundle.putInt("sortSelection", mSortSelection);
+        mBundle.putString("sortOrder", mSortOrder);
+
         Fragment f = new NutrientNewFragment();
-        Bundle args = new Bundle();
-        args.putInt("sortSelection", mSortSelection);
-        //args.putString("sortOrder", mSortOrder);
+        f.setArguments(mBundle);
 
         switch (item.getItemId()) {
 
             case R.id.add_nutrient:
-                f.setArguments(args);
                 getFragmentManager().beginTransaction()
                         .replace(R.id.frame_nutrient_activity, new NutrientNewFragment())
                         .addToBackStack("newNutrient")

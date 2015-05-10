@@ -10,12 +10,23 @@ import chadamine.com.databaselist.Fragments.NutrientsFragment;
 
 public class NutrientsActivity extends ActionBarActivity {
 
+    private final String NUTRIENTS_FRAGMENT_TAG = "nutrientsFragmentTag";
+    private NutrientsFragment mNutrientsFragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_nutrients);
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.frame_nutrient_activity, new NutrientsFragment()).commit();
+
+        if(savedInstanceState != null) {
+            mNutrientsFragment = (NutrientsFragment) getSupportFragmentManager().findFragmentByTag(NUTRIENTS_FRAGMENT_TAG);
+        } else if (mNutrientsFragment == null)
+            mNutrientsFragment = new NutrientsFragment();
+
+        if(!mNutrientsFragment.isInLayout())
+            getSupportFragmentManager().beginTransaction()
+                .replace(R.id.frame_nutrient_activity, mNutrientsFragment, NUTRIENTS_FRAGMENT_TAG).commit();
     }
 
     @Override

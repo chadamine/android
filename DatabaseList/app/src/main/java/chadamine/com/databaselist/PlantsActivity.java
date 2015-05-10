@@ -101,31 +101,6 @@ public class PlantsActivity extends ActionBarActivity {
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-
-        switch(item.getItemId()) {
-
-            case R.id.action_settings:
-                return true;
-
-            case R.id.add_plant:
-                Toast.makeText(this, " add plant ", Toast.LENGTH_SHORT).show();
-                getSupportFragmentManager().beginTransaction()
-                        .addToBackStack("new plant fragment")
-                        .replace(R.id.frame_plant_activity, new PlantNewFragment()).commit();
-                return true;
-
-            case R.id.spinner_plant_menu:
-
-        }
-
-        //return super.onOptionsItemSelected(item);
-        return true;
-    }
 
     private void loadPlants() {
 

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
@@ -44,66 +45,36 @@ public class PlantsFragment extends ListFragment
     private static final String SORT_DESC = " DESC";
     private static final String SORT_ASC = " ASC";
     private LoaderManager.LoaderCallbacks<Cursor> mLoaderManager;
-    private static String mSortOrder;
-
-    public static PlantsFragment newInstance(String sortOrder) {
-        PlantsFragment f = new PlantsFragment();
-        Bundle args = new Bundle();
-        args.putString("sort_order", sortOrder);
-        f.setArguments(args);
-        mSortOrder = sortOrder;
-
-        return f;
-    }
+    private String mSortOrder;
+    private int mSortSelection;
+    private Bundle mBundle;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        if(mView == null) {
-            mView = inflater.inflate(R.layout.fragment_plants, container, false);
+        mView = inflater.inflate(R.layout.fragment_plants, container, false);
+        mContext = getActivity();
+        mPlant = new Plant(getActivity());
+        mLoaderManager = this;
 
-            mPlant = new Plant(getActivity());
-            mContext = getActivity();
-            mLoaderManager = this;
+        if(savedInstanceState != null) {
+            mBundle = savedInstanceState.getBundle("bundle");
 
-            if(savedInstanceState != null) {
-                //mSortOrder = savedInstanceState.getString("sort_order");
-                mSortOrder = "name Desc";
-            }
-            //mSortOrder = "name Desc";
+            mSortOrder = savedInstanceState.getString("sortOrder");
+            mSortSelection = savedInstanceState.getInt("sortSelection");
 
-            Bundle loaderBundle = new Bundle();
-            loaderBundle.putString("sort_order", mSortOrder);
+            getLoaderManager().initLoader(LIST_LOADER_ID, mBundle, this);
 
-            getLoaderManager().restartLoader(LIST_LOADER_ID, loaderBundle, this);
-            // no longer seems necessary?
-            //getLoaderManager().initLoader(LIST_LOADER_ID, null, this);
-
-            prepareList();
+        } else {
+            mBundle = new Bundle();
+            getLoaderManager().initLoader(LIST_LOADER_ID, null, this);
         }
-
-        else {
-
-            Bundle loaderBundle = new Bundle();
-            loaderBundle.putString("sort_order", mSortOrder);
-
-            getLoaderManager().restartLoader(LIST_LOADER_ID, loaderBundle, this);
-
-            if(mView.getParent() != null) {
-
-                ((ViewGroup)mView.getParent()).removeView(mView);
-            }
-        }
-
-        return mView;
-    }
-
-    private void prepareList() {
 
         mListCursorAdapter = new ListCursorAdapter(getActivity(), null, 0, mPlant);
         setListAdapter(mListCursorAdapter);
-    }
 
+        return mView;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -116,10 +87,6 @@ public class PlantsFragment extends ListFragment
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
 
-        prepareMenuSpinner(menu, inflater);
-    }
-
-    private void prepareMenuSpinner(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_plants_fragment_options, menu);
 
         Spinner spinner = (Spinner) MenuItemCompat.getActionView(menu.findItem(R.id.spinner_plant_menu));
@@ -131,31 +98,33 @@ public class PlantsFragment extends ListFragment
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Bundle loaderBundle = new Bundle();
 
                 switch (position) {
 
                     case 0:
                         mSortOrder = Plants.KEY_ID + SORT_ASC;
-                        //mSortSelection = 0;
+                        mSortSelection = 0;
                         break;
 
                     case 10:
                         mSortOrder = Plants.KEY_ID + SORT_DESC;
+                        mSortSelection = 10;
                         break;
 
                     case 1:
                         mSortOrder = Plants.KEY_NAME + SORT_ASC;
-                        //mSortSelection = 1;
+                        mSortSelection = 1;
                         break;
 
                     case 11:
                         mSortOrder = Plants.KEY_NAME + SORT_DESC;
+                        mSortSelection = 11;
                         break;
                 }
 
-                loaderBundle.putString("sort_order", mSortOrder);
-                getLoaderManager().restartLoader(LIST_LOADER_ID, loaderBundle, mLoaderManager);
+                mBundle.putString("sortOrder", mSortOrder);
+                mBundle.putInt("sortSelection", mSortSelection);
+                getLoaderManager().restartLoader(LIST_LOADER_ID, mBundle, mLoaderManager);
             }
 
             // this should not happen in this case
@@ -170,11 +139,33 @@ public class PlantsFragment extends ListFragment
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
 
+        Fragment f = new PlantNewFragment();
+        mBundle.putInt("sortSelection", mSortSelection);
+        f.setArguments(mBundle);
         getFragmentManager().beginTransaction()
-                .replace(R.id.frame_plant_activity, PlantViewFragment.newInstance(position, mSortOrder))
-                .addToBackStack("plant_view").commit();
+                .replace(R.id.frame_plant_activity, f)
+                .addToBackStack("plantView").commit();
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        mBundle.putInt("sortSelection", mSortSelection);
+        mBundle.putString("sortOrder", mSortOrder);
+
+        Fragment f = new PlantNewFragment();
+        f.setArguments(mBundle);
+
+        switch(item.getItemId()) {
+            case R.id.add_plant:
+                getFragmentManager().beginTransaction()
+                        .addToBackStack("newPlant")
+                        .replace(R.id.frame_plant_activity, f).commit();
+                break;
+        }
+
+        return true;
+    }
 
     // TODO: SETUP CONTEXT MENU
     @Override
@@ -184,17 +175,13 @@ public class PlantsFragment extends ListFragment
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-
-        outState.putString("sort_order", mSortOrder);
         super.onSaveInstanceState(outState);
-        Toast.makeText(mContext, "saveState", Toast.LENGTH_SHORT).show();
+        outState.putBundle("bundle", mBundle);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-        // TODO: Restore fragment state
 
         getListView().setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
 
@@ -251,25 +238,16 @@ public class PlantsFragment extends ListFragment
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
 
         String sortOrder = "";
-        if(!args.equals(null)) {
-            sortOrder = args.getString("sort_order");
-           /* if(sortOrder != "")
-                Toast.makeText(mContext, "loader args not null!", Toast.LENGTH_SHORT).show();*/
+        if(args != null) {
+            sortOrder = args.getString("sortOrder");
         }
 
         return new CursorLoader(getActivity(),
-               Plants.CONTENT_URI,
-                Plants.KEY_ID_ARRAY,
-                null, null,
-                mSortOrder);
-                //sortOrder != "" ? sortOrder : null);
-                //args != null ? args.getString("sort_order") : null);
+               mPlant.getUri(), mPlant.getKeyIdArray(), null, null, sortOrder);
     }
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-
-        //mListCursorAdapter.notifyDataSetChanged();
 
         mListCursorAdapter.swapCursor(data);
     }

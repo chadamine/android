@@ -37,8 +37,6 @@ public class NutrientNewFragment extends Fragment {
 
         if(savedInstanceState != null) {
             mBundle = savedInstanceState.getBundle("bundle");
-            //mSortSelection = savedInstanceState.getInt("sortSelection");
-            //mSortOrder = savedInstanceState.getString("sortOrder");
         }
 
         mView = inflater.inflate(R.layout.fragment_nutrient_new, container, false);

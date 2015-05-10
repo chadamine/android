@@ -21,38 +21,18 @@ import chadamine.com.databaselist.Objects.Substrate;
 import chadamine.com.databaselist.R;
 
 public class PlantNewFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    /*private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";*/
-
-    // TODO: Rename and change types of parameters
-    /*private String mParam1;
-    private String mParam2;
-
-    private OnFragmentInteractionListener mListener;*/
 
     private View mView;
     private Plant mPlant;
     private Substrate mSubstrate;
     private Context mContext;
-
-    // TODO: Rename and change types and number of parameters
-    public static PlantNewFragment newInstance(/*String param1, String param2*/) {
-        PlantNewFragment fragment = new PlantNewFragment();
-
-        return fragment;
-    }
+    private Bundle mBundle;
 
     public PlantNewFragment() {}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-       /* if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }*/
     }
 
     @Override
@@ -66,20 +46,26 @@ public class PlantNewFragment extends Fragment {
         setSpinnerHeightUnits();
         setSpinnerSubstrates();
 
+        if(savedInstanceState != null)
+            mBundle = savedInstanceState.getBundle("bundle");
+
         return mView;
     }
-
 
     private void setUpButton() {
         Button btnSavePlant = (Button) mView.findViewById(R.id.button_save_plant_new);
         btnSavePlant.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                createPlant();
+                savePlant();
                 saveToDB();
 
-                getFragmentManager().popBackStack();
+                Fragment f = new PlantsFragment();
+                f.setArguments(mBundle);
 
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.frame_nutrient_activity, f)
+                        .commit();
             }
         });
     }
@@ -125,7 +111,7 @@ public class PlantNewFragment extends Fragment {
         spinner.setAdapter(new SpinnerCursorAdapter(getActivity(), mSubstrate.getCursor()));
     }
 
-    private void createPlant() {
+    private void savePlant() {
         mPlant = new Plant(mContext);
         mPlant.setName(((EditText) mView.findViewById(R.id.edittext_plant_new_name))
                 .getText().toString());
@@ -150,4 +136,9 @@ public class PlantNewFragment extends Fragment {
                 .insert(DatabaseSchema.Plants.CONTENT_URI, mPlant.getValues());
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBundle("bundle", mBundle);
+    }
 }
