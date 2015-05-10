@@ -59,7 +59,7 @@ public class ProductsFragment extends ListFragment
                         getFragmentManager()
                                 .beginTransaction()
                                 .addToBackStack("newProduct")
-                                .replace(R.id.container, new ProductNewFragment())
+                                .replace(R.id.frame_product_activity, new ProductNewFragment())
                                 .commit();
                     }
                 });

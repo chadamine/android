@@ -23,7 +23,7 @@
         android:label="@string/app_name"
         android:theme="@style/Theme.AppCompat.Light" >
         <activity
-            android:name=".MainActivity"
+            android:name=".HomeActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -47,6 +47,10 @@
         <activity
             android:name=".ScheduleActivity"
             android:label="@string/title_activity_schedule" >
+        </activity>
+        <activity
+            android:name=".ProductsActivity"
+            android:label="@string/title_activity_products" >
         </activity>
     </application>
 

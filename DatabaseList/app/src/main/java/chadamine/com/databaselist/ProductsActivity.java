@@ -5,27 +5,24 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import chadamine.com.databaselist.Fragments.HomeFragment;
+import chadamine.com.databaselist.Fragments.ProductsFragment;
 
 
-public class MainActivity extends ActionBarActivity {
+public class ProductsActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
-        if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new HomeFragment())
-                    .commit();
-        }
-    }
+        setContentView(R.layout.activity_products);
 
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.frame_product_activity, new ProductsFragment()).commit();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_products_activity, menu);
         return true;
     }
 
@@ -43,5 +40,4 @@ public class MainActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
 }

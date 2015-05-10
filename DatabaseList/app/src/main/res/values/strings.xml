@@ -8,4 +8,5 @@
     <string name="title_activity_plants">PlantsActivity</string>
     <string name="title_activity_nutrients">NutrientsActivity</string>
     <string name="title_activity_schedule">ScheduleActivity</string>
+    <string name="title_activity_products">ProductsActivity</string>
 </resources>

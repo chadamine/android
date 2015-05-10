@@ -12,6 +12,7 @@ import android.widget.Button;
 import chadamine.com.databaselist.PlantsActivity;
 import chadamine.com.databaselist.NutrientsActivity;
 
+import chadamine.com.databaselist.ProductsActivity;
 import chadamine.com.databaselist.R;
 import chadamine.com.databaselist.ScheduleActivity;
 
@@ -28,13 +29,8 @@ public class HomeFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
 
         mContext = getActivity();
-        Button btnProducts = (Button) rootView.findViewById(R.id.button_tomaterials);
-        btnProducts.setOnClickListener(new View.OnClickListener() {
-           @Override
-        public void onClick(View v) {
-               getFragmentManager().beginTransaction().addToBackStack("home").replace(R.id.container, new ProductsFragment()).commit();
-           }
-        });
+
+
 
         Button btnJournals = (Button) rootView.findViewById(R.id.button_tojournals);
         btnJournals.setOnClickListener(new View.OnClickListener() {
@@ -44,6 +40,14 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        Button btnProducts = (Button) rootView.findViewById(R.id.button_tomaterials);
+        btnProducts.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(mContext, ProductsActivity.class));
+                //getFragmentManager().beginTransaction().addToBackStack("home").replace(R.id.container, new ProductsFragment()).commit();
+            }
+        });
         Button btnPlants = (Button) rootView.findViewById(R.id.button_toplants);
         btnPlants.setOnClickListener(new View.OnClickListener() {
             @Override

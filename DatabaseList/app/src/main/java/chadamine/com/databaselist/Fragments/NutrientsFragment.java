@@ -31,8 +31,11 @@ public class NutrientsFragment extends ListFragment
     private Context mContext;
     private Nutrient mNutrient;
     private View mView;
-    //private String mSortOrder;
+
+    private String mSortOrder;
     private int mSortSelection;
+    private Bundle mBundle;
+
     private LoaderManager.LoaderCallbacks<Cursor> mLoaderManager;
 
     private ListCursorAdapter mListCursorAdapter;
@@ -41,13 +44,6 @@ public class NutrientsFragment extends ListFragment
     private static final String SORT_DESC = " DESC";
     private static final String SORT_ASC = " ASC";
 
-    /*public static NutrientsFragment newInstance(String param1, String sortOrder) {
-        NutrientsFragment fragment = new NutrientsFragment();
-        mSortOrder = sortOrder;
-
-        return fragment;
-    }*/
-
     public NutrientsFragment() {
 
     }
@@ -55,7 +51,7 @@ public class NutrientsFragment extends ListFragment
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        setRetainInstance(true);
     }
 
     @Override
@@ -64,16 +60,27 @@ public class NutrientsFragment extends ListFragment
 
         mView = inflater.inflate(R.layout.fragment_nutrients, container, false);
         mContext = getActivity();
-        mNutrient = new Nutrient(mContext);
-        mListCursorAdapter = new ListCursorAdapter(mContext, null, 0, mNutrient);
+
+        if(mNutrient == null)
+            mNutrient = new Nutrient(mContext);
+
+        if(mListCursorAdapter == null)
+            mListCursorAdapter = new ListCursorAdapter(mContext, null, 0, mNutrient);
+
         mLoaderManager = this;
+
+        if(mBundle == null)
+            mBundle = new Bundle();
 
         setHasOptionsMenu(true);
 
         if(savedInstanceState != null) {
-            //mSortOrder = savedInstanceState.getString("sortOrder");
-            mSortSelection = savedInstanceState.getInt("sortSelection");
-            getLoaderManager().initLoader(LIST_LOADER_ID, savedInstanceState, this);
+            mBundle = savedInstanceState.getBundle("bundle");
+
+            mSortOrder = mBundle.getString("sortOrder");
+            mSortSelection = mBundle.getInt("sortSelection");
+
+            getLoaderManager().initLoader(LIST_LOADER_ID, mBundle, this);
         }
         else
             getLoaderManager().initLoader(LIST_LOADER_ID, null, this);
@@ -123,34 +130,33 @@ public class NutrientsFragment extends ListFragment
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Bundle loaderBundle = new Bundle();
-                String sortOrder = "";
 
                 switch (position) {
 
                     case 0:
-                        sortOrder = Nutrients.KEY_ID + SORT_ASC;
+                        mSortOrder = Nutrients.KEY_ID + SORT_ASC;
                         mSortSelection = 0;
                         break;
 
                     case 5:
-                        sortOrder = Nutrients.KEY_ID + SORT_DESC;
+                        mSortOrder = Nutrients.KEY_ID + SORT_DESC;
                         mSortSelection = 5;
                         break;
 
                     case 1:
-                        sortOrder = Nutrients.KEY_NAME + SORT_ASC;
+                        mSortOrder = Nutrients.KEY_NAME + SORT_ASC;
                         mSortSelection = 1;
                         break;
 
                     case 6:
-                        sortOrder = Nutrients.KEY_NAME + SORT_DESC;
+                        mSortOrder = Nutrients.KEY_NAME + SORT_DESC;
                         mSortSelection = 6;
                         break;
                 }
 
-                loaderBundle.putString("sortOrder", sortOrder);
-                getLoaderManager().restartLoader(LIST_LOADER_ID, loaderBundle, mLoaderManager);
+                mBundle.putString("sortOrder", mSortOrder);
+                mBundle.putInt("sortSelection", mSortSelection);
+                getLoaderManager().restartLoader(LIST_LOADER_ID, mBundle, mLoaderManager);
             }
 
             // this should not happen in this case
@@ -170,6 +176,13 @@ public class NutrientsFragment extends ListFragment
 
         return new CursorLoader(mContext, mNutrient.getUri(),
                 mNutrient.getKeyIdArray(), null, null, sortOrder);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putBundle("bundle", mBundle);
     }
 
     @Override

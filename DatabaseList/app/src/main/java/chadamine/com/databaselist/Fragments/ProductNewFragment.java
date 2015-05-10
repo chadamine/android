@@ -42,11 +42,11 @@ public class ProductNewFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater,
                              @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        mContext = getActivity();
         mView = inflater.inflate(R.layout.fragment_product_new, container, false);
         mProduct = new Product(mContext);
         mFields = new ArrayList<>();
         mPhotos = new ArrayList<>();
-        mContext = getActivity();
 
         mEditTextName = (EditText) mView.findViewById(R.id.edittext_newproduct_name);
         mFields.add(mEditTextName);
