@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 
@@ -48,21 +49,11 @@ public class NutrientsFragment extends ListFragment
 
     }
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
-    }
-
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        if(savedInstanceState != null) {
-            mBundle = savedInstanceState.getBundle("bundle");
-
-            mSortOrder = mBundle.getString("sortOrder");
-            mSortSelection = mBundle.getInt("sortSelection");
-        }
     }
 
     @Override
@@ -71,17 +62,9 @@ public class NutrientsFragment extends ListFragment
 
         mView = inflater.inflate(R.layout.fragment_nutrients, container, false);
         mContext = getActivity();
-
         if(mNutrient == null)
             mNutrient = new Nutrient(mContext);
-
-        if(mListCursorAdapter == null)
-            mListCursorAdapter = new ListCursorAdapter(mContext, null, 0, mNutrient);
-
         mLoaderManager = this;
-
-        if(mBundle == null)
-            mBundle = new Bundle();
 
         setHasOptionsMenu(true);
 
@@ -93,35 +76,27 @@ public class NutrientsFragment extends ListFragment
 
             getLoaderManager().initLoader(LIST_LOADER_ID, mBundle, this);
         }
-        else
+        else {
+            mBundle = new Bundle();
             getLoaderManager().initLoader(LIST_LOADER_ID, null, this);
+        }
 
+        if(mListCursorAdapter == null)
+            mListCursorAdapter = new ListCursorAdapter(mContext, null, 0, mNutrient);
         setListAdapter(mListCursorAdapter);
 
         return mView;
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        if(savedInstanceState != null) {
+            mBundle = savedInstanceState.getBundle("bundle");
 
-        // TODO: AVOID BUNDLE WORK HERE, DO IN newInstance() OF FRAGMENT INSTEAD
-        mBundle.putInt("sortSelection", mSortSelection);
-        mBundle.putString("sortOrder", mSortOrder);
-
-        Fragment f = new NutrientNewFragment();
-        f.setArguments(mBundle);
-
-        switch (item.getItemId()) {
-
-            case R.id.add_nutrient:
-                getFragmentManager().beginTransaction()
-                        .replace(R.id.frame_nutrient_activity, new NutrientNewFragment())
-                        .addToBackStack("newNutrient")
-                        .commit();
-                break;
+            mSortOrder = mBundle.getString("sortOrder");
+            mSortSelection = mBundle.getInt("sortSelection");
         }
-
-        return true;
     }
 
     @Override
@@ -168,6 +143,7 @@ public class NutrientsFragment extends ListFragment
 
                 mBundle.putString("sortOrder", mSortOrder);
                 mBundle.putInt("sortSelection", mSortSelection);
+
                 getLoaderManager().restartLoader(LIST_LOADER_ID, mBundle, mLoaderManager);
             }
 
@@ -179,6 +155,48 @@ public class NutrientsFragment extends ListFragment
         });
     }
 
+
+    @Override
+    public void onListItemClick(ListView l, View v, int position, long id) {
+        super.onListItemClick(l, v, position, id);
+
+        Fragment f = new NutrientViewFragment();
+        mBundle.putInt("sortSelection", mSortSelection);
+        f.setArguments(mBundle);
+        getFragmentManager().beginTransaction().replace(R.id.frame_nutrient_activity, f)
+                .addToBackStack("nutrientView").commit();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        // TODO: AVOID BUNDLE WORK HERE, DO IN newInstance() OF FRAGMENT INSTEAD
+        mBundle.putInt("sortSelection", mSortSelection);
+        mBundle.putString("sortOrder", mSortOrder);
+
+        Fragment f = new NutrientNewFragment();
+        f.setArguments(mBundle);
+
+        switch (item.getItemId()) {
+
+            case R.id.add_nutrient:
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.frame_nutrient_activity, new NutrientNewFragment())
+                        .addToBackStack("newNutrient")
+                        .commit();
+                break;
+        }
+
+        return true;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putBundle("bundle", mBundle);
+    }
+
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
 
@@ -188,13 +206,6 @@ public class NutrientsFragment extends ListFragment
 
         return new CursorLoader(mContext, mNutrient.getUri(),
                 mNutrient.getKeyIdArray(), null, null, sortOrder);
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-
-        outState.putBundle("bundle", mBundle);
     }
 
     @Override
