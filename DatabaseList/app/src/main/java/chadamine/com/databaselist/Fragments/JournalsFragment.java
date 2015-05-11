@@ -76,7 +76,7 @@ public class JournalsFragment extends ListFragment implements LoaderManager.Load
 				@Override
 				public boolean onCreateActionMode(ActionMode mode, Menu menu) {
 
-					mode.getMenuInflater().inflate(R.menu.menu_products, menu);
+					mode.getMenuInflater().inflate(R.menu.menu_journals, menu);
 					return true;
 				}
 
@@ -88,7 +88,7 @@ public class JournalsFragment extends ListFragment implements LoaderManager.Load
 				@Override
 				public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
 					switch(item.getItemId()) {
-						case R.id.delete:
+						case R.id.delete_journal:
 
 							for(int i = (getListView().getCheckedItemCount() - 1); i >= 0; i--) {
 								int checkedItemKey = getListView()

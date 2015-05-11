@@ -89,7 +89,9 @@ public class PlantsFragment extends ListFragment
             getLoaderManager().initLoader(LIST_LOADER_ID, null, this);
         }
 
-        mListCursorAdapter = new ListCursorAdapter(getActivity(), null, 0, mPlant);
+        mListCursorAdapter = new ListCursorAdapter(getActivity(),
+                mPlant.getNewCursor(mPlant.getKeyIdArray(), null, null, mSortOrder), 0, mPlant);
+
         setListAdapter(mListCursorAdapter);
 
         return mView;
@@ -113,7 +115,7 @@ public class PlantsFragment extends ListFragment
             @Override
             public boolean onCreateActionMode(ActionMode mode, Menu menu) {
 
-                mode.getMenuInflater().inflate(R.menu.menu_action_mode_plants, menu);
+                mode.getMenuInflater().inflate(R.menu.menu_plants_action, menu);
                 return true;
             }
 
@@ -150,7 +152,9 @@ public class PlantsFragment extends ListFragment
             public void onItemCheckedStateChanged(ActionMode mode, int position, long id,
                                                   boolean checked) {
 
-                mode.setTitle(getListView().getCheckedItemCount() + " Plants Selected");
+                String plurality = mListCursorAdapter
+                        .getSelectedItems().size() == 1 ? " Plant Selected" : " Plants Selected";
+                mode.setTitle(getListView().getCheckedItemCount() + plurality);
                 mListCursorAdapter.toggleSelection(position);
             }
 
@@ -162,7 +166,7 @@ public class PlantsFragment extends ListFragment
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
 
-        inflater.inflate(R.menu.menu_plants_plants, menu);
+        inflater.inflate(R.menu.menu_plants, menu);
 
         Spinner spinner = (Spinner) MenuItemCompat.getActionView(menu.findItem(R.id.spinner_plant_menu));
         SpinnerAdapter mSpinnerAdapter = ArrayAdapter.createFromResource(mContext,

@@ -40,17 +40,10 @@ public class Product implements DatabaseAdapter {
     //private Manufacturer mManufacturer;
     //private Supplier mSupplier;
 
-    //public Product() {}
-
     public Product(Context c) {
         mContext = c;
         mCursor = mContext.getContentResolver()
                 .query(getUri(), getKeyIdArray(), null, null, null);
-    }
-
-    public Product(Product product) {
-        mID = product.getID();
-        mName = product.getName();
     }
 
     public String getName() throws NullPointerException {
@@ -110,7 +103,7 @@ public class Product implements DatabaseAdapter {
         String name = c.getString(c.getColumnIndexOrThrow(KEY_NAME));
 
         if (!name.isEmpty())
-            ((TextView) view.findViewById(R.id.textview_productlist_name)).setText(name);
+            ((TextView) view.findViewById(R.id.textview_product_name)).setText(name);
     }
 
     @Override
@@ -122,14 +115,10 @@ public class Product implements DatabaseAdapter {
         mCursor = cursor;
         loadFromDatabase(position);
 
-        ((TextView) view.findViewById(R.id.textview_productlist_name)).setText(getName());
-        //mCursor.getString(mCursor.getColumnIndex(DatabaseContract.Products.KEY_NAME)));
-        ((TextView) view.findViewById(R.id.textview_productlist_manufacturer)).setText(getManufacturer());
-        //mCursor.getString(mCursor.getColumnIndex(DatabaseContract.Products.KEY_MANUFACTURER)));
-        ((TextView) view.findViewById(R.id.textview_productlist_type)).setText(getType());
-        //mCursor.getString(mCursor.getColumnIndex(DatabaseContract.Products.KEY_TYPE)));
-        ((TextView) view.findViewById(R.id.textview_productlist_line)).setText(getProductLine());
-        //mCursor.getString(mCursor.getColumnIndex(DatabaseContract.Products.KEY_LINE)));
+        ((TextView) view.findViewById(R.id.textview_product_name)).setText(getName());
+        ((TextView) view.findViewById(R.id.textview_product_manufacturer)).setText(getManufacturer());
+        ((TextView) view.findViewById(R.id.textview_product_type)).setText(getType());
+        ((TextView) view.findViewById(R.id.textview_product_line)).setText(getProductLine());
     }
 
     public void loadFromDatabase(int position) {

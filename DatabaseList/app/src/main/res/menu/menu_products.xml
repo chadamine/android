@@ -1,6 +1,25 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <item
-        android:id="@+id/delete"
-        android:title="delete"
+        android:id="@+id/spinner_products_filter"
+        android:title="SpinnerProductsFilter"
+        android:orderInCategory="80"
+        app:showAsAction="ifRoom"
+        app:actionViewClass="android.widget.Spinner"
         />
+    <item
+        android:id="@+id/spinner_products_sort"
+        android:title="SpinnerProductsSort"
+        android:orderInCategory="90"
+        app:showAsAction="ifRoom"
+        app:actionViewClass="android.widget.Spinner"
+        />
+    <item
+        android:id="@+id/add_product"
+        app:showAsAction="ifRoom"
+        android:orderInCategory="100"
+        android:title="Add Product">
+    </item>
 </menu>

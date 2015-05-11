@@ -36,4 +36,29 @@
         <item>State, Desc</item>
         <item>Form, Desc</item>
     </string-array>
+    <string-array name="product_sort_items">
+        <!-- ASCENDING -->
+        <item>Date Acquired</item>
+        <item>Date Used</item>
+        <item>Name</item>
+        <item>Manufacturer</item>
+        <item>Product Line</item>
+        <!-- DESCENDING -->
+        <item>Date Acquired, Desc</item>
+        <item>Date Used, Desc</item>
+        <item>Name, Desc</item>
+        <item>Manufacturer, Desc</item>
+        <item>Product Line, Desc</item>
+    </string-array>
+    <string-array name="product_filter_items">
+        <!-- ASCENDING -->
+        <item>No Filter</item>
+        <item>Nutrients</item>
+        <item>Pesticides</item>
+        <item>Substrates</item>
+        <item>Lighting</item>
+        <item>Environmental</item>
+
+
+    </string-array>
 </resources>

@@ -1,71 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:id="@+id/relativelayout_plant_list_row"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/checkablerelativelayout_product_list_row"
     android:background="?android:attr/activatedBackgroundIndicator"
     >
+    <FrameLayout
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="#ffffff"
+        android:id="@+id/framelayout_plants_item"
+        android:layout_margin="10dp"
+        />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginEnd="10dp"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textview_product_name"
+            android:text="Name:"
+            android:layout_alignParentTop="true"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textview_product_type"
+            android:text="Type:"
+            android:layout_marginTop="5dp"
+            />
 
-    <TextView
+    </LinearLayout>
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/textview_productlist_nameTitle"
-        android:text="Name:"
-        android:layout_alignParentTop="true"
-        />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/textview_productlist_name"
-        android:layout_toRightOf="@id/textview_productlist_nameTitle"
+        android:orientation="vertical"
         android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginEnd="10dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textview_product_manufacturer"
+            android:text="Manufacturer:"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textview_product_line"
+            android:text="Product Line:"
+            android:layout_marginTop="5dp"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginEnd="10dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textview_product_state"
+            android:text="State: "
+            android:layout_marginTop="5dp"/>
+    </LinearLayout>
 
-        />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/textview_productlist_manufacturerTitle"
-        android:layout_toRightOf="@id/textview_productlist_name"
-        android:text="Manufacturer:"
-        android:layout_marginLeft="20dp"
-        />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/textview_productlist_manufacturer"
-        android:layout_toRightOf="@id/textview_productlist_manufacturerTitle"
-        android:layout_marginLeft="10dp"
-        />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/textview_productlist_lineTitle"
-        android:layout_toRightOf="@id/textview_productlist_manufacturer"
-        android:text="Product Line:"
-        android:layout_marginLeft="20dp"
-        />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/textview_productlist_line"
-        android:layout_marginLeft="10dp"
-        android:layout_toRightOf="@id/textview_productlist_lineTitle"
-        />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/textview_productlist_typeTitle"
-        android:layout_toRightOf="@id/textview_productlist_line"
-        android:text="Product Type:"
-        android:layout_marginLeft="20dp"
-        />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/textview_productlist_type"
-        android:layout_toRightOf="@id/textview_productlist_typeTitle"
-        android:layout_marginLeft="10dp"
-        />
-
-</RelativeLayout>
+</LinearLayout>

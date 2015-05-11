@@ -30,13 +30,7 @@ public class ListCursorAdapter extends CursorAdapter {
         mDatabaseObject = dbObject;
         mIds = new HashMap<>();
         mSelectedItems = new SparseBooleanArray();
-
-        //if(c != null)
-            mCursor = c;
-        /*else
-            mCursor = mContext.getContentResolver()
-                    .query(mDatabaseObject.getUri(),
-                            mDatabaseObject.getKeyIdArray(), null, null, null);*/
+        mCursor = c;
     }
 
     @Override
@@ -54,6 +48,18 @@ public class ListCursorAdapter extends CursorAdapter {
         return mCursor;
 	}
 
+    public void selectAll() {
+
+        for(int i = 0; i < mSelectedItems.size(); i++) {
+            mCursor.moveToPosition(i);
+            mSelectedItems.put(i, false);
+            mIds.put(i, mCursor.getLong(
+                    mCursor.getColumnIndex(mDatabaseObject.getKeyID())));
+        }
+
+        notifyDataSetChanged();
+    }
+
     public void toggleSelection(int position) {
         boolean checked = !mSelectedItems.get(position);
 		//Cursor cursor = getCursor();
@@ -62,8 +68,7 @@ public class ListCursorAdapter extends CursorAdapter {
 
         if(checked) {
             mSelectedItems.put(position, checked);
-            mIds.put(position,
-                    mCursor.getLong(
+            mIds.put(position, mCursor.getLong(
                             mCursor.getColumnIndex(mDatabaseObject.getKeyID())));
         } else {
             mIds.remove(position);
@@ -85,5 +90,9 @@ public class ListCursorAdapter extends CursorAdapter {
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
         return LayoutInflater.from(context).inflate(mDatabaseObject.getListItemLayoutId(), parent, false);
+    }
+
+    public SparseBooleanArray getSelectedItems() {
+        return mSelectedItems;
     }
 }

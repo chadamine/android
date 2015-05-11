@@ -36,7 +36,7 @@ public class NutrientNewFragment extends Fragment {
         setHasOptionsMenu(true);
 
         if(savedInstanceState != null) {
-            mBundle = savedInstanceState.getBundle("bundle");
+            mBundle = savedInstanceState;
         }
 
         mView = inflater.inflate(R.layout.fragment_nutrient_new, container, false);

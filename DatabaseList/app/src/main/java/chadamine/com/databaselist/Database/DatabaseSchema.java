@@ -22,6 +22,9 @@ public class DatabaseSchema {
     public static final String TXF = " TEXT";
     public static final String CLOSE = ");";
 
+    public static final String SORT_DESC = " DESC";
+    public static final String SORT_ASC = " ASC";
+
     public static final String[] CREATE_TABLES = {
             Products.TABLE_CREATE,
             Photos.TABLE_CREATE,

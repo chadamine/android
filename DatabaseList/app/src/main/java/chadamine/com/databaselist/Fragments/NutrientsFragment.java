@@ -31,7 +31,6 @@ public class NutrientsFragment extends ListFragment
 
     private Context mContext;
     private Nutrient mNutrient;
-    private View mView;
 
     private String mSortOrder;
     private int mSortSelection;
@@ -45,10 +44,14 @@ public class NutrientsFragment extends ListFragment
     private static final String SORT_DESC = " DESC";
     private static final String SORT_ASC = " ASC";
 
-    public NutrientsFragment() {
+    public NutrientsFragment newInstance(Bundle args) {
+        NutrientsFragment f = new NutrientsFragment();
 
+        if(args != null)
+            f.setArguments(args);
+
+        return f;
     }
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -60,43 +63,34 @@ public class NutrientsFragment extends ListFragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        mView = inflater.inflate(R.layout.fragment_nutrients, container, false);
+        View view = inflater.inflate(R.layout.fragment_nutrients, container, false);
         mContext = getActivity();
+
         if(mNutrient == null)
             mNutrient = new Nutrient(mContext);
         mLoaderManager = this;
 
         setHasOptionsMenu(true);
 
-        if(savedInstanceState != null) {
-            mBundle = savedInstanceState.getBundle("bundle");
-
-            mSortOrder = mBundle.getString("sortOrder");
-            mSortSelection = mBundle.getInt("sortSelection");
-
-            getLoaderManager().initLoader(LIST_LOADER_ID, mBundle, this);
-        }
-        else {
-            mBundle = new Bundle();
-            getLoaderManager().initLoader(LIST_LOADER_ID, null, this);
-        }
+        getLoaderManager().initLoader(LIST_LOADER_ID, mBundle, this);
 
         if(mListCursorAdapter == null)
             mListCursorAdapter = new ListCursorAdapter(mContext, null, 0, mNutrient);
         setListAdapter(mListCursorAdapter);
 
-        return mView;
+        return view;
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
         if(savedInstanceState != null) {
             mBundle = savedInstanceState.getBundle("bundle");
-
             mSortOrder = mBundle.getString("sortOrder");
             mSortSelection = mBundle.getInt("sortSelection");
-        }
+        } else
+            mBundle = new Bundle();
     }
 
     @Override
@@ -160,10 +154,11 @@ public class NutrientsFragment extends ListFragment
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
 
-        Fragment f = new NutrientViewFragment();
         mBundle.putInt("sortSelection", mSortSelection);
-        f.setArguments(mBundle);
-        getFragmentManager().beginTransaction().replace(R.id.frame_nutrient_activity, f)
+        mBundle.putString("sortOrder", mSortOrder);
+        mBundle.putInt("position", position);
+
+        getFragmentManager().beginTransaction().replace(R.id.frame_nutrient_activity, NutrientViewFragment.newInstance(mBundle))
                 .addToBackStack("nutrientView").commit();
     }
 
@@ -193,8 +188,7 @@ public class NutrientsFragment extends ListFragment
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-
-        outState.putBundle("bundle", mBundle);
+        outState = mBundle;
     }
 
     @Override

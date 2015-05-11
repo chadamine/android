@@ -1,34 +1,28 @@
 package chadamine.com.databaselist.Fragments;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.ParcelFileDescriptor;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.internal.widget.TintEditText;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.io.File;
-import java.io.FileDescriptor;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import chadamine.com.databaselist.Database.DatabaseSchema;
-import chadamine.com.databaselist.Objects.Product;
 import chadamine.com.databaselist.Objects.Photo;
+import chadamine.com.databaselist.Objects.Product;
 import chadamine.com.databaselist.R;
 
 /**
@@ -37,72 +31,96 @@ import chadamine.com.databaselist.R;
 public class ProductNewFragment extends Fragment {
 
     private Product mProduct;
-    private View mView;
-    private List<View> mFields;
-    private EditText mEditTextName;
+    private HashMap<String, View> mFields;
     private Photo mPhoto;
     private List<Photo> mPhotos;
     private Context mContext;
+
+    private Bundle mBundle;
+    private String mSortOrder;
+    private int mPosition;
+    private EditText mEditName;
 
     static final int REQUEST_IMAGE_CAPTURE = 1;
     private static final int WRITE_REQUEST_CODE = 10;
 
 
-    public ProductNewFragment() {}
+    public static ProductNewFragment newInstance(Bundle args) {
+        ProductNewFragment f = new ProductNewFragment();
+        if(args != null)
+            f.setArguments(args);
+
+        return f;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater,
                              @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mContext = getActivity();
-        mView = inflater.inflate(R.layout.fragment_product_new, container, false);
+        View view = inflater.inflate(R.layout.fragment_product_new, container, false);
         mProduct = new Product(mContext);
-        mFields = new ArrayList<>();
+        mFields = new HashMap<>();
         mPhotos = new ArrayList<>();
 
-        mEditTextName = (EditText) mView.findViewById(R.id.edittext_newproduct_name);
-        mFields.add(mEditTextName);
+        mFields.put("name", view.findViewById(R.id.edittext_product_new_name));
 
-        setSaveButton();
-        setPictureButton();
+        mEditName = (EditText) view.findViewById(R.id.edittext_product_new_name);
+        setProductName();
 
-        return mView;
+        return view;
     }
 
-    private void setSaveButton() {
-        Button btnSave = (Button) mView.findViewById(R.id.button_newproduct_save);
-        btnSave.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-            @Override
-            public void onClick(View v) {
+        setHasOptionsMenu(true);
+        if(savedInstanceState != null) {
+            mBundle = savedInstanceState;
+            mSortOrder = mBundle.getString("sortOrder");
+            mPosition = mBundle.getInt("position");
+        } else
+            mBundle = new Bundle();
+    }
 
-                //mProduct.setName((mEditTextName).getText().toString());
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.menu_product_new, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.save_product:
+                setProductName();
                 if (mProduct.hasName()) {
                     savePictures();
-                    saveFields();
                     dbInsertFields();
                     getFragmentManager().popBackStack();
                 } else
                     Toast.makeText(mContext,
                             "Product must have a name to save", Toast.LENGTH_LONG).show();
-            }
-        });
-    }
+                break;
 
-    private void setPictureButton() {
-        (mView.findViewById(R.id.button_takepicture)).setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-
-                mProduct.setName(mEditTextName.getText().toString());
+            case R.id.product_menu_photo:
+                setProductName();
 
                 if (mProduct.hasName()) {
                     startCamera();
                 } else
                     Toast.makeText(mContext,
                             "Product must have a name to take a photo", Toast.LENGTH_LONG).show();
-            }
-        });
+                break;
+        }
+
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void setProductName() {
+        mProduct.setName(mEditName.getText().toString());
     }
 
     @Override
@@ -119,7 +137,7 @@ public class ProductNewFragment extends Fragment {
                 Toast.LENGTH_LONG).show();
         // TODO: CLOSE KEYBOARD
 
-        if (requestCode == WRITE_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+        /*if (requestCode == WRITE_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
 
             Uri uri = null;
             if (data != null) {
@@ -154,7 +172,7 @@ public class ProductNewFragment extends Fragment {
 
                 }
             }
-        }
+        }*/
     }
 
     private void clearFields() {
@@ -170,6 +188,7 @@ public class ProductNewFragment extends Fragment {
         }
     }
 
+    // TODO: IS BETTER WAY TO REMOVE FOCUS?
     private void toggleFocusable(View view) {
         if(view.isFocused()) {
             view.setFocusable(false);
@@ -193,15 +212,11 @@ public class ProductNewFragment extends Fragment {
 
         // TODO: check for mProductName changed,
         // TODO: adjust names of pictures in list as needed before save
-        mProduct.setName(mEditTextName.getText().toString());
-
+        setProductName();
         Intent intent = new Intent(Intent.ACTION_EDIT);
         //intent.addCategory(Intent.CATEGORY_OPENABLE);
         intent.setType("image/*");
         startActivityForResult(intent, WRITE_REQUEST_CODE);
-
-
-
 
 /*
         for(Photo photo : mPhotos) {
@@ -251,25 +266,11 @@ public class ProductNewFragment extends Fragment {
     }
 
     private void dbInsertFields() {
-        mProduct.setName((mEditTextName).getText().toString());
+
+        setProductName();
         mContext.getContentResolver()
                 .insert(DatabaseSchema.Products.CONTENT_URI, mProduct.getValues());
     }
 
-    private void saveFields() {
-        //mFields = new ArrayList<>();
-        //mFields.add(mEditTextName);
-        String name = mEditTextName.getText().toString();
-
-        // FIXME: BETTER CHECKING FOR NAME SETTERS AND GETTERS
-        if(name == null)
-            name = "";
-        try {
-            mProduct.setName(name);
-        }
-            catch (NullPointerException e) {
-                e.printStackTrace();
-            }
-    }
 }
 
