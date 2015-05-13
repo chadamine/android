@@ -6,18 +6,18 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 
+import chadamine.com.databaselist.Fragments.PlantNewFragment;
+import chadamine.com.databaselist.Fragments.PlantViewFragment;
 import chadamine.com.databaselist.Fragments.PlantsFragment;
 
 public class PlantsActivity extends ActionBarActivity {
 
-    ViewPager mViewPager;
-    String[] mPageData;
-
-    Bundle mBundle;
-    String mSortOrder;
-    Fragment mContent;
     private final String PLANTS_FRAGMENT_TAG = "plantsFragmentTag";
-    PlantsFragment mPlantsFragment;
+    private final String PLANT_NEW_FRAGMENT_TAG = "plantNewFragmentTag";
+    private final String PLANT_VIEW_FRAGMENT_TAG = "plantViewFragmentTag";
+    private PlantsFragment mPlantsFragment;
+    private PlantViewFragment mPlantViewFragment;
+    private PlantNewFragment mPlantNewFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,26 +25,28 @@ public class PlantsActivity extends ActionBarActivity {
 
         setContentView(R.layout.activity_plants);
 
-        //mPageData = TODO: GET FROM DATABASE
-        //mViewPager = (ViewPager) findViewById(R.id.frame_plant_activity);
-        //mViewPager.setAdapter(new SwipePagerAdapter(this, mPlants, DatabaseContract.Plants.CONTENT_URI));
-
         if (savedInstanceState != null) {
-            mPlantsFragment = (PlantsFragment) getSupportFragmentManager().findFragmentByTag(PLANTS_FRAGMENT_TAG);
+
+            mPlantsFragment = (PlantsFragment) getSupportFragmentManager()
+                    .findFragmentByTag(PLANTS_FRAGMENT_TAG);
+ /*           mPlantViewFragment = (PlantViewFragment) getSupportFragmentManager()
+                    .findFragmentByTag(PLANT_VIEW_FRAGMENT_TAG);
+            mPlantNewFragment = (PlantNewFragment) getSupportFragmentManager()
+                    .findFragmentByTag(PLANT_NEW_FRAGMENT_TAG);
         } else if (mPlantsFragment == null) {
             mPlantsFragment = new PlantsFragment();
+        } else if (mPlantViewFragment == null) {
+            mPlantViewFragment = new PlantViewFragment();
+        } else if (mPlantNewFragment == null) {
+            mPlantNewFragment = new PlantNewFragment();
+            */
         }
 
         if(!mPlantsFragment.isInLayout())
             getSupportFragmentManager().beginTransaction()
-                .replace(R.id.frame_plant_activity, mPlantsFragment, PLANTS_FRAGMENT_TAG).commit();
+                .replace(R.id.frame_plant_activity, mPlantsFragment,
+                        PLANTS_FRAGMENT_TAG).commit();
     }
-
-        @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-    }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

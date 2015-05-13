@@ -1,9 +1,7 @@
 package chadamine.com.databaselist.Fragments;
 
 import android.content.Context;
-import android.database.Cursor;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -11,7 +9,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -26,10 +23,9 @@ public class PlantViewFragment extends Fragment {
     private Context mContext;
     private Plant mPlant;
     private List<View> mFields;
-    private static int mPosition;
+    private int mCursorPosition;
 
-    private TextView mTextViewName;
-    private static String mSortOrder;
+    private String mSortOrder;
     private Bundle mBundle;
 
     public PlantViewFragment() {
@@ -40,13 +36,13 @@ public class PlantViewFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        setRetainInstance(true);
     }
 
-    public static PlantViewFragment newInstance(Bundle savedInstancestate) {
+    public static PlantViewFragment newInstance(Bundle args) {
         PlantViewFragment f = new PlantViewFragment();
-        if(savedInstancestate != null)
-            f.setArguments(savedInstancestate);
-
+        if(args != null)
+            f.setArguments(args);
         return f;
     }
 
@@ -57,12 +53,16 @@ public class PlantViewFragment extends Fragment {
         mContext = getActivity();
         mPlant = new Plant(mContext);
 
-        if(savedInstanceState != null) {
-            mBundle = savedInstanceState;
-            mPlant.setViewItemContent(mView, savedInstanceState.getInt("position"), mSortOrder);
-        }
-        else {
-            mPlant.setViewItemContent(mView, mPosition, mSortOrder);
+        if(getArguments() != null) {
+            mBundle = getArguments();
+
+            if(mBundle.containsKey("sortOrder"))
+                mSortOrder = mBundle.getString("sortOrder");
+
+            if(mBundle.containsKey("position"))
+                mCursorPosition = mBundle.getInt("position");
+
+            mPlant.setViewItemContent(mView, mCursorPosition, mSortOrder);
         }
 
         return mView;
@@ -82,8 +82,6 @@ public class PlantViewFragment extends Fragment {
 
         for(View view : mFields)
             ((TextView) view).setText("");
-
-
     }
 
     @Override
@@ -104,5 +102,11 @@ public class PlantViewFragment extends Fragment {
         }
 
         return true;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState = mBundle;
     }
 }

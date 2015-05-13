@@ -54,7 +54,6 @@ public class ProductsFragment extends ListFragment
         ProductsFragment f = new ProductsFragment();
         if(args != null)
             f.setArguments(args);
-
         return f;
     }
 
@@ -62,6 +61,7 @@ public class ProductsFragment extends ListFragment
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        setRetainInstance(true);
     }
 
     @Override

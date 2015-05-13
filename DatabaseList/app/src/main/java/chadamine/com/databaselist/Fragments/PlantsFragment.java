@@ -54,15 +54,16 @@ public class PlantsFragment extends ListFragment
 
    public PlantsFragment() { }
 
-    public static PlantsFragment newInstance(Bundle savedInstanceState) {
+    public static PlantsFragment newInstance(Bundle args) {
         PlantsFragment f = new PlantsFragment();
-        f.setArguments(savedInstanceState);
-
+        if(args != null)
+            f.setArguments(args);
         return f;
     }
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
 
         setHasOptionsMenu(true);
         setRetainInstance(true);
@@ -71,42 +72,36 @@ public class PlantsFragment extends ListFragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        mView = inflater.inflate(R.layout.fragment_plants, container, false);
+        if(mView == null)
+            mView = inflater.inflate(R.layout.fragment_plants, container, false);
         mContext = getActivity();
-        mPlant = new Plant(getActivity());
+        mPlant = new Plant(mContext);
         mLoaderManager = this;
 
-        if(savedInstanceState != null) {
-            mBundle = savedInstanceState.getBundle("bundle");
+        getLoaderManager().initLoader(LIST_LOADER_ID, mBundle, this);
 
-            mSortOrder = savedInstanceState.getString("sortOrder");
-            mSortSelection = savedInstanceState.getInt("sortSelection");
+        if(mListCursorAdapter == null)
+            mListCursorAdapter = new ListCursorAdapter(mContext, null, 0, mPlant);
 
-            getLoaderManager().initLoader(LIST_LOADER_ID, mBundle, this);
-
-        } else {
-            mBundle = new Bundle();
-            getLoaderManager().initLoader(LIST_LOADER_ID, null, this);
-        }
-
-        mListCursorAdapter = new ListCursorAdapter(getActivity(),
-                mPlant.getNewCursor(mPlant.getKeyIdArray(), null, null, mSortOrder), 0, mPlant);
-
-        setListAdapter(mListCursorAdapter);
+            setListAdapter(mListCursorAdapter);
 
         return mView;
     }
-
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
         if(savedInstanceState != null) {
-            mBundle = savedInstanceState.getBundle("bundle");
-            mSortOrder = mBundle.getString("sortOrder");
-            mSortSelection = mBundle.getInt("sortSelection");
-        }
+            mBundle = savedInstanceState;
+            if(mBundle.containsKey("sortSelection"))
+                mSortSelection = mBundle.getInt("sortSelection");
+        } else if(getArguments() != null) {
+            mBundle = getArguments();
+            if(mBundle.containsKey("sortSelection"))
+                mSortSelection = mBundle.getInt("sortSelection");
+        } else if(mBundle == null)
+            mBundle = new Bundle();
 
         getListView().setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
 
@@ -161,7 +156,6 @@ public class PlantsFragment extends ListFragment
         });
     }
 
-
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
@@ -174,6 +168,8 @@ public class PlantsFragment extends ListFragment
 
         spinner.setAdapter(mSpinnerAdapter);
 
+        // set spinner selection with no animation
+        // prevents firing setOnItemSelectedListener when instantiated
         spinner.setSelection(mSortSelection);
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -205,6 +201,7 @@ public class PlantsFragment extends ListFragment
 
                 mBundle.putString("sortOrder", mSortOrder);
                 mBundle.putInt("sortSelection", mSortSelection);
+
                 getLoaderManager().restartLoader(LIST_LOADER_ID, mBundle, mLoaderManager);
             }
 
@@ -220,9 +217,7 @@ public class PlantsFragment extends ListFragment
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
 
-        /*Fragment f = new PlantViewFragment();
-        mBundle.putInt("sortSelection", mSortSelection);
-        f.setArguments(mBundle);*/
+        mBundle.putInt("position", position);
         getFragmentManager().beginTransaction()
                 .replace(R.id.frame_plant_activity, PlantViewFragment.newInstance(mBundle))
                 .addToBackStack("plantView").commit();
@@ -231,33 +226,28 @@ public class PlantsFragment extends ListFragment
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        mBundle.putInt("sortSelection", mSortSelection);
-        mBundle.putString("sortOrder", mSortOrder);
+        //mBundle.putInt("sortSelection", mSortSelection);
+        //mBundle.putString("sortOrder", mSortOrder);
 
-        Fragment f = new PlantNewFragment();
-        f.setArguments(mBundle);
+        mBundle.putInt("position", -1); // position not wanted in this case
 
         switch(item.getItemId()) {
             case R.id.add_plant:
                 getFragmentManager().beginTransaction()
+                        .replace(R.id.frame_plant_activity,
+                                PlantNewFragment.newInstance(mBundle))
                         .addToBackStack("newPlant")
-                        .replace(R.id.frame_plant_activity, f).commit();
+                        .commit();
                 break;
         }
 
         return true;
     }
 
-    // TODO: SETUP CONTEXT MENU
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-        super.onCreateContextMenu(menu, v, menuInfo);
-    }
-
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putBundle("bundle", mBundle);
+        outState = mBundle;
     }
 
     @Override
@@ -268,8 +258,8 @@ public class PlantsFragment extends ListFragment
             sortOrder = args.getString("sortOrder");
         }
 
-        return new CursorLoader(getActivity(),
-               mPlant.getUri(), mPlant.getKeyIdArray(), null, null, sortOrder);
+        return new CursorLoader(mContext, mPlant.getUri(),
+                mPlant.getKeyIdArray(), null, null, sortOrder);
     }
 
     @Override

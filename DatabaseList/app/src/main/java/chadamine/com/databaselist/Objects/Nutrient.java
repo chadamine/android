@@ -163,11 +163,11 @@ public class Nutrient implements DatabaseAdapter {
         String name = c.getString(c.getColumnIndexOrThrow(Nutrients.KEY_NAME));
 
         ((TextView) view.findViewById(R.id.textview_nutrient_item_name))
-                .setText(name.isEmpty() ? "" : name);
+                .setText(name == null ? "" : name);
 
         String purity = c.getString(c.getColumnIndexOrThrow(Nutrients.KEY_PURITY));
         ((TextView) view.findViewById(R.id.textview_nutrient_item_purity))
-                .setText(purity.isEmpty() ? "" : purity);
+                .setText(purity == null ? "" : purity);
     }
 
     @Override

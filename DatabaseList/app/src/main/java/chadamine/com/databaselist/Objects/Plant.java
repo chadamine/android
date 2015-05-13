@@ -111,25 +111,23 @@ public class Plant extends Organism implements DatabaseAdapter {
 
         String name = c.getString(c.getColumnIndexOrThrow(Plants.KEY_NAME));
         ((TextView) view.findViewById(R.id.textview_plants_item_name))
-                .setText(name.isEmpty() ? "" : name);
+                .setText(name != null ? name : "");
 
         String species = c.getString(c.getColumnIndexOrThrow(Plants.KEY_SPECIES));
         ((TextView) view.findViewById(R.id.textview_plants_item_species))
-                .setText(species.isEmpty() ? "" : species);
+                .setText(species != null ? species : "");
 
         String cultivar = c.getString(c.getColumnIndexOrThrow(Plants.KEY_CULTIVAR));
         ((TextView) view.findViewById(R.id.textview_plants_item_cultivar))
-                .setText(cultivar.isEmpty() ? "" : cultivar);
+                .setText(cultivar != null ? cultivar : "");
 
         String stage = c.getString(c.getColumnIndexOrThrow(Plants.KEY_STAGE));
         ((TextView) view.findViewById(R.id.textview_plants_item_stage))
-                .setText(stage.isEmpty() ? "" : stage);
+                .setText(stage != null ? stage : "");
 
         String age = c.getString(c.getColumnIndexOrThrow(Plants.KEY_AGE));
         ((TextView) view.findViewById(R.id.textview_plants_item_age))
-                .setText(age.isEmpty() ? "" : age);
-
-
+                .setText(age != null ? age : "");
     }
 
     @Override
@@ -144,30 +142,30 @@ public class Plant extends Organism implements DatabaseAdapter {
         mContext.getContentResolver().insert(getUri(), getValues());
     }
 
-    public void setViewItemContent(View view, int position, String sortOrder) {
+    public void setViewItemContent(View view, int cursorPosition, String sortOrder) {
 
         mCursor = getNewCursor(getKeyIdArray(), null, null, sortOrder);
-        mCursor.moveToPosition(position);
+        mCursor.moveToPosition(cursorPosition);
 
         String name = mCursor.getString(mCursor.getColumnIndexOrThrow(Plants.KEY_NAME));
         ((TextView) view.findViewById(R.id.textview_plant_view_info_name))
-                .setText(name.isEmpty() ? "" : name);
+                .setText(name == null ? "" : name);
 
         String species = mCursor.getString(mCursor.getColumnIndexOrThrow(Plants.KEY_SPECIES));
         ((TextView) view.findViewById(R.id.textview_plant_view_info_species))
-                .setText(species.isEmpty() ? "" : species);
+                .setText(species == null ? "" : species);
 
         String cultivar = mCursor.getString(mCursor.getColumnIndexOrThrow(Plants.KEY_CULTIVAR));
         ((TextView) view.findViewById(R.id.textview_plant_view_info_cultivar))
-                .setText(cultivar.isEmpty() ? "" : cultivar);
+                .setText(cultivar == null ? "" : cultivar);
 
         String stage = mCursor.getString(mCursor.getColumnIndexOrThrow(Plants.KEY_STAGE));
         ((TextView) view.findViewById(R.id.textview_plant_view_info_stage))
-                .setText(stage.isEmpty() ? "" : stage);
+                .setText(stage == null ? "" : stage);
 
         String age = mCursor.getString(mCursor.getColumnIndexOrThrow(Plants.KEY_AGE));
         ((TextView) view.findViewById(R.id.textview_plant_view_info_age))
-                .setText(age.isEmpty() ? "" : age);
+                .setText(age == null ? "" : age);
 
         mCursor.moveToNext();
     }

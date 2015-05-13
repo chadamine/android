@@ -2,8 +2,8 @@ package chadamine.com.databaselist.Fragments;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -14,7 +14,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,47 +38,69 @@ public class PlantNewFragment extends Fragment {
 
     public static PlantNewFragment newInstance(Bundle savedInstanceState) {
         PlantNewFragment f = new PlantNewFragment();
-
         f.setArguments(savedInstanceState);
         return f;
     }
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+
+        mContext = getActivity();
+        mPlant = new Plant(mContext);
+
+        mSubstrate = new Substrate(mContext);
+
+        setHasOptionsMenu(true);
+        setRetainInstance(true);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_plant_new, container, false);
-        mContext = getActivity();
-        mPlant = new Plant(mContext);
 
-        mSubstrate = new Substrate(getActivity());
         setUpButton();
         setSpinnerAgeUnits();
         setSpinnerHeightUnits();
         setSpinnerSubstrates();
 
         if(savedInstanceState != null) {
-            //mBundle = savedInstanceState.getBundle("bundle");
             mBundle = savedInstanceState;
 
-            mPosition = mBundle.getInt("position");
-            mSortOrder = mBundle.getString("sortOrder");
+        } else if(getArguments() != null) {
 
+            mBundle = getArguments();
+
+            if(mBundle.containsKey("position"))
+                mPosition = mBundle.getInt("position");
+
+            if(mBundle.containsKey("sortOrder"))
+                mSortOrder = mBundle.getString("sortOrder");
+
+        } else
+            mBundle = new Bundle();
+
+        String name = "";
+        if(mPosition >= 0) {
             Cursor cursor = mContext.getContentResolver()
                     .query(mPlant.getUri(), mPlant.getKeyIdArray(), null, null, mSortOrder);
+
             cursor.moveToPosition(mPosition);
 
-            String name = cursor
+            name = cursor
                     .getString(cursor.getColumnIndexOrThrow(DatabaseSchema.Plants.KEY_NAME));
+
             ((EditText) mView.findViewById(R.id.edittext_plant_new_name))
                     .setText(name.isEmpty() ? "" : name);
-
         }
-
         return mView;
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
     }
 
     @Override
@@ -113,11 +134,8 @@ public class PlantNewFragment extends Fragment {
                 savePlant();
                 saveToDB();
 
-                Fragment f = new PlantsFragment();
-                f.setArguments(mBundle);
-
                 getFragmentManager().beginTransaction()
-                        .replace(R.id.frame_nutrient_activity, f)
+                        .replace(R.id.frame_plant_activity, PlantsFragment.newInstance(mBundle))
                         .commit();
             }
         });
@@ -191,6 +209,7 @@ public class PlantNewFragment extends Fragment {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putBundle("bundle", mBundle);
+
+        outState = mBundle;
     }
 }

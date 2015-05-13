@@ -44,7 +44,7 @@ public class NutrientsFragment extends ListFragment
     private static final String SORT_DESC = " DESC";
     private static final String SORT_ASC = " ASC";
 
-    public NutrientsFragment newInstance(Bundle args) {
+    public static NutrientsFragment newInstance(Bundle args) {
         NutrientsFragment f = new NutrientsFragment();
 
         if(args != null)
@@ -57,6 +57,7 @@ public class NutrientsFragment extends ListFragment
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -69,8 +70,6 @@ public class NutrientsFragment extends ListFragment
         if(mNutrient == null)
             mNutrient = new Nutrient(mContext);
         mLoaderManager = this;
-
-        setHasOptionsMenu(true);
 
         getLoaderManager().initLoader(LIST_LOADER_ID, mBundle, this);
 
@@ -86,11 +85,14 @@ public class NutrientsFragment extends ListFragment
         super.onActivityCreated(savedInstanceState);
 
         if(savedInstanceState != null) {
-            mBundle = savedInstanceState.getBundle("bundle");
-            mSortOrder = mBundle.getString("sortOrder");
-            mSortSelection = mBundle.getInt("sortSelection");
-        } else
+            mBundle = savedInstanceState;
+            //mSortOrder = mBundle.getString("sortOrder");
+            //mSortSelection = mBundle.getInt("sortSelection");
+        } else {
             mBundle = new Bundle();
+            //mBundle.putString("sortOrder", mSortOrder);
+            //mBundle.putInt("sortSelection", mSortSelection);
+        }
     }
 
     @Override
@@ -106,7 +108,7 @@ public class NutrientsFragment extends ListFragment
 
         spinner.setAdapter(mSpinnerAdapter);
 
-        spinner.setSelection(mSortSelection);
+        spinner.setSelection(mSortSelection, false);
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -149,34 +151,27 @@ public class NutrientsFragment extends ListFragment
         });
     }
 
-
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
 
-        mBundle.putInt("sortSelection", mSortSelection);
-        mBundle.putString("sortOrder", mSortOrder);
-        mBundle.putInt("position", position);
+        //mBundle.putInt("sortSelection", mSortSelection);
+        //mBundle.putString("sortOrder", mSortOrder);
 
-        getFragmentManager().beginTransaction().replace(R.id.frame_nutrient_activity, NutrientViewFragment.newInstance(mBundle))
+        getFragmentManager().beginTransaction()
+                .replace(R.id.frame_nutrient_activity, NutrientViewFragment.newInstance(mBundle))
                 .addToBackStack("nutrientView").commit();
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        // TODO: AVOID BUNDLE WORK HERE, DO IN newInstance() OF FRAGMENT INSTEAD
-        mBundle.putInt("sortSelection", mSortSelection);
-        mBundle.putString("sortOrder", mSortOrder);
-
-        Fragment f = new NutrientNewFragment();
-        f.setArguments(mBundle);
-
         switch (item.getItemId()) {
 
             case R.id.add_nutrient:
                 getFragmentManager().beginTransaction()
-                        .replace(R.id.frame_nutrient_activity, new NutrientNewFragment())
+                        .replace(R.id.frame_nutrient_activity,
+                                NutrientNewFragment.newInstance(mBundle))
                         .addToBackStack("newNutrient")
                         .commit();
                 break;
