@@ -119,8 +119,9 @@ public class PlantNewFragment extends Fragment {
                 //f.setArguments(mBundle);
 
                 mPlant.saveFields(mView, false);
-                getFragmentManager().beginTransaction()
-                        .replace(R.id.frame_plant_activity, PlantsFragment.newInstance(mBundle)).commit();
+                getFragmentManager().popBackStack();
+                /*getFragmentManager().beginTransaction()
+                        .replace(R.id.frame_plant_activity, PlantsFragment.newInstance(mBundle)).commit();*/
                 break;
         }
 
