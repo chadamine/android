@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -159,6 +160,8 @@ public class ProductNewFragment extends Fragment {
                     Toast.makeText(mContext, "could not open file", Toast.LENGTH_SHORT).show();
                 }
 
+
+
                 for(Photo photo : mPhotos) {
                     photoFile.renameTo(new File(photo.getPhotoFolder() + mProduct.getPhotoDir(),
                             mPhoto.getCurrentPhotoFullName()));
@@ -213,10 +216,24 @@ public class ProductNewFragment extends Fragment {
         // TODO: check for mProductName changed,
         // TODO: adjust names of pictures in list as needed before save
         setProductName();
-        Intent intent = new Intent(Intent.ACTION_EDIT);
+
+        for(Photo photo: mPhotos) {
+            if(photo.getName() != mProduct.getName()) {
+
+                File from = new File(photo.getPhotoFolder() + mProduct.getPhotoDir(),
+                        photo.getCurrentPhotoFullName());
+
+                File to = new File(photo.getPhotoFolder() + mProduct.getPhotoDir(),
+                        mPhoto.getCurrentPhotoFullName());
+
+                photo.renameImageFile(mContext, from, to);
+            }
+        }
+
+        //Intent intent = new Intent(Intent.ACTION_EDIT);
         //intent.addCategory(Intent.CATEGORY_OPENABLE);
-        intent.setType("image/*");
-        startActivityForResult(intent, WRITE_REQUEST_CODE);
+        //intent.setType("image/*");
+        //startActivityForResult(intent, WRITE_REQUEST_CODE);
 
 /*
         for(Photo photo : mPhotos) {

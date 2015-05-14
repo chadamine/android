@@ -2,9 +2,11 @@ package chadamine.com.databaselist.Objects;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.view.View;
 
 import java.io.File;
@@ -118,6 +120,32 @@ public class Photo implements DatabaseAdapter {
         //values.put(Photos.KEY_TYPE, mType);
 
         return values;
+    }
+
+    /*
+        Renaming media Images.Media file
+        stackoverflow.com/question/24564336/rename-an-image-with-mediastore-android
+    */
+    public static boolean renameImageFile(Context c, File from, File to) {
+        if(from.renameTo(to)) {
+            removeMedia(c, from);
+            addMedia(c, to);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public static void addMedia(Context c, File f) {
+        Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+        intent.setData(Uri.fromFile(f));
+        c.sendBroadcast(intent);
+    }
+
+    private static void removeMedia(Context c, File f) {
+        c.getContentResolver().delete(
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI, MediaStore.Images.Media.DATA + "=?",
+                new String[] { f.getAbsolutePath() });
     }
 
     @Override
