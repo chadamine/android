@@ -44,6 +44,8 @@ public class PlantsFragment extends ListFragment
     private int mSortSelection;
     private Bundle mBundle;
 
+    private long mId;
+
     private LoaderManager.LoaderCallbacks<Cursor> mLoaderManager;
 
     private ListCursorAdapter mListCursorAdapter;
@@ -218,6 +220,7 @@ public class PlantsFragment extends ListFragment
         super.onListItemClick(l, v, position, id);
 
         mBundle.putInt("position", position);
+        mBundle.putLong("id", id);
         getFragmentManager().beginTransaction()
                 .replace(R.id.frame_plant_activity, PlantViewFragment.newInstance(mBundle))
                 .addToBackStack("plantView").commit();

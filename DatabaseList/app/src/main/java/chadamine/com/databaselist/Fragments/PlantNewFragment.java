@@ -2,6 +2,7 @@ package chadamine.com.databaselist.Fragments;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -33,6 +35,7 @@ public class PlantNewFragment extends Fragment {
     private Bundle mBundle;
     private int mPosition;
     private String mSortOrder;
+    private long mId;
 
     public PlantNewFragment() {}
 
@@ -61,7 +64,6 @@ public class PlantNewFragment extends Fragment {
                              Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_plant_new, container, false);
 
-        setUpButton();
         setSpinnerAgeUnits();
         setSpinnerHeightUnits();
         setSpinnerSubstrates();
@@ -79,21 +81,25 @@ public class PlantNewFragment extends Fragment {
             if(mBundle.containsKey("sortOrder"))
                 mSortOrder = mBundle.getString("sortOrder");
 
+            if(mBundle.containsKey("id"))
+                mId = mBundle.getLong("id");
+
         } else
             mBundle = new Bundle();
 
         String name = "";
+
         if(mPosition >= 0) {
             Cursor cursor = mContext.getContentResolver()
-                    .query(mPlant.getUri(), mPlant.getKeyIdArray(), null, null, mSortOrder);
+                    .query(mPlant.getUri(), mPlant.getKeyIdArray(),
+                            null, null, mSortOrder);
 
             cursor.moveToPosition(mPosition);
 
-            name = cursor
-                    .getString(cursor.getColumnIndexOrThrow(DatabaseSchema.Plants.KEY_NAME));
+            name = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseSchema.Plants.KEY_NAME));
 
             ((EditText) mView.findViewById(R.id.edittext_plant_new_name))
-                    .setText(name.isEmpty() ? "" : name);
+                    .setText(name == null ? "" : name);
         }
         return mView;
     }
@@ -111,35 +117,29 @@ public class PlantNewFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        //Fragment f;
 
         switch(item.getItemId()) {
             case R.id.save_plant:
-                //f = new PlantsFragment();
-                //f.setArguments(mBundle);
 
-                mPlant.saveFields(mView, false);
+                if(mPosition >= 0) {
+                    mPlant.setName(
+                            ((EditText) mView.findViewById(R.id.edittext_plant_new_name)).getText()
+                                    .toString());
+
+                    mPlant.update(mView, mId);
+                }
+                else
+                    mPlant.saveFields(mView, false);
+
                 getFragmentManager().popBackStack();
-                /*getFragmentManager().beginTransaction()
-                        .replace(R.id.frame_plant_activity, PlantsFragment.newInstance(mBundle)).commit();*/
+
+                ((InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE))
+                        .hideSoftInputFromWindow(mView.getWindowToken(),
+                                InputMethodManager.HIDE_NOT_ALWAYS);
                 break;
         }
 
-        return true;    }
-
-    private void setUpButton() {
-        Button btnSavePlant = (Button) mView.findViewById(R.id.button_save_plant_new);
-        btnSavePlant.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                savePlant();
-                saveToDB();
-
-                getFragmentManager().beginTransaction()
-                        .replace(R.id.frame_plant_activity, PlantsFragment.newInstance(mBundle))
-                        .commit();
-            }
-        });
+        return true;
     }
 
     private void setSpinnerAgeUnits() {

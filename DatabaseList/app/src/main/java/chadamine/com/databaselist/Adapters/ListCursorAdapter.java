@@ -30,7 +30,10 @@ public class ListCursorAdapter extends CursorAdapter {
         mDatabaseObject = dbObject;
         mIds = new HashMap<>();
         mSelectedItems = new SparseBooleanArray();
-        mCursor = c;
+        if(c != null)
+            mCursor = c;
+        else
+            mCursor = mDatabaseObject.getCursor();
     }
 
     @Override
@@ -85,6 +88,12 @@ public class ListCursorAdapter extends CursorAdapter {
 
     public void remove(int key) {
         mContext.getContentResolver().delete(mDatabaseObject.getUri(), mDatabaseObject.getKeyID() + " = " + mIds.get(key), null);
+    }
+
+    public void update(int key) {
+        mContext.getContentResolver().update(mDatabaseObject.getUri(),
+                mDatabaseObject.getValues(),
+                mDatabaseObject.getKeyID() + " = " + mIds.get(key), null);
     }
 
     @Override

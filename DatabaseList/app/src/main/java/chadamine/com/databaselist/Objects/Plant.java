@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import chadamine.com.databaselist.Adapters.DatabaseAdapter;
+import chadamine.com.databaselist.Database.DatabaseSchema;
 import chadamine.com.databaselist.Database.DatabaseSchema.Plants;
 import chadamine.com.databaselist.R;
 
@@ -85,7 +86,10 @@ public class Plant extends Organism implements DatabaseAdapter {
 
     @Override
     public Cursor getCursor() {
-        return mCursor;
+
+        Cursor cursor = mContext.getContentResolver().query(CONTENT_URI, null, null, null, null);
+        cursor.moveToFirst();
+        return cursor;
     }
 
     public Cursor getNewCursor(@Nullable String[] idArray,
@@ -135,11 +139,24 @@ public class Plant extends Organism implements DatabaseAdapter {
 
     }
 
+    private Uri mUri;
+
     public void saveFields(View view, boolean isListItem) {
         if(!isListItem)
             setName(((EditText) view.findViewById(R.id.edittext_plant_new_name))
                     .getText().toString());
-        mContext.getContentResolver().insert(getUri(), getValues());
+        mUri = mContext.getContentResolver().insert(getUri(), getValues());
+    }
+
+    /*public void updateFields(View view) {
+        setName(((EditText) view.findViewById(R.id.edittext_plant_new_name)).getText().toString());
+        mContext.getContentResolver().update(getUri(), getValues(), null, null);
+    }*/
+
+    public void update(View view, long id) {
+        setName(((EditText) view.findViewById(R.id.edittext_plant_new_name)).getText().toString());
+        mContext.getContentResolver().update(Uri.parse(Plants.CONTENT_URI + "/" + id),
+                getValues(), null, null);
     }
 
     public void setViewItemContent(View view, int cursorPosition, String sortOrder) {

@@ -8,6 +8,8 @@ import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 import android.text.TextUtils;
 
+import chadamine.com.databaselist.Database.DatabaseSchema;
+
 /**
  * Created by chadamine on 4/10/2015.
  */
@@ -264,6 +266,37 @@ public class DatabaseContentProvider extends ContentProvider {
     @Override
     public int update(Uri uri, ContentValues values,
                       String selection, String[] selectionArgs) {
-        return 0;
+
+        int uriType = DatabaseSchema.URI_MATCHER.match(uri);
+        SQLiteDatabase sqlDB = mDatabase;
+        int rowsUpdated = 0;
+
+        switch (uriType) {
+            case DatabaseSchema.PLANTS:
+                rowsUpdated = sqlDB.update(DatabaseSchema.Plants.TABLE_NAME,
+                        values,
+                        selection,
+                        selectionArgs);
+                break;
+
+            case DatabaseSchema.PLANT_ID:
+                String id = uri.getLastPathSegment();
+
+                if (TextUtils.isEmpty(selection)) {
+                    rowsUpdated = sqlDB.update(DatabaseSchema.Plants.TABLE_NAME,
+                            values, DatabaseSchema.Plants.KEY_ID + "=" + id, null);
+                } else {
+                    rowsUpdated = sqlDB.update(DatabaseSchema.Plants.TABLE_NAME,
+                            values, DatabaseSchema.Plants.KEY_ID + "=" + id
+                                    + " and " + selection, selectionArgs);
+                }
+                break;
+            default:
+                throw new IllegalArgumentException("Unknown URI: " + uri);
+        }
+
+        getContext().getContentResolver().notifyChange(uri, null);
+
+        return rowsUpdated;
     }
 }

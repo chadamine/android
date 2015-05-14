@@ -59,8 +59,8 @@ public class NutrientViewFragment extends Fragment {
 
         if(mBundle != null) {
 
-            if(mBundle.containsKey("position"))
-                position = mBundle.getInt("position");
+            if(mBundle.containsKey("id"))
+                position = mBundle.getInt("id");
             if (mBundle.containsKey("sortOrder"))
                 sortOrder = mBundle.getString("sortOrder");
             if (mBundle.containsKey("selection"))

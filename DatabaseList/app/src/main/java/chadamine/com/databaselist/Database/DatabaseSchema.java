@@ -1,5 +1,6 @@
 package chadamine.com.databaselist.Database;
 
+import android.content.ContentResolver;
 import android.content.UriMatcher;
 import android.net.Uri;
 import android.provider.BaseColumns;
@@ -287,6 +288,11 @@ public class DatabaseSchema {
                         + CLOSE;
 
         public static final Uri CONTENT_URI = Uri.withAppendedPath(DatabaseSchema.CONTENT_URI, TABLE_NAME);
+
+        public static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE
+                + "/plants";
+        public static final String CONTENT_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE
+                + "/plant";
 
         public static final String DELETE = "DROP TABLE IF EXISTS " + TABLE_NAME;
     }
