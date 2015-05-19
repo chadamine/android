@@ -60,26 +60,20 @@
         android:gravity="bottom"
         />
     <EditText
+        android:id="@+id/edittext_product_new_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/edittext_product_new_name"
         android:layout_toRightOf="@id/textview_product_new_name"
         android:layout_below="@id/edittext_product_new_line"
         android:ems="10"
         />
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/button_takepicture"
-        android:layout_below="@id/edittext_product_new_name"
-        android:text="Add Picture"
-        />
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/button_product_new_save"
-        android:layout_below="@id/button_takepicture"
 
-        android:text="Save"
-        />
+    <GridView
+        android:id="@+id/gridview_product_new"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/edittext_product_new_name"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
 </RelativeLayout>

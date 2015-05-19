@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.Toast;
 
 import java.io.File;
@@ -67,6 +68,8 @@ public class ProductNewFragment extends Fragment {
 
         mEditName = (EditText) view.findViewById(R.id.edittext_product_new_name);
         setProductName();
+
+        GridView gridView = (GridView) view.findViewById(R.id.gridview_product_new);
 
         return view;
     }
