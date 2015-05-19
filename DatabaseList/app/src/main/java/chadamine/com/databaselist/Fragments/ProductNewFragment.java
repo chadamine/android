@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import chadamine.com.databaselist.Adapters.ImageAdapter;
 import chadamine.com.databaselist.Database.DatabaseSchema;
 import chadamine.com.databaselist.Objects.Photo;
 import chadamine.com.databaselist.Objects.Product;
@@ -70,6 +71,7 @@ public class ProductNewFragment extends Fragment {
         setProductName();
 
         GridView gridView = (GridView) view.findViewById(R.id.gridview_product_new);
+        gridView.setAdapter(new ImageAdapter(mContext));
 
         return view;
     }
