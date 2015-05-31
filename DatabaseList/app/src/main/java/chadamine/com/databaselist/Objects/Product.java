@@ -18,7 +18,7 @@ import chadamine.com.databaselist.R;
  */
 public class Product implements DatabaseAdapter {
 
-    private int mID;
+    private int mId;
     private String mName;
     private Photo mPhoto;
     private Double mSize;
@@ -46,6 +46,10 @@ public class Product implements DatabaseAdapter {
                 .query(getUri(), getKeyIdArray(), null, null, null);
     }
 
+    public int getId() {
+        return mId;
+    }
+
     public String getName() throws NullPointerException {
         return mName;
     }
@@ -56,11 +60,11 @@ public class Product implements DatabaseAdapter {
     }
 
     public int getID() {
-        return mID;
+        return mId;
     }
 
     public void setID(int id) {
-        mID = id;
+        mId = id;
     }
 
     public void setName(String name) {
@@ -126,7 +130,7 @@ public class Product implements DatabaseAdapter {
         if (mCursor != null) {
             mCursor.moveToPosition(position);
 
-            mID = mCursor.getInt(mCursor.getColumnIndexOrThrow(DatabaseSchema.Products.KEY_ID));
+            mId = mCursor.getInt(mCursor.getColumnIndexOrThrow(DatabaseSchema.Products.KEY_ID));
             mName = mCursor.getString(mCursor.getColumnIndexOrThrow(DatabaseSchema.Products.KEY_NAME));
             mManufacturer = mCursor.getString(mCursor.getColumnIndexOrThrow(DatabaseSchema.Products.KEY_MANUFACTURER));
             mType = mCursor.getString(mCursor.getColumnIndexOrThrow(DatabaseSchema.Products.KEY_TYPE));

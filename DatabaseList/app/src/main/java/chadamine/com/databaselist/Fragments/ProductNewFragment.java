@@ -1,7 +1,10 @@
 package chadamine.com.databaselist.Fragments;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
@@ -13,6 +16,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.Toast;
@@ -38,11 +42,14 @@ public class ProductNewFragment extends Fragment {
     private Photo mPhoto;
     private List<Photo> mPhotos;
     private Context mContext;
+    private View mView;
 
     private Bundle mBundle;
     private String mSortOrder;
     private int mPosition;
     private EditText mEditName;
+    private GridView mGridView;
+    private ImageAdapter mImageAdapter;
 
     static final int REQUEST_IMAGE_CAPTURE = 1;
     private static final int WRITE_REQUEST_CODE = 10;
@@ -60,20 +67,21 @@ public class ProductNewFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater,
                              @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mContext = getActivity();
-        View view = inflater.inflate(R.layout.fragment_product_new, container, false);
+        mView = inflater.inflate(R.layout.fragment_product_new, container, false);
         mProduct = new Product(mContext);
         mFields = new HashMap<>();
         mPhotos = new ArrayList<>();
 
-        mFields.put("name", view.findViewById(R.id.edittext_product_new_name));
+        mFields.put("name", mView.findViewById(R.id.edittext_product_new_name));
 
-        mEditName = (EditText) view.findViewById(R.id.edittext_product_new_name);
+        mEditName = (EditText) mView.findViewById(R.id.edittext_product_new_name);
         setProductName();
 
-        GridView gridView = (GridView) view.findViewById(R.id.gridview_product_new);
-        gridView.setAdapter(new ImageAdapter(mContext));
+        mGridView = (GridView) mView.findViewById(R.id.gridview_product_new);
+        mImageAdapter = new ImageAdapter(mContext);
+        mGridView.setAdapter(mImageAdapter);
 
-        return view;
+        return mView;
     }
 
     @Override
@@ -108,6 +116,7 @@ public class ProductNewFragment extends Fragment {
                 } else
                     Toast.makeText(mContext,
                             "Product must have a name to save", Toast.LENGTH_LONG).show();
+                hideKeyboard();
                 break;
 
             case R.id.product_menu_photo:
@@ -141,10 +150,26 @@ public class ProductNewFragment extends Fragment {
                 "Product image saved as " + mProduct.getName()
                     + "\nin the following folder: " + mPhoto.getPhotoFolder(),
                 Toast.LENGTH_LONG).show();
-        // TODO: CLOSE KEYBOARD
 
-        /*if (requestCode == WRITE_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+        if(resultCode == Activity.RESULT_OK) {
 
+            if(requestCode == REQUEST_IMAGE_CAPTURE) {
+                if(data != null) {
+                    Bitmap imageBitmap = (Bitmap) data.getExtras().get("data");
+                    mPhoto.setThumb(imageBitmap);
+                    mImageAdapter.addItem(mPhoto);
+                } else
+                    Toast.makeText(mContext, "camera result null", Toast.LENGTH_SHORT).show();
+
+
+            }
+
+        }
+
+        else
+            Toast.makeText(mContext, "Activity result NOT OK", Toast.LENGTH_SHORT).show();
+
+            /*
             Uri uri = null;
             if (data != null) {
                 uri = data.getData();
@@ -211,9 +236,19 @@ public class ProductNewFragment extends Fragment {
             mPhoto = new Photo(mContext, mProduct);
             mPhotos.add(mPhoto);
 
+            Uri uri = mPhoto.getUri();
+
+            Toast.makeText(mContext,
+                    "Uri is :" + uri,
+                    Toast.LENGTH_LONG).show();
+
             takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, mPhoto.getUri());
             startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
         }
+
+        else
+            Toast.makeText(mContext, "Photo file path could not be created!",
+                    Toast.LENGTH_LONG).show();
     }
 
     private void savePictures() {
@@ -292,6 +327,12 @@ public class ProductNewFragment extends Fragment {
         setProductName();
         mContext.getContentResolver()
                 .insert(DatabaseSchema.Products.CONTENT_URI, mProduct.getValues());
+    }
+
+    private void hideKeyboard() {
+        ((InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE))
+                .hideSoftInputFromWindow(mView.getWindowToken(),
+                        InputMethodManager.HIDE_NOT_ALWAYS);
     }
 
 }

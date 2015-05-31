@@ -9,6 +9,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -84,16 +85,19 @@ public class NutrientNewFragment extends Fragment {
 
         switch(item.getItemId()) {
             case R.id.save_nutrient:
-                f = new NutrientsFragment();
-                f.setArguments(mBundle);
-
                 mNutrient.saveFields(mView, false);
-                getFragmentManager().beginTransaction()
-                        .replace(R.id.frame_nutrient_activity, f).commit();
+                getFragmentManager().popBackStack();
+                hideKeyboard();
                 break;
         }
 
         return true;
+    }
+
+    private void hideKeyboard() {
+        ((InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE))
+                .hideSoftInputFromWindow(mView.getWindowToken(),
+                        InputMethodManager.HIDE_NOT_ALWAYS);
     }
 
 }

@@ -80,6 +80,11 @@ public class Plant extends Organism implements DatabaseAdapter {
     }
 
     @Override
+    public int getId() {
+        return 0;
+    }
+
+    @Override
     public String getKeyID() {
         return KEY_ID;
     }

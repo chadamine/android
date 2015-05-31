@@ -33,6 +33,11 @@ public class Substrate implements DatabaseAdapter {
     }
 
     @Override
+    public int getId() {
+        return 0;
+    }
+
+    @Override
     public String[] getKeyIdArray() {
         return KEY_ID_ARRAY;
     }

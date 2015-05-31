@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -30,12 +31,14 @@ public class Photo implements DatabaseAdapter {
     private String mType;
     private Context mContext;
     private DatabaseAdapter mDatabaseObject;
+    private Bitmap mThumbnail;
 
     private static final Uri CONTENT_URI = Photos.CONTENT_URI;
     private static final String[] KEY_ID_ARRAY = Photos.KEY_ID_ARRAY;
     private static final String KEY_ID = Photos.KEY_ID;
 
-    private static final String EXT_DIR = Environment.getExternalStorageDirectory().toString();
+    private final String EXT_DIR = Environment.getExternalStorageDirectory().toString();
+    private final File mExtPubDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
 
     public Photo(Context c, DatabaseAdapter databaseObject) {
         mContext = c;
@@ -81,10 +84,24 @@ public class Photo implements DatabaseAdapter {
     }
 
     public Uri getUri() {
-        Uri imageUri = Uri.fromFile(new File(getPhotoFolder(),
+        /*Uri imageUri = Uri.fromFile(new File(getPhotoFolder(),
                 getNewPhotoFullName()));
-
+*/
+        Uri imageUri = Uri.fromFile(mExtPubDir);
         return imageUri;
+    }
+
+    @Override
+    public int getId() {
+        return 0;
+    }
+
+    public void setThumb(Bitmap b) {
+        mThumbnail = b;
+    }
+
+    public Bitmap getThumb() {
+        return mThumbnail;
     }
 
     @Override
@@ -162,8 +179,6 @@ public class Photo implements DatabaseAdapter {
     public String getName() {
         return mDatabaseObject.getName();
     }
-
-
 
     @Override
     public void setListItemContent(View view, Cursor cursor) {

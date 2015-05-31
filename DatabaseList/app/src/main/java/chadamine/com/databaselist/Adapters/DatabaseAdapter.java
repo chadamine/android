@@ -15,6 +15,8 @@ public interface DatabaseAdapter {
 
     Uri getUri();
 
+    int getId();
+
     String getKeyID();
 
     String[] getKeyIdArray();

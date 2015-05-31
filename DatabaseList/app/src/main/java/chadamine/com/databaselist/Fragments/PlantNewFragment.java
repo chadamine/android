@@ -133,13 +133,17 @@ public class PlantNewFragment extends Fragment {
 
                 getFragmentManager().popBackStack();
 
-                ((InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE))
-                        .hideSoftInputFromWindow(mView.getWindowToken(),
-                                InputMethodManager.HIDE_NOT_ALWAYS);
+                hideKeyboard();
                 break;
         }
 
         return true;
+    }
+
+    private void hideKeyboard() {
+        ((InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE))
+                .hideSoftInputFromWindow(mView.getWindowToken(),
+                        InputMethodManager.HIDE_NOT_ALWAYS);
     }
 
     private void setSpinnerAgeUnits() {

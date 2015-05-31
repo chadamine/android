@@ -7,6 +7,11 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import chadamine.com.databaselist.Objects.Photo;
+
 /**
  * Created by chadamine on 5/18/2015.
  */
@@ -14,14 +19,17 @@ import android.widget.ImageView;
 public class ImageAdapter extends BaseAdapter {
 
     private Context mContext;
-    private Integer[] mThumbIds;
+    private List<Photo> mPhotos;
+    private List<Integer> mThumbIds;
 
     public ImageAdapter(Context c) {
         mContext = c;
+        mThumbIds = new ArrayList<>();
     }
+
     @Override
     public int getCount() {
-        return mThumbIds.length;
+        return mThumbIds.size();
     }
 
     @Override
@@ -47,7 +55,13 @@ public class ImageAdapter extends BaseAdapter {
             imageView = (ImageView) convertView;
         }
 
-        imageView.setImageResource(mThumbIds[position]);
+        //imageView.setImageURI(mPhotos.get(position).getUri());
+        imageView.setImageBitmap(mPhotos.get(position).getThumb());
+
         return imageView;
+    }
+
+    public void addItem(Photo p) {
+        mPhotos.add(p);
     }
 }
