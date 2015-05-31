@@ -50,6 +50,14 @@
         <item>Manufacturer, Desc</item>
         <item>Product Line, Desc</item>
     </string-array>
+    <string-array name="journal_sort_items">
+        <!-- ASCENDING -->
+        <item>Date Created</item>
+        <item>Name</item>
+        <!-- DESCENDING -->
+        <item>Date Created, Desc</item>
+        <item>Name, Desc</item>
+    </string-array>
     <string-array name="product_filter_items">
         <!-- ASCENDING -->
         <item>No Filter</item>
@@ -58,7 +66,5 @@
         <item>Substrates</item>
         <item>Lighting</item>
         <item>Environmental</item>
-
-
     </string-array>
 </resources>

@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import chadamine.com.databaselist.Objects.JournalsActivity;
 import chadamine.com.databaselist.PlantsActivity;
 import chadamine.com.databaselist.NutrientsActivity;
 
@@ -36,7 +37,8 @@ public class HomeFragment extends Fragment {
         btnJournals.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getFragmentManager().beginTransaction().addToBackStack("home").replace(R.id.container, new JournalsFragment()).commit();
+                //getFragmentManager().beginTransaction().addToBackStack("home").replace(R.id.container, new JournalsFragment()).commit();
+                startActivity(new Intent(mContext, JournalsActivity.class));
             }
         });
 

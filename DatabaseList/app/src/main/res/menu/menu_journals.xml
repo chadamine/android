@@ -1,18 +1,18 @@
-<?xml version="1.0" encoding="utf-8"?>
-<menu
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item
-        android:id="@+id/spinner_journals_sort"
-        android:title="SpinnerJournalsMenu"
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="chadamine.com.databaselist.Objects.JournalsActivity">
+
+    <item android:id="@+id/spinner_journals_sort"
+        android:title="Sort Journals"
         android:orderInCategory="0"
-        app:showAsAction="ifRoom"
+        app:showAsAction="always"
         app:actionViewClass="android.widget.Spinner"
         />
     <item
         android:id="@+id/add_journal"
         app:showAsAction="ifRoom"
         android:orderInCategory="50"
-        android:title="Add Journal">
-    </item>
+        android:title="Add Journal"
+        />
 </menu>

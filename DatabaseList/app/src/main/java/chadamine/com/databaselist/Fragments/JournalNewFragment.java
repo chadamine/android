@@ -6,8 +6,12 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -24,7 +28,19 @@ public class JournalNewFragment extends Fragment {
     private ContentValues mValues;
     private Journal mJournal;
     private Context mContext;
+    private Bundle mBundle;
 
+    public static JournalNewFragment newInstance(Bundle args) {
+        JournalNewFragment f = new JournalNewFragment();
+        f.setArguments(args);
+        return f;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -33,13 +49,34 @@ public class JournalNewFragment extends Fragment {
         mValues = new ContentValues();
         mContext = getActivity();
 
-        setUpButton();
+        //setUpButton();
 
         return mView;
     }
 
-    private void setUpButton() {
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
 
+        if(savedInstanceState != null) {
+            mBundle = savedInstanceState.getBundle("bundle");
+            //mSortOrder = mBundle.getString("sortOrder");
+            //mSortSelection = mBundle.getInt("sortSelection");
+        } else
+            mBundle = new Bundle();
+    }
+
+    private void saveData() {
+
+        createJournal();
+
+        mValues.put(DatabaseSchema.Products.KEY_NAME,
+                ((EditText) mView.findViewById(R.id.edittext_newjournal_name))
+                        .getText().toString());
+
+        getActivity().getContentResolver().insert(mJournal.getUri(), mJournal.getValues());
+        getFragmentManager().popBackStack();
+/*
         Button btnSave = (Button) mView.findViewById(R.id.button_newjournal_save);
         btnSave.setOnClickListener(new View.OnClickListener() {
 
@@ -55,7 +92,7 @@ public class JournalNewFragment extends Fragment {
                 getActivity().getContentResolver().insert(mJournal.getUri(), mJournal.getValues());
                 getFragmentManager().popBackStack();
             }
-        });
+        });*/
     }
 
     private void createJournal() {
@@ -63,5 +100,31 @@ public class JournalNewFragment extends Fragment {
         mJournal.setName(
                 ((EditText) mView.findViewById(R.id.edittext_newjournal_name))
                         .getText().toString());
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.menu_journal_new, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch(item.getItemId()) {
+            case R.id.save_journal:
+                saveData();
+                //mJournal.saveFields(mView, false);
+                getFragmentManager().popBackStack();
+                hideKeyboard();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void hideKeyboard() {
+        ((InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE))
+                .hideSoftInputFromWindow(mView.getWindowToken(),
+                        InputMethodManager.HIDE_NOT_ALWAYS);
     }
 }

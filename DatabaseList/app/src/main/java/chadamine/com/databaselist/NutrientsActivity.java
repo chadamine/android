@@ -27,8 +27,8 @@ public class NutrientsActivity extends ActionBarActivity {
 
         if(!mNutrientsFragment.isInLayout())
             getSupportFragmentManager().beginTransaction()
-                .replace(R.id.frame_nutrient_activity, mNutrientsFragment,
-                        NUTRIENTS_FRAGMENT_TAG).commit();
+                .replace(R.id.frame_nutrient_activity, mNutrientsFragment, NUTRIENTS_FRAGMENT_TAG)
+                    .commit();
     }
 
     @Override

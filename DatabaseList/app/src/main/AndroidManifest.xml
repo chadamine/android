@@ -12,6 +12,11 @@
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         android:maxSdkVersion="18" />
 
+    <android:uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <android:uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="18" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -46,6 +51,10 @@
         <activity
             android:name=".ProductsActivity"
             android:label="@string/title_activity_products" >
+        </activity>
+        <activity
+            android:name=".Objects.JournalsActivity"
+            android:label="@string/title_activity_journals" >
         </activity>
     </application>
 

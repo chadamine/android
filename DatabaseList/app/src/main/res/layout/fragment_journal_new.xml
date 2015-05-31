@@ -67,11 +67,4 @@
         android:layout_below="@id/edittext_newjournal_line"
         android:ems="10"
         />
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/button_newjournal_save"
-        android:layout_below="@id/textview_newjournal_name"
-        android:text="Save"
-        />
 </RelativeLayout>

@@ -9,4 +9,5 @@
     <string name="title_activity_nutrients">NutrientsActivity</string>
     <string name="title_activity_schedule">ScheduleActivity</string>
     <string name="title_activity_products">ProductsActivity</string>
+    <string name="title_activity_journals">JournalsActivity</string>
 </resources>

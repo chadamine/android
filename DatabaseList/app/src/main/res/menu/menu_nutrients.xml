@@ -15,6 +15,6 @@
         android:id="@+id/add_nutrient"
         app:showAsAction="ifRoom"
         android:orderInCategory="50"
-        android:title="Add Nutrient">
-    </item>
+        android:title="Add Nutrient"
+        />
 </menu>
