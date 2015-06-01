@@ -197,7 +197,6 @@ public class PlantNewFragment extends Fragment {
         CustomSpinner spinner = (CustomSpinner) mView.findViewById(R.id.spinner_plant_new_substrate);
 
         SpinnerCursorAdapter adapter = new SpinnerCursorAdapter(mContext, getMergedCursor(mSubstrate.getCursor()));
-
         spinner.setAdapter(adapter);
 
         spinner.setSelection(0, false);
@@ -219,9 +218,6 @@ public class PlantNewFragment extends Fragment {
 
             }
         });
-
-
-
     }
 
     private Cursor getMergedCursor(Cursor c) {
