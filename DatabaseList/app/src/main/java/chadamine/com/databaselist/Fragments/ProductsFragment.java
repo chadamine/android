@@ -121,11 +121,15 @@ public class ProductsFragment extends ListFragment
         super.onActivityCreated(savedInstanceState);
 
         if(savedInstanceState != null) {
-            mBundle = savedInstanceState.getBundle("bundle");
-            mSortOrder = mBundle.getString("sortOrder");
-            mSortSelection = mBundle.getInt("sortSelection");
-        } else
+            mBundle = savedInstanceState;
+        } else if(getArguments() != null) {
+            mBundle = getArguments();
+        } else if(mBundle == null)
             mBundle = new Bundle();
+
+        if(mBundle.containsKey("sortSelection"))
+            mSortSelection = mBundle.getInt("sortSelection");
+
 
         getListView().setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
 
