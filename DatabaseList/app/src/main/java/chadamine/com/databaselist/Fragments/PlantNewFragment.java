@@ -58,11 +58,6 @@ public class PlantNewFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        mPlant = new Plant(mContext);
-
-        mSubstrate = new Substrate(mContext);
-
         setHasOptionsMenu(true);
         setRetainInstance(true);
     }
@@ -71,7 +66,6 @@ public class PlantNewFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_plant_new, container, false);
-
         setMembers();
         setCalculatorImages();
 
@@ -120,7 +114,8 @@ public class PlantNewFragment extends Fragment {
 
     private void setMembers() {
         mContext = getActivity();
-
+        mPlant = new Plant(mContext);
+        mSubstrate = new Substrate(mContext);
         mHeightValue = (EditText) mView.findViewById(R.id.edittext_plant_new_height_2);
         mHeightExtraUnit = (TextView) mView.findViewById(R.id.textview_plant_new_height_2_unit);
 
