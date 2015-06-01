@@ -4,8 +4,10 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.database.MergeCursor;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -16,6 +18,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -41,6 +44,9 @@ public class PlantNewFragment extends Fragment {
     private long mId;
     private final String NEW = "New...";
 
+    private EditText mHeightValue;
+    private TextView mHeightExtraUnit;
+
     public PlantNewFragment() {}
 
     public static PlantNewFragment newInstance(Bundle savedInstanceState) {
@@ -65,11 +71,15 @@ public class PlantNewFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_plant_new, container, false);
-        mContext = getActivity();
+
+        setMembers();
+        setCalculatorImages();
 
         setSpinnerAgeUnits();
         setSpinnerHeightUnits();
         setSpinnerSubstrates();
+        setSpinnerPotsizes();
+
         hideExtraUnits();
 
         if(savedInstanceState != null) {
@@ -106,6 +116,36 @@ public class PlantNewFragment extends Fragment {
                     .setText(name == null ? "" : name);
         }
         return mView;
+    }
+
+    private void setMembers() {
+        mContext = getActivity();
+
+        mHeightValue = (EditText) mView.findViewById(R.id.edittext_plant_new_height_2);
+        mHeightExtraUnit = (TextView) mView.findViewById(R.id.textview_plant_new_height_2_unit);
+
+    }
+
+    private void setCalculatorImages() {
+        ImageView calc = (ImageView) mView.findViewById(R.id.imageview_plant_new_age_calculator);
+        registerForContextMenu(calc);
+        calc.setImageResource(R.drawable.calculator);
+        calc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //getActivity().openContextMenu(v);
+                PlantAgeDialogFragment dialog = new PlantAgeDialogFragment();
+                dialog.show(getFragmentManager(), "plantAgeDialog");
+            }
+        });
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater inflater = getActivity().getMenuInflater();
+        //inflater.inflate(R.menu.menu_plant_age_calculator, menu);
+
     }
 
     @Override
@@ -153,13 +193,13 @@ public class PlantNewFragment extends Fragment {
     private void setSpinnerAgeUnits() {
 
         List<String> ageUnits = new ArrayList<>();
-        ageUnits.add("seconds");
-        ageUnits.add("minutes");
-        ageUnits.add("hours");
-        ageUnits.add("days") ;
-        ageUnits.add("weeks");
-        ageUnits.add("months");
-        ageUnits.add("years");
+        ageUnits.add("sec");
+        ageUnits.add("min");
+        ageUnits.add("hr");
+        ageUnits.add("day");
+        ageUnits.add("wk");
+        ageUnits.add("mo");
+        ageUnits.add("yr");
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
                 android.R.layout.simple_spinner_dropdown_item, ageUnits);
 
@@ -171,26 +211,45 @@ public class PlantNewFragment extends Fragment {
     }
 
     private void hideExtraUnits() {
-        EditText heightValue = (EditText) mView.findViewById(R.id.edittext_plant_new_height_2);
-        heightValue.setVisibility(View.INVISIBLE);
-        TextView heightExtraUnit = (TextView) mView.findViewById(R.id.textview_plant_new_height_2_unit);
-        heightExtraUnit.setVisibility(View.INVISIBLE);
+        mHeightValue.setVisibility(View.INVISIBLE);
+        mHeightExtraUnit.setVisibility(View.INVISIBLE);
+    }
+
+    private void showExtraUnits() {
+        mHeightValue.setVisibility(View.VISIBLE);
+        mHeightExtraUnit.setVisibility(View.VISIBLE);
     }
 
     private void setSpinnerHeightUnits() {
-        List<String> l = new ArrayList<String>();
+        List<String> list = new ArrayList<String>();
 
-        l.add("mm");
-        l.add("cm");
-        l.add("in");
-        l.add("ft");
-        l.add("m");
-        l.add("yd");
+        list.add("mm");
+        list.add("cm");
+        list.add("in");
+        list.add("ft");
+        list.add("m");
+        list.add("yd");
 
         Spinner spinner = (Spinner) mView.findViewById(R.id.spinner_plant_new_height_units);
         spinner.setAdapter(new ArrayAdapter<>(getActivity(),
-                        android.R.layout.simple_spinner_dropdown_item, l));
-        spinner.setSelection(3);
+                        android.R.layout.simple_spinner_dropdown_item, list));
+        spinner.setSelection(2);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (position == 3) {
+                    showExtraUnits();
+                } else {
+                    hideExtraUnits();
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 
     private void setSpinnerSubstrates() {
@@ -209,6 +268,33 @@ public class PlantNewFragment extends Fragment {
                     getFragmentManager().beginTransaction()
                             .replace(R.id.frame_plant_activity, new SubstrateNewFragment())
                             .addToBackStack("newSubstrate")
+                            .commit();
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
+
+    private void setSpinnerPotsizes() {
+        CustomSpinner spinner = (CustomSpinner) mView.findViewById(R.id.spinner_plant_new_potsize);
+
+        SpinnerCursorAdapter adapter = new SpinnerCursorAdapter(mContext, getMergedCursor(mSubstrate.getCursor()));
+        spinner.setAdapter(adapter);
+
+        spinner.setSelection(0, false);
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                if (position == 0) {
+                    getFragmentManager().beginTransaction()
+                            .replace(R.id.frame_plant_activity, new PotsizesNewFragment())
+                            .addToBackStack("newPotsize")
                             .commit();
                 }
             }
@@ -258,7 +344,6 @@ public class PlantNewFragment extends Fragment {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-
         outState = mBundle;
     }
 }

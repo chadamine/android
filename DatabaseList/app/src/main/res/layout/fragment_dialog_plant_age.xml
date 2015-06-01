@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <EditText
+        android:id="@+id/edittext_dialog_plant_age_convert_from_value"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:inputType="numberDecimal"
+        android:gravity="right"
+        android:textAlignment="gravity"
+        />
+    <Spinner
+        android:id="@+id/spinner_dialog_plant_age_convert_from_unit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/edittext_dialog_plant_age_convert_from_value"
+        android:layout_alignBaseline="@id/edittext_dialog_plant_age_convert_from_value"
+        />
+    <TextView
+        android:id="@+id/textview_dialog_plant_age_convert_to_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="equals"
+        android:layout_toRightOf="@id/spinner_dialog_plant_age_convert_from_unit"
+        android:layout_alignBaseline="@id/edittext_dialog_plant_age_convert_from_value"
+        android:layout_margin="10dp"
+        android:textSize="18dp"
+        />
+
+    <TextView
+        android:id="@+id/textview_dialog_plant_age_convert_result"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/textview_dialog_plant_age_convert_to_title"
+        android:layout_alignBaseline="@id/edittext_dialog_plant_age_convert_from_value"
+        android:textSize="18dp"
+        android:gravity="right"
+        android:textAlignment="gravity"
+        />
+
+    <Spinner
+        android:id="@+id/spinner_dialog_plant_age_convert_to_unit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/textview_dialog_plant_age_convert_result"
+        android:layout_alignBaseline="@id/edittext_dialog_plant_age_convert_from_value"
+        />
+
+
+
+</RelativeLayout>

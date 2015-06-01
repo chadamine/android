@@ -1,5 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string-array name="lengths">
+        <item>mm</item>
+        <item>cm</item>
+        <item>in</item>
+        <item>ft</item>
+        <item>m</item>
+        <item>yd</item>
+    </string-array>
+    <string-array name="times">
+        <item>sec</item>
+        <item>min</item>
+        <item>hr</item>
+        <item>da</item>
+        <item>wk</item>
+        <item>mo</item>
+        <item>yr</item>
+    </string-array>
     <string-array name="plant_sort_items">
         <!-- ASCENDING -->
         <item>Date</item>

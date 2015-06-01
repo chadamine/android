@@ -6,14 +6,15 @@
 	android:layout_width="match_parent">
 
 	<FrameLayout
-		android:layout_height="95dp"
-		android:layout_width="95dp"
-		android:layout_margin="10dp"
 		android:id="@+id/framelayout_plant_new_photo"
+		android:layout_height="115dp"
+		android:layout_width="115dp"
 		android:layout_marginRight="0dp"
+		android:layout_marginTop="20dp"
+		android:layout_marginLeft="20dp"
 		android:layout_marginBottom="10dp"
 		android:background="#000000"
-		/>
+		 />
 
 	<TextView
 		android:id="@+id/textview_plant_new_name_title"
@@ -22,10 +23,11 @@
 		android:layout_width="wrap_content"
 		android:layout_toRightOf="@id/framelayout_plant_new_photo"
 		android:padding="3dp"
-		android:layout_marginBottom="10dp"
+		android:layout_marginBottom="0dp"
 		android:layout_marginTop="20dp"
-		android:layout_marginLeft="10dp"
-		android:layout_marginRight="10dp" />
+		android:layout_marginLeft="20dp"
+		android:layout_marginRight="10dp"
+		android:textSize="18dp" />
 
 	<TextView
 		android:layout_height="wrap_content"
@@ -34,31 +36,39 @@
 		android:layout_toRightOf="@id/framelayout_plant_new_photo"
 		android:layout_below="@id/textview_plant_new_name_title"
 		android:id="@+id/textview_plant_new_species_title"
-		android:layout_margin="10dp"
 		android:padding="3dp"
-		android:layout_marginBottom="0dp" />
+		android:layout_marginBottom="0dp"
+		android:textSize="18dp"
+		android:layout_marginLeft="20dp"
+		android:layout_marginTop="15dp"
+		android:layout_marginRight="10dp" />
 
 	<TextView
 		android:layout_height="wrap_content"
 		android:text="Cultivar:"
 		android:layout_width="wrap_content"
-		android:layout_below="@id/textview_plant_new_species_title"
+		android:layout_below="@+id/textview_plant_new_species_title"
 		android:id="@+id/textview_plant_new_cultivar_title"
 		android:padding="3dp"
-		android:layout_margin="10dp"
 		android:layout_marginBottom="0dp"
-		android:layout_toRightOf="@+id/framelayout_plant_new_photo" />
+		android:layout_toRightOf="@+id/framelayout_plant_new_photo"
+		android:textSize="18dp"
+		android:layout_marginLeft="20dp"
+		android:layout_marginTop="15dp"
+		android:layout_marginRight="10dp" />
 
 	<TextView
 		android:layout_height="wrap_content"
 		android:text="Stage:"
 		android:layout_width="wrap_content"
-		android:layout_below="@id/framelayout_plant_new_photo"
-		android:layout_margin="10dp"
+		android:layout_below="@+id/textview_plant_new_cultivar_title"
 		android:id="@+id/textview_plant_new_stage_title"
-		android:layout_marginBottom="0dp"
-		android:layout_marginRight="0dp"
-		android:padding="3dp"/>
+		android:layout_marginBottom="10dp"
+		android:layout_marginRight="10dp"
+		android:padding="3dp"
+		android:layout_marginLeft="20dp"
+		android:layout_marginTop="20dp"
+		android:textSize="18dp" />
 
 	<TextView
 		android:layout_height="wrap_content"
@@ -66,48 +76,56 @@
 		android:layout_width="wrap_content"
 		android:layout_below="@id/textview_plant_new_stage_title"
 		android:id="@+id/textview_plant_new_age_title"
-		android:layout_margin="10dp"
-		android:layout_marginRight="0dp"
-		android:layout_marginBottom="0dp"
-		android:padding="3dp"/>
+		android:layout_marginRight="10dp"
+		android:layout_marginBottom="10dp"
+		android:padding="3dp"
+		android:layout_marginLeft="20dp"
+		android:layout_marginTop="10dp"
+		android:textSize="18dp" />
 
 	<TextView
 		android:layout_height="wrap_content"
 		android:text="Height:"
 		android:layout_width="wrap_content"
 		android:layout_below="@id/textview_plant_new_age_title"
-		android:layout_margin="10dp"
 		android:id="@+id/textview_plant_new_height_title"
-		android:layout_marginRight="0dp"
-		android:layout_marginBottom="0dp"
-		android:padding="3dp"/>
+		android:layout_marginRight="10dp"
+		android:layout_marginBottom="10dp"
+		android:padding="3dp"
+		android:layout_marginLeft="20dp"
+		android:layout_marginTop="10dp"
+		android:textSize="18dp" />
 
 	<TextView
 		android:layout_height="wrap_content"
 		android:text="Substrate:"
 		android:layout_width="wrap_content"
 		android:layout_below="@id/textview_plant_new_height_title"
-		android:layout_margin="10dp"
 		android:id="@+id/textview_plant_new_substrate_title"
-		android:layout_marginBottom="0dp"
-		android:layout_marginRight="0dp"
-		android:padding="3dp"/>
+		android:layout_marginBottom="10dp"
+		android:layout_marginRight="10dp"
+		android:padding="3dp"
+		android:layout_marginLeft="20dp"
+		android:layout_marginTop="10dp"
+		android:textSize="18dp" />
 
 	<TextView
 		android:layout_height="wrap_content"
 		android:text="Pot Size:"
 		android:layout_width="wrap_content"
 		android:layout_below="@id/textview_plant_new_substrate_title"
-		android:layout_margin="10dp"
 		android:id="@+id/textview_plant_new_potsize_title"
-		android:layout_marginRight="0dp"
+		android:layout_marginRight="10dp"
 		android:layout_marginBottom="10dp"
-		android:padding="3dp"/>
+		android:padding="3dp"
+		android:layout_marginLeft="20dp"
+		android:layout_marginTop="10dp"
+		android:textSize="18dp" />
 
 	<EditText
 		android:layout_height="wrap_content"
 		android:ems="5"
-		android:layout_width="match_parent"
+		android:layout_width="200dp"
 		android:layout_toRightOf="@id/textview_plant_new_species_title"
 		android:layout_below="@id/textview_plant_new_name_title"
 		android:layout_marginBottom="0dp"
@@ -119,7 +137,7 @@
 	<EditText
 		android:layout_height="wrap_content"
 		android:ems="5"
-		android:layout_width="match_parent"
+		android:layout_width="200dp"
 		android:layout_toRightOf="@id/textview_plant_new_name_title"
 		android:layout_alignBaseline="@+id/textview_plant_new_name_title"
 		android:id="@+id/edittext_plant_new_name"
@@ -129,7 +147,7 @@
 	<EditText
 		android:layout_height="wrap_content"
 		android:ems="5"
-		android:layout_width="match_parent"
+		android:layout_width="200dp"
 		android:layout_toRightOf="@id/textview_plant_new_cultivar_title"
 		android:layout_marginTop="0dp"
 		android:layout_marginLeft="10dp"
@@ -152,7 +170,7 @@
 		android:id="@+id/edittext_plant_new_age"
 		android:layout_height="wrap_content"
 		android:ems="10"
-		android:layout_width="50dp"
+		android:layout_width="100dp"
 		android:layout_toRightOf="@id/textview_plant_new_age_title"
 		android:layout_margin="0dp"
 		android:layout_marginBottom="0dp"
@@ -167,12 +185,24 @@
 		android:layout_width="wrap_content"
 		android:layout_height="40dp"
 		android:layout_toRightOf="@+id/edittext_plant_new_age"
-		android:layout_alignBaseline="@+id/textview_plant_new_age_title" />
+		android:layout_alignBaseline="@+id/textview_plant_new_age_title"
+		android:layout_marginLeft="10dp"
+		/>
 
+	<ImageView
+		android:id="@+id/imageview_plant_new_age_calculator"
+		android:layout_width="40dp"
+		android:layout_height="40dp"
+		android:layout_toRightOf="@id/spinner_plant_new_age_units"
+		android:layout_below="@id/textview_plant_new_stage_title"
+		android:layout_alignBottom="@id/textview_plant_new_age_title"
+		android:layout_alignTop="@id/textview_plant_new_age_title"
+		android:layout_marginLeft="20dp"
+		/>
 	<EditText
 		android:layout_height="wrap_content"
 		android:ems="10"
-		android:layout_width="50dp"
+		android:layout_width="100dp"
 		android:layout_toRightOf="@id/textview_plant_new_height_title"
 		android:id="@+id/edittext_plant_new_height_1"
 		android:layout_marginLeft="10dp"
@@ -219,7 +249,7 @@
 		android:layout_height="40dp"
 		android:layout_width="wrap_content"
 		android:layout_toRightOf="@+id/textview_plant_new_potsize_title"
-		android:layout_alignBottom="@+id/textview_plant_new_potsize_title"
+		android:layout_alignBaseline="@+id/textview_plant_new_potsize_title"
 		/>
 
 </RelativeLayout>
