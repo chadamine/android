@@ -2,7 +2,8 @@ package chadamine.com.databaselist.Fragments;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.net.Uri;
+import android.database.MatrixCursor;
+import android.database.MergeCursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -12,15 +13,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import chadamine.com.databaselist.Adapters.SpinnerCursorAdapter;
+import chadamine.com.databaselist.CustomWidgets.CustomSpinner;
 import chadamine.com.databaselist.Database.DatabaseSchema;
 import chadamine.com.databaselist.Objects.Plant;
 import chadamine.com.databaselist.Objects.Substrate;
@@ -36,6 +39,7 @@ public class PlantNewFragment extends Fragment {
     private int mPosition;
     private String mSortOrder;
     private long mId;
+    private final String NEW = "New...";
 
     public PlantNewFragment() {}
 
@@ -48,9 +52,6 @@ public class PlantNewFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
-
-        mContext = getActivity();
         mPlant = new Plant(mContext);
 
         mSubstrate = new Substrate(mContext);
@@ -63,6 +64,7 @@ public class PlantNewFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_plant_new, container, false);
+        mContext = getActivity();
 
         setSpinnerAgeUnits();
         setSpinnerHeightUnits();
@@ -183,8 +185,45 @@ public class PlantNewFragment extends Fragment {
     }
 
     private void setSpinnerSubstrates() {
-        Spinner spinner = (Spinner) mView.findViewById(R.id.spinner_plant_new_substrate);
-        spinner.setAdapter(new SpinnerCursorAdapter(getActivity(), mSubstrate.getCursor()));
+        CustomSpinner spinner = (CustomSpinner) mView.findViewById(R.id.spinner_plant_new_substrate);
+
+        spinner.setAdapter(
+                new SpinnerCursorAdapter(mContext, getMergedCursor(mSubstrate.getCursor()))
+        );
+
+        spinner.setSelection(0, false);
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String selectedItem = parent.getItemAtPosition(position).toString();
+
+                Toast.makeText(mContext, String.valueOf(position) + " " + String.valueOf(id),
+                        Toast.LENGTH_SHORT).show();
+
+                if(position == 0) {
+                    getFragmentManager().beginTransaction().replace(R.id.frame_plant_activity,
+                            new SubstrateNewFragment()).commit();
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
+
+    private Cursor getMergedCursor(Cursor c) {
+
+        String[] projection = new String[] {"_id", "name" };
+        MatrixCursor extras = new MatrixCursor(projection);
+        //extras.addRow(new String[]{"-1", "Select Journal..."});
+        extras.addRow(new String[]{"-1", NEW});
+        Cursor[] cursors = { extras, c };
+        Cursor extendedCursor = new MergeCursor(cursors);
+
+        return extendedCursor;
     }
 
     private void savePlant() {

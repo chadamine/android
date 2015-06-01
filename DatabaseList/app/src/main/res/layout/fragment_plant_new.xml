@@ -214,11 +214,11 @@
 		android:layout_below="@id/textview_plant_new_potsize_title"
 		android:layout_margin="10dp"
 		/>
-	<Spinner
+	<chadamine.com.databaselist.CustomWidgets.CustomSpinner
+		android:id="@+id/spinner_plant_new_substrate"
 		android:layout_height="40dp"
 		android:layout_width="wrap_content"
 		android:layout_toRightOf="@+id/textview_plant_new_substrate_title"
-		android:id="@+id/spinner_plant_new_substrate"
 		android:layout_alignBaseline="@+id/textview_plant_new_substrate_title" />
 
 	<Spinner
