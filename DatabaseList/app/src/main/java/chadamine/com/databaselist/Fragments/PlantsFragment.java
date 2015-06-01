@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
@@ -123,6 +124,9 @@ public class PlantsFragment extends ListFragment
             public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.delete_plant:
+
+                        DialogFragment dialog = new DialogFragment();
+                        dialog.show(getFragmentManager(), null);
 
                         for (int i = (getListView().getCheckedItemCount() - 1); i >= 0; i--) {
                             int checkedItemKey = getListView()
