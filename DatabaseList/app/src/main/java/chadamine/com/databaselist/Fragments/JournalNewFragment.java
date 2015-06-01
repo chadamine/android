@@ -55,8 +55,6 @@ public class JournalNewFragment extends Fragment {
             mBundle = savedInstanceState;
         }
 
-        //setUpButton();
-
         return mView;
     }
 
@@ -82,23 +80,6 @@ public class JournalNewFragment extends Fragment {
 
         getActivity().getContentResolver().insert(mJournal.getUri(), mJournal.getValues());
         getFragmentManager().popBackStack();
-/*
-        Button btnSave = (Button) mView.findViewById(R.id.button_newjournal_save);
-        btnSave.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-
-                createJournal();
-
-                mValues.put(DatabaseSchema.Products.KEY_NAME,
-                        ((EditText) mView.findViewById(R.id.edittext_newjournal_name))
-                                .getText().toString());
-
-                getActivity().getContentResolver().insert(mJournal.getUri(), mJournal.getValues());
-                getFragmentManager().popBackStack();
-            }
-        });*/
     }
 
     private void createJournal() {
@@ -120,7 +101,6 @@ public class JournalNewFragment extends Fragment {
         switch(item.getItemId()) {
             case R.id.save_journal:
                 saveData();
-                //mJournal.saveFields(mView, false);
                 getFragmentManager().popBackStack();
                 hideKeyboard();
                 break;
