@@ -17,6 +17,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,6 +48,7 @@ public class PlantNewFragment extends Fragment {
         f.setArguments(savedInstanceState);
         return f;
     }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,6 +70,7 @@ public class PlantNewFragment extends Fragment {
         setSpinnerAgeUnits();
         setSpinnerHeightUnits();
         setSpinnerSubstrates();
+        hideExtraUnits();
 
         if(savedInstanceState != null) {
             mBundle = savedInstanceState;
@@ -165,6 +168,13 @@ public class PlantNewFragment extends Fragment {
         spinner.setSelection(3);
 
         //new SpinnerCursorAdapter(getActivity(), mProduct.getCursor()));
+    }
+
+    private void hideExtraUnits() {
+        EditText heightValue = (EditText) mView.findViewById(R.id.edittext_plant_new_height_2);
+        heightValue.setVisibility(View.INVISIBLE);
+        TextView heightExtraUnit = (TextView) mView.findViewById(R.id.textview_plant_new_height_2_unit);
+        heightExtraUnit.setVisibility(View.INVISIBLE);
     }
 
     private void setSpinnerHeightUnits() {
