@@ -149,10 +149,10 @@ public class PlantsFragment extends ListFragment
             public void onItemCheckedStateChanged(ActionMode mode, int position, long id,
                                                   boolean checked) {
 
+                mListCursorAdapter.toggleSelection(position);
                 String plurality = mListCursorAdapter
                         .getSelectedItems().size() == 1 ? " Plant Selected" : " Plants Selected";
                 mode.setTitle(getListView().getCheckedItemCount() + plurality);
-                mListCursorAdapter.toggleSelection(position);
             }
 
         });
