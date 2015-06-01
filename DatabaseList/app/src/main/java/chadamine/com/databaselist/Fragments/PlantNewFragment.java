@@ -17,7 +17,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -196,10 +195,6 @@ public class PlantNewFragment extends Fragment {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                //String selectedItem = parent.getItemAtPosition(position).toString();
-
-                Toast.makeText(mContext, String.valueOf(position) + " " + String.valueOf(id),
-                        Toast.LENGTH_SHORT).show();
 
                 if(position == 0) {
                     getFragmentManager().beginTransaction()
@@ -220,7 +215,6 @@ public class PlantNewFragment extends Fragment {
 
         String[] projection = new String[] {"_id", "name" };
         MatrixCursor extras = new MatrixCursor(projection);
-        //extras.addRow(new String[]{"-1", "Select Journal..."});
         extras.addRow(new String[]{"-1", NEW});
         Cursor[] cursors = { extras, c };
         Cursor extendedCursor = new MergeCursor(cursors);

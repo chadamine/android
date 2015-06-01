@@ -237,15 +237,5 @@
 		android:layout_margin="10dp"
 		android:layout_marginBottom="0dp"/>
 
-	<Button
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:text="Save Plant"
-		android:id="@+id/button_save_plant_new"
-		android:layout_below="@+id/spinner_plant_new_irrigationschedule"
-		android:layout_alignLeft="@+id/spinner_plant_new_irrigationschedule"
-		android:layout_alignStart="@+id/spinner_plant_new_irrigationschedule" />
-
-
 </RelativeLayout>
 

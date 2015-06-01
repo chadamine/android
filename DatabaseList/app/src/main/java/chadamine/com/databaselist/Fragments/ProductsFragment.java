@@ -2,8 +2,6 @@ package chadamine.com.databaselist.Fragments;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.database.MatrixCursor;
-import android.database.MergeCursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ListFragment;
@@ -30,7 +28,6 @@ import chadamine.com.databaselist.Database.DatabaseSchema;
 import chadamine.com.databaselist.Database.DatabaseSchema.Products;
 import chadamine.com.databaselist.Objects.Product;
 import chadamine.com.databaselist.R;
-import chadamine.com.databaselist.Adapters.SpinnerCursorAdapter;
 
 /**
  * Created by chadamine on 4/10/2015.
@@ -131,7 +128,6 @@ public class ProductsFragment extends ListFragment
 
         if(mBundle.containsKey("sortSelection"))
             mSortSelection = mBundle.getInt("sortSelection");
-
 
         getListView().setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
 
