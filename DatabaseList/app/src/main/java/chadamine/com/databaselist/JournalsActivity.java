@@ -1,4 +1,4 @@
-package chadamine.com.databaselist.Objects;
+package chadamine.com.databaselist;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;

@@ -66,8 +66,11 @@ public class JournalsFragment extends ListFragment
 
         getLoaderManager().initLoader(LIST_LOADER_ID, null, this);
 
+        Cursor cursor = mContext.getContentResolver().query(mJournal.getUri(),
+                mJournal.getKeyIdArray(), null, null, mSortOrder);
+
         mListCursorAdapter
-                = new ListCursorAdapter(mContext, null, 0, mJournal);
+                = new ListCursorAdapter(mContext, cursor, 0, mJournal);
 
         setListAdapter(mListCursorAdapter);
     }
@@ -167,7 +170,7 @@ public class JournalsFragment extends ListFragment
 				@Override
 				public boolean onCreateActionMode(ActionMode mode, Menu menu) {
 
-					mode.getMenuInflater().inflate(R.menu.menu_journals, menu);
+					mode.getMenuInflater().inflate(R.menu.menu_journals_action, menu);
 					return true;
 				}
 
@@ -204,9 +207,11 @@ public class JournalsFragment extends ListFragment
 				public void onItemCheckedStateChanged(ActionMode mode, int position, long id,
 													  boolean checked) {
 
-					mode.setTitle(getListView().getCheckedItemCount() + " Products Selected");
 					mListCursorAdapter.toggleSelection(position);
-				}
+                    String plurality = mListCursorAdapter.getSelectedItems().size()
+                            == 1 ? " Journal Selected" : " Journals Selected";
+                    mode.setTitle(getListView().getCheckedItemCount() + plurality);
+                }
 
 			});
     }

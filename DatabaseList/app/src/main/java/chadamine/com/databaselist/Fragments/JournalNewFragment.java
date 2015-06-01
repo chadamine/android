@@ -40,6 +40,7 @@ public class JournalNewFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        setRetainInstance(true);
     }
 
     @Override
@@ -48,6 +49,11 @@ public class JournalNewFragment extends Fragment {
         mView = inflater.inflate(R.layout.fragment_journal_new, container, false);
         mValues = new ContentValues();
         mContext = getActivity();
+
+        // restore previous state (i.e. on screen rotation)
+        if(savedInstanceState != null) {
+            mBundle = savedInstanceState;
+        }
 
         //setUpButton();
 
