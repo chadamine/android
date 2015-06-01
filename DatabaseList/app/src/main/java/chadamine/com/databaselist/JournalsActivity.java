@@ -21,13 +21,17 @@ public class JournalsActivity extends ActionBarActivity {
         if(savedInstanceState != null) {
             mJournalsFragment = (JournalsFragment) getSupportFragmentManager()
                     .findFragmentByTag(JOURNALS_FRAGMENT_TAG);
-        } else if (mJournalsFragment == null)
-            mJournalsFragment = new JournalsFragment();
+        } else {
+            if (mJournalsFragment == null)
+                mJournalsFragment = new JournalsFragment();
 
-        if(!mJournalsFragment.isInLayout())
             getSupportFragmentManager().beginTransaction()
-            .replace(R.id.frame_journals_activity, mJournalsFragment, JOURNALS_FRAGMENT_TAG)
+                    .replace(R.id.frame_journals_activity, mJournalsFragment, JOURNALS_FRAGMENT_TAG)
                     .commit();
+        }
+
+        //if(!mJournalsFragment.isInLayout())
+
     }
 
     @Override
@@ -50,5 +54,10 @@ public class JournalsActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
     }
 }
