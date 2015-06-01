@@ -196,9 +196,9 @@ public class PlantNewFragment extends Fragment {
     private void setSpinnerSubstrates() {
         CustomSpinner spinner = (CustomSpinner) mView.findViewById(R.id.spinner_plant_new_substrate);
 
-        spinner.setAdapter(
-                new SpinnerCursorAdapter(mContext, getMergedCursor(mSubstrate.getCursor()))
-        );
+        SpinnerCursorAdapter adapter = new SpinnerCursorAdapter(mContext, getMergedCursor(mSubstrate.getCursor()));
+
+        spinner.setAdapter(adapter);
 
         spinner.setSelection(0, false);
 
@@ -206,7 +206,7 @@ public class PlantNewFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                if(position == 0) {
+                if (position == 0) {
                     getFragmentManager().beginTransaction()
                             .replace(R.id.frame_plant_activity, new SubstrateNewFragment())
                             .addToBackStack("newSubstrate")
@@ -219,6 +219,9 @@ public class PlantNewFragment extends Fragment {
 
             }
         });
+
+
+
     }
 
     private Cursor getMergedCursor(Cursor c) {
