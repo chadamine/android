@@ -15,13 +15,13 @@ public class DatabaseSchema {
     public static final int DATABASE_VERSION = 1;
     public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY);
 
-    public static final String DTIE = "DROP TABLE IF EXISTS ";
-    public static final String CT = "CREATE TABLE ";
-    public static final String OB = "(";
-    public static final String IPKA = " INTEGER PRIMARY KEY AUTOINCREMENT,";
-    public static final String TXT = " TEXT, ";
-    public static final String TXF = " TEXT";
-    public static final String CLOSE = ");";
+    private static final String DTIE = "DROP TABLE IF EXISTS ";
+    private static final String CT = "CREATE TABLE ";
+    private static final String OB = "(";
+    private static final String IPKA = " INTEGER PRIMARY KEY AUTOINCREMENT,";
+    private static final String TXT = " TEXT, ";
+    private static final String TXF = " TEXT";
+    private static final String CLOSE = ");";
 
     public static final String SORT_DESC = " DESC";
     public static final String SORT_ASC = " ASC";
@@ -390,9 +390,6 @@ public class DatabaseSchema {
         public static final String[] KEY_ID_ARRAY =
                 { KEY_ID, KEY_NAME, KEY_MATERIAL, KEY_FORM, KEY_SIZE,
                         KEY_POROSITY, KEY_DENSITY, KEY_CEC};
-
-        public static final String[] KEY_ARRAY =
-                { KEY_NAME, KEY_MATERIAL, KEY_FORM, KEY_SIZE, KEY_POROSITY, KEY_DENSITY, KEY_CEC };
 
         public static final String TABLE_CREATE =
                 CT+ TABLE_NAME + OB
