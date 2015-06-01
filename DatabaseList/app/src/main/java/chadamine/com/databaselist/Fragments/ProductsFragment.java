@@ -42,6 +42,8 @@ public class ProductsFragment extends ListFragment
     private int mSortSelection;
 
     private static final int LIST_LOADER_ID = 0;
+    private static final String SORT_ASC = DatabaseSchema.SORT_ASC;
+    private static final String SORT_DESC = DatabaseSchema.SORT_DESC;
 
     private Context mContext;
     private Product mProduct;
@@ -208,22 +210,22 @@ public class ProductsFragment extends ListFragment
                 switch (position) {
 
                     case 0:
-                        mSortOrder = Products.KEY_ID + DatabaseSchema.SORT_ASC;
+                        mSortOrder = Products.KEY_ID + SORT_ASC;
                         mSortSelection = 0;
                         break;
 
                     case 4:
-                        mSortOrder = Products.KEY_ID + DatabaseSchema.SORT_DESC;
+                        mSortOrder = Products.KEY_ID + SORT_DESC;
                         mSortSelection = 5;
                         break;
 
                     case 2:
-                        mSortOrder = Products.KEY_NAME + DatabaseSchema.SORT_ASC;
+                        mSortOrder = Products.KEY_NAME + SORT_ASC;
                         mSortSelection = 1;
                         break;
 
                     case 5:
-                        mSortOrder = Products.KEY_NAME + DatabaseSchema.SORT_DESC;
+                        mSortOrder = Products.KEY_NAME + SORT_DESC;
                         mSortSelection = 6;
                         break;
                 }
