@@ -146,11 +146,6 @@ public class ProductNewFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        Toast.makeText(mContext,
-                "Product image saved as " + mProduct.getName()
-                    + "\nin the following folder: " + mPhoto.getPhotoFolder(),
-                Toast.LENGTH_LONG).show();
-
         if(resultCode == Activity.RESULT_OK) {
 
             if(requestCode == REQUEST_IMAGE_CAPTURE) {
@@ -158,12 +153,14 @@ public class ProductNewFragment extends Fragment {
                     Bitmap imageBitmap = (Bitmap) data.getExtras().get("data");
                     mPhoto.setThumb(imageBitmap);
                     mImageAdapter.addItem(mPhoto);
+
+                    Toast.makeText(mContext,
+                            "Product image saved as " + mProduct.getName()
+                                    + "\nin the following folder: " + mPhoto.getPhotoFolder(),
+                            Toast.LENGTH_LONG).show();
                 } else
                     Toast.makeText(mContext, "camera result null", Toast.LENGTH_SHORT).show();
-
-
             }
-
         }
 
         else
