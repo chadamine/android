@@ -82,10 +82,8 @@ public class PlantsFragment extends ListFragment
 
         getLoaderManager().initLoader(LIST_LOADER_ID, mBundle, this);
 
-        if(mListCursorAdapter == null)
-            mListCursorAdapter = new ListCursorAdapter(mContext, null, 0, mPlant);
-
-            setListAdapter(mListCursorAdapter);
+        mListCursorAdapter = new ListCursorAdapter(mContext, null, 0, mPlant);
+        setListAdapter(mListCursorAdapter);
 
         return mView;
     }
