@@ -207,13 +207,6 @@
 		android:layout_marginLeft="10dp"
 		android:id="@+id/textview_plant_new_height_2_unit" />
 
-	<Spinner
-		android:id="@+id/spinner_plant_new_irrigationschedule"
-		android:layout_height="wrap_content"
-		android:layout_width="wrap_content"
-		android:layout_below="@id/textview_plant_new_potsize_title"
-		android:layout_margin="10dp"
-		/>
 	<chadamine.com.databaselist.CustomWidgets.CustomSpinner
 		android:id="@+id/spinner_plant_new_substrate"
 		android:layout_height="40dp"
@@ -228,14 +221,6 @@
 		android:layout_toRightOf="@+id/textview_plant_new_potsize_title"
 		android:layout_alignBottom="@+id/textview_plant_new_potsize_title"
 		/>
-
-	<Spinner
-		android:layout_height="25dp"
-		android:layout_width="wrap_content"
-		android:layout_toRightOf="@id/textview_plant_new_potsize_title"
-		android:layout_alignBottom="@id/textview_plant_new_potsize_title"
-		android:layout_margin="10dp"
-		android:layout_marginBottom="0dp"/>
 
 </RelativeLayout>
 
