@@ -117,10 +117,16 @@ public class PlantAgeDialogFragment extends DialogFragment {
         if(mFromUnit.equalsIgnoreCase("mm")) {
             if(mToUnit.equalsIgnoreCase("mm"))
                 answer = value;
+            if(mToUnit.equalsIgnoreCase("cm"))
+                answer = value / 10;
             if(mToUnit.equalsIgnoreCase("in"))
                 answer = value * _mm2in;
             if(mToUnit.equalsIgnoreCase("m"))
-                answer = value * 1000;
+                answer = value / 1000;
+            if(mToUnit.equalsIgnoreCase("ft"))
+                answer = value * 0.00328084;
+            if(mToUnit.equalsIgnoreCase("yd"))
+                answer = value * 0.00109361;
         }
 
         return answer;
