@@ -13,7 +13,7 @@ public class CustomSpinner extends Spinner {
     private OnItemSelectedListener listener;
 
     public CustomSpinner(Context context, AttributeSet attrs) {
-        super(context);
+        super(context, attrs);
     }
 
     @Override

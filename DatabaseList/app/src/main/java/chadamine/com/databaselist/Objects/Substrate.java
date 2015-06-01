@@ -24,7 +24,11 @@ public class Substrate implements DatabaseAdapter {
 
     public Substrate(Context c) {
         mContext = c;
-        mCursor = mContext.getContentResolver().query(CONTENT_URI, KEY_ID_ARRAY, null, null, null);
+        try {
+            mCursor = mContext.getContentResolver().query(CONTENT_URI, KEY_ID_ARRAY, null, null, null);
+        } catch (NullPointerException e) {
+            mCursor = null;
+        }
     }
 
     @Override

@@ -196,14 +196,16 @@ public class PlantNewFragment extends Fragment {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String selectedItem = parent.getItemAtPosition(position).toString();
+                //String selectedItem = parent.getItemAtPosition(position).toString();
 
                 Toast.makeText(mContext, String.valueOf(position) + " " + String.valueOf(id),
                         Toast.LENGTH_SHORT).show();
 
                 if(position == 0) {
-                    getFragmentManager().beginTransaction().replace(R.id.frame_plant_activity,
-                            new SubstrateNewFragment()).commit();
+                    getFragmentManager().beginTransaction()
+                            .replace(R.id.frame_plant_activity, new SubstrateNewFragment())
+                            .addToBackStack("newSubstrate")
+                            .commit();
                 }
             }
 
