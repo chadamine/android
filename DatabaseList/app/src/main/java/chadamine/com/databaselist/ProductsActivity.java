@@ -10,14 +10,27 @@ import chadamine.com.databaselist.Fragments.ProductsFragment;
 
 public class ProductsActivity extends ActionBarActivity {
 
+    private final String PRODUCTS_FRAGMENT_TAG = "productsFragmentTag";
+    private ProductsFragment mProductsFragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_products);
 
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.frame_product_activity, new ProductsFragment())
-                .commit();
+        if (savedInstanceState != null) {
+            mProductsFragment = (ProductsFragment) getSupportFragmentManager()
+                    .findFragmentByTag(PRODUCTS_FRAGMENT_TAG);
+        } else {
+            if(mProductsFragment == null) {
+                mProductsFragment = new ProductsFragment();
+            }
+
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.frame_product_activity, new ProductsFragment())
+                    .commit();
+        }
+
     }
 
     @Override

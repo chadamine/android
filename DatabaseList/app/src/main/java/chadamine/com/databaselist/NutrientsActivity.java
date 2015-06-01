@@ -19,16 +19,18 @@ public class NutrientsActivity extends ActionBarActivity {
 
         setContentView(R.layout.activity_nutrients);
 
-        if(savedInstanceState != null) {
+        if (savedInstanceState != null) {
             mNutrientsFragment = (NutrientsFragment) getSupportFragmentManager()
                     .findFragmentByTag(NUTRIENTS_FRAGMENT_TAG);
-        } else if (mNutrientsFragment == null)
-            mNutrientsFragment = new NutrientsFragment();
+        } else {
 
-        if(!mNutrientsFragment.isInLayout())
-            getSupportFragmentManager().beginTransaction()
-                .replace(R.id.frame_nutrient_activity, mNutrientsFragment, NUTRIENTS_FRAGMENT_TAG)
-                    .commit();
+            if (mNutrientsFragment == null)
+                mNutrientsFragment = new NutrientsFragment();
+        }
+
+        getSupportFragmentManager().beginTransaction()
+            .replace(R.id.frame_nutrient_activity, mNutrientsFragment, NUTRIENTS_FRAGMENT_TAG)
+                .commit();
     }
 
     @Override
