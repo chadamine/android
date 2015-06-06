@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
+import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.TextView;
 
@@ -67,6 +68,23 @@ public class Journal implements DatabaseAdapter {
     @Override
     public Cursor getCursor() {
         return mCursor;
+    }
+
+    public Cursor getNewCursor(@Nullable String[] idArray,
+                               @Nullable String selection,
+                               @Nullable String[] selectionArgs,
+                               @Nullable String sortOrder) {
+        String[] idA;
+
+        if(idArray == null)
+            idA = KEY_ID_ARRAY;
+        else
+            idA = idArray;
+
+        Cursor cursor = mContext.getContentResolver().query(CONTENT_URI, idA, selection, selectionArgs, sortOrder);
+        cursor.moveToFirst();
+
+        return cursor;
     }
 
     public void setName(String name) {

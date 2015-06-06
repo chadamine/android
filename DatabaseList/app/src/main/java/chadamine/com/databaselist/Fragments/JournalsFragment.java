@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.*;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.*;
 import android.support.v4.view.MenuItemCompat;
 import android.view.*;
@@ -219,6 +220,10 @@ public class JournalsFragment extends ListFragment
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
+
+        getFragmentManager().beginTransaction()
+                .replace(R.id.frame_journals_activity, JournalViewFragment.newInstance(mBundle))
+                .addToBackStack("journalView").commit();
 
     }
 
