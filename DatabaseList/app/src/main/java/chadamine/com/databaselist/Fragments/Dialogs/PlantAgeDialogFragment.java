@@ -1,4 +1,4 @@
-package chadamine.com.databaselist.Fragments;
+package chadamine.com.databaselist.Fragments.Dialogs;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -23,7 +23,6 @@ import chadamine.com.databaselist.R;
  * Created by chadamine on 6/1/2015.
  */
 public class PlantAgeDialogFragment extends DialogFragment {
-
 
     private String mToUnit;
     private String mFromUnit;
