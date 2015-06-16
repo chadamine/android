@@ -10,6 +10,7 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v4.view.ViewPager;
 import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -23,7 +24,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
+import android.widget.Toast;
 
+import chadamine.com.databaselist.Adapters.CustomFragmentPagerAdapter;
 import chadamine.com.databaselist.Adapters.ListCursorAdapter;
 import chadamine.com.databaselist.Database.DatabaseSchema.Plants;
 import chadamine.com.databaselist.Objects.Plant;
@@ -44,6 +47,7 @@ public class PlantsFragment extends ListFragment
     private Bundle mBundle;
 
     private long mId;
+    private static CustomFragmentPagerAdapter.FirstPageFragmentListener mListener;
 
     private LoaderManager.LoaderCallbacks<Cursor> mLoaderManager;
 
@@ -61,10 +65,18 @@ public class PlantsFragment extends ListFragment
             f.setArguments(args);
         return f;
     }
+
+    public static PlantsFragment newInstance(Bundle args, CustomFragmentPagerAdapter.FirstPageFragmentListener listener) {
+        PlantsFragment f = new PlantsFragment();
+        mListener = listener;
+        if(args != null)
+            f.setArguments(args);
+        return f;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
 
         setHasOptionsMenu(true);
         setRetainInstance(true);
@@ -221,6 +233,10 @@ public class PlantsFragment extends ListFragment
 
         mBundle.putInt("position", position);
         mBundle.putLong("id", id);
+
+        Toast.makeText(mContext, "Click!", Toast.LENGTH_SHORT).show();
+
+        mListener.onSwitchToNextFragment();
         getFragmentManager().beginTransaction()
                 .replace(R.id.frame_plant_activity, PlantViewFragment.newInstance(mBundle))
                 .addToBackStack("plantView").commit();
