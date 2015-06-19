@@ -167,29 +167,34 @@ public class Plant extends Organism implements DatabaseAdapter {
     public void setViewItemContent(View view, int cursorPosition, String sortOrder) {
 
         mCursor = getNewCursor(getKeyIdArray(), null, null, sortOrder);
-        mCursor.moveToPosition(cursorPosition);
 
-        String name = mCursor.getString(mCursor.getColumnIndexOrThrow(Plants.KEY_NAME));
-        ((TextView) view.findViewById(R.id.textview_plant_view_info_name))
-                .setText(name == null ? "" : name);
+        if(mCursor.getCount() > 0) {
+            mCursor.moveToPosition(cursorPosition);
 
-        String species = mCursor.getString(mCursor.getColumnIndexOrThrow(Plants.KEY_SPECIES));
-        ((TextView) view.findViewById(R.id.textview_plant_view_info_species))
-                .setText(species == null ? "" : species);
+            String name = mCursor.getString(mCursor.getColumnIndex(Plants.KEY_NAME));
 
-        String cultivar = mCursor.getString(mCursor.getColumnIndexOrThrow(Plants.KEY_CULTIVAR));
-        ((TextView) view.findViewById(R.id.textview_plant_view_info_cultivar))
-                .setText(cultivar == null ? "" : cultivar);
+            ((TextView) view.findViewById(R.id.textview_plant_view_info_name))
+                    .setText(name == null ? "" : name);
 
-        String stage = mCursor.getString(mCursor.getColumnIndexOrThrow(Plants.KEY_STAGE));
-        ((TextView) view.findViewById(R.id.textview_plant_view_info_stage))
-                .setText(stage == null ? "" : stage);
 
-        String age = mCursor.getString(mCursor.getColumnIndexOrThrow(Plants.KEY_AGE));
-        ((TextView) view.findViewById(R.id.textview_plant_view_info_age))
-                .setText(age == null ? "" : age);
+            String species = mCursor.getString(mCursor.getColumnIndexOrThrow(Plants.KEY_SPECIES));
+            ((TextView) view.findViewById(R.id.textview_plant_view_info_species))
+                    .setText(species == null ? "" : species);
 
-        mCursor.moveToNext();
+            String cultivar = mCursor.getString(mCursor.getColumnIndexOrThrow(Plants.KEY_CULTIVAR));
+            ((TextView) view.findViewById(R.id.textview_plant_view_info_cultivar))
+                    .setText(cultivar == null ? "" : cultivar);
+
+            String stage = mCursor.getString(mCursor.getColumnIndexOrThrow(Plants.KEY_STAGE));
+            ((TextView) view.findViewById(R.id.textview_plant_view_info_stage))
+                    .setText(stage == null ? "" : stage);
+
+            String age = mCursor.getString(mCursor.getColumnIndexOrThrow(Plants.KEY_AGE));
+            ((TextView) view.findViewById(R.id.textview_plant_view_info_age))
+                    .setText(age == null ? "" : age);
+
+            mCursor.moveToNext();
+        }
     }
 
     @Override
