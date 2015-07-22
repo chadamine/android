@@ -17,7 +17,7 @@ public class PlantsActivity extends ActionBarActivity {
     private final String PLANTS_FRAGMENT_TAG = "plantsFragmentTag";
     private PlantsFragment mPlantsFragment;
     private PagerAdapter mCustomFragmentPagerAdapter;
-    private PagerSlidingTabStrip tabs;
+
     private ViewPager mViewPager;
 
     @Override
@@ -42,7 +42,7 @@ public class PlantsActivity extends ActionBarActivity {
 
         mCustomFragmentPagerAdapter = new CustomFragmentPagerAdapter(getSupportFragmentManager(), this);
 
-        tabs = (PagerSlidingTabStrip) findViewById(R.id.pager_sliding_tab_strip);
+        PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) findViewById(R.id.pager_sliding_tab_strip);
 
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mCustomFragmentPagerAdapter);
