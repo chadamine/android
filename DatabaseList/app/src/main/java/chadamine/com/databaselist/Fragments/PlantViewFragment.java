@@ -14,6 +14,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import chadamine.com.databaselist.Adapters.CustomFragmentPagerAdapter.FirstPageFragmentListener;
 import chadamine.com.databaselist.Objects.Plant;
 import chadamine.com.databaselist.R;
 
@@ -24,12 +25,27 @@ public class PlantViewFragment extends Fragment {
     private Plant mPlant;
     private List<View> mFields;
     private int mCursorPosition;
+    private static FirstPageFragmentListener mListener;
 
     private String mSortOrder;
     private Bundle mBundle;
 
-    public PlantViewFragment() {
+    public PlantViewFragment() {}
 
+    public static PlantViewFragment newInstance(Bundle args) {
+        PlantViewFragment f = new PlantViewFragment();
+        if(args != null)
+            f.setArguments(args);
+        return f;
+    }
+
+    public static PlantViewFragment newInstance(Bundle args,
+                                                FirstPageFragmentListener listener) {
+        PlantViewFragment f = new PlantViewFragment();
+        if(args != null)
+            f.setArguments(args);
+        mListener = listener;
+        return f;
     }
 
     @Override
@@ -37,13 +53,6 @@ public class PlantViewFragment extends Fragment {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
         setRetainInstance(true);
-    }
-
-    public static PlantViewFragment newInstance(Bundle args) {
-        PlantViewFragment f = new PlantViewFragment();
-        if(args != null)
-            f.setArguments(args);
-        return f;
     }
 
     @Override

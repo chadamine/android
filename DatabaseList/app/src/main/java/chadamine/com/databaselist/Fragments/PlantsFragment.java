@@ -233,30 +233,28 @@ public class PlantsFragment extends ListFragment
 
         mBundle.putInt("position", position);
         mBundle.putLong("id", id);
+        mBundle.putBoolean("hasPosition", true);
 
-        Toast.makeText(mContext, "Click!", Toast.LENGTH_SHORT).show();
-
-        mListener.onSwitchToNextFragment();
-        getFragmentManager().beginTransaction()
+        mListener.onSwitchToNextFragment(mBundle);
+        /*getFragmentManager().beginTransaction()
                 .replace(R.id.frame_plant_activity, PlantViewFragment.newInstance(mBundle))
-                .addToBackStack("plantView").commit();
+                .addToBackStack("plantView").commit();*/
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        //mBundle.putInt("sortSelection", mSortSelection);
-        //mBundle.putString("sortOrder", mSortOrder);
-
-        mBundle.putInt("position", -1); // position not wanted in this case
+        //mBundle.putInt("position", -1); // position not wanted in this case
+        mBundle.putBoolean("hasPosition", false);
 
         switch(item.getItemId()) {
             case R.id.add_plant:
-                getFragmentManager().beginTransaction()
+                /*getFragmentManager().beginTransaction()
                         .replace(R.id.frame_plant_activity,
                                 PlantNewFragment.newInstance(mBundle))
                         .addToBackStack("newPlant")
-                        .commit();
+                        .commit();*/
+                mListener.onSwitchToNew(mBundle);
                 break;
         }
 

@@ -61,4 +61,16 @@ public class PlantsActivity extends ActionBarActivity {
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+    //mCustomFragmentPagerAdapter.FirstPageListener mListener = new FirstPageListener();
+    getSupportFragmentManager().beginTransaction()
+            .replace(R.id.frame_plant_activity, PlantsFragment.newInstance(null))
+    .commit();
+   }
 }
+
+

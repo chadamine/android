@@ -20,10 +20,12 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import chadamine.com.databaselist.Adapters.CustomFragmentPagerAdapter.FirstPageFragmentListener;
 import chadamine.com.databaselist.Adapters.SpinnerCursorAdapter;
 import chadamine.com.databaselist.CustomWidgets.CustomSpinner;
 import chadamine.com.databaselist.Database.DatabaseSchema;
@@ -43,14 +45,24 @@ public class PlantNewFragment extends Fragment {
     private String mSortOrder;
     private long mId;
     private final String NEW = "New...";
+    private boolean mHasPosition;
 
     private EditText mHeightValue;
     private TextView mHeightExtraUnit;
+
+    private static FirstPageFragmentListener mListener;
 
     public PlantNewFragment() {}
 
     public static PlantNewFragment newInstance(Bundle savedInstanceState) {
         PlantNewFragment f = new PlantNewFragment();
+        f.setArguments(savedInstanceState);
+        return f;
+    }
+    public static PlantNewFragment newInstance(Bundle savedInstanceState,
+                                               FirstPageFragmentListener listener) {
+        PlantNewFragment f = new PlantNewFragment();
+        mListener = listener;
         f.setArguments(savedInstanceState);
         return f;
     }
@@ -72,7 +84,7 @@ public class PlantNewFragment extends Fragment {
         setSpinnerAgeUnits();
         setSpinnerHeightUnits();
         setSpinnerSubstrates();
-        setSpinnerPotsizes();
+        setSpinnerPotSizes();
 
         hideExtraUnits();
 
@@ -83,7 +95,10 @@ public class PlantNewFragment extends Fragment {
 
             mBundle = getArguments();
 
-            if(mBundle.containsKey("position"))
+            if(mBundle.containsKey("hasPostion"))
+                mHasPosition = mBundle.getBoolean("hasPosition");
+
+            if(mHasPosition == true && mBundle.containsKey("position"))
                 mPosition = mBundle.getInt("position");
 
             if(mBundle.containsKey("sortOrder"))
@@ -97,7 +112,8 @@ public class PlantNewFragment extends Fragment {
 
         String name = "";
 
-        if(mPosition >= 0) {
+        //if(mPosition >= 0) {
+        if(mHasPosition) {
             Cursor cursor = mContext.getContentResolver()
                     .query(mPlant.getUri(), mPlant.getKeyIdArray(),
                             null, null, mSortOrder);
@@ -160,7 +176,8 @@ public class PlantNewFragment extends Fragment {
         switch(item.getItemId()) {
             case R.id.save_plant:
 
-                if(mPosition >= 0) {
+                //if(mPosition >= 0) {
+                if(mHasPosition) {
                     mPlant.setName(
                             ((EditText) mView.findViewById(R.id.edittext_plant_new_name)).getText()
                                     .toString());
@@ -170,8 +187,8 @@ public class PlantNewFragment extends Fragment {
                 else
                     mPlant.saveFields(mView, false);
 
-                getFragmentManager().popBackStack();
-
+                //getFragmentManager().popBackStack();
+                mListener.onSwitchToNew(mBundle);
                 hideKeyboard();
                 break;
         }
@@ -274,7 +291,7 @@ public class PlantNewFragment extends Fragment {
         });
     }
 
-    private void setSpinnerPotsizes() {
+    private void setSpinnerPotSizes() {
         CustomSpinner spinner = (CustomSpinner) mView.findViewById(R.id.spinner_plant_new_potsize);
 
         SpinnerCursorAdapter adapter = new SpinnerCursorAdapter(mContext, getMergedCursor(mSubstrate.getCursor()));
@@ -338,7 +355,9 @@ public class PlantNewFragment extends Fragment {
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState = mBundle;
+        super.onSaveInstanceState(mBundle);
+        // outState = mBundle;
+
+        Toast.makeText(mContext, "Plant Saved", Toast.LENGTH_SHORT).show();
     }
 }
