@@ -2,20 +2,24 @@ package chadamine.com.databaselist;
 
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.PagerTabStrip;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
+
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.view.Menu;
 
 import com.astuetz.PagerSlidingTabStrip;
 
 import chadamine.com.databaselist.Adapters.CustomFragmentPagerAdapter;
+import chadamine.com.databaselist.Fragments.PlantOverviewFragment;
 import chadamine.com.databaselist.Fragments.PlantsFragment;
 
 public class PlantsActivity extends ActionBarActivity {
 
     private final String PLANTS_FRAGMENT_TAG = "plantsFragmentTag";
-    private PlantsFragment mPlantsFragment;
+    private PlantOverviewFragment mPlantOverviewFragment;
     private PagerAdapter mCustomFragmentPagerAdapter;
 
     private ViewPager mViewPager;
@@ -26,34 +30,29 @@ public class PlantsActivity extends ActionBarActivity {
 
         setContentView(R.layout.activity_plants);
 
-        if (savedInstanceState != null) {
-            mPlantsFragment = (PlantsFragment) getSupportFragmentManager()
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.frame_plant_activity, new PlantsFragment())
+                .commit();
+
+        /*if (savedInstanceState != null) {
+            mPlantOverviewFragment = (PlantOverviewFragment) getSupportFragmentManager()
                     .findFragmentByTag(PLANTS_FRAGMENT_TAG);
 
         } else {
 
-            if (mPlantsFragment == null) {
-                mPlantsFragment = new PlantsFragment();
-            }
+            if (mPlantOverviewFragment == null) {
+                mPlantOverviewFragment = new PlantOverviewFragment();
+            }*/
 
-            /*getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.frame_plant_activity, mPlantsFragment, PLANTS_FRAGMENT_TAG).commit();*/
-        }
 
-        mCustomFragmentPagerAdapter = new CustomFragmentPagerAdapter(getSupportFragmentManager(), this);
+        //}
 
-        PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) findViewById(R.id.pager_sliding_tab_strip);
 
-        mViewPager = (ViewPager) findViewById(R.id.pager);
-        mViewPager.setAdapter(mCustomFragmentPagerAdapter);
-
-        tabs.setViewPager(mViewPager);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_plants_activity, menu);
-
         return true;
     }
 
@@ -67,9 +66,9 @@ public class PlantsActivity extends ActionBarActivity {
         super.onBackPressed();
 
     //mCustomFragmentPagerAdapter.FirstPageListener mListener = new FirstPageListener();
-    getSupportFragmentManager().beginTransaction()
-            .replace(R.id.frame_plant_activity, PlantsFragment.newInstance(null))
-    .commit();
+    /*getSupportFragmentManager().beginTransaction()
+            .replace(R.id.frame_plant_activity, new PlantsFragment())
+            .commit();*/
    }
 }
 

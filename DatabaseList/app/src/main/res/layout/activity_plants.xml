@@ -1,24 +1,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/linear_layout_plants_activity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-    <com.astuetz.PagerSlidingTabStrip
-        android:id="@+id/pager_sliding_tab_strip"
-        android:layout_width="match_parent"
-        android:layout_height="45dip"
-        app:pstsShouldExpand="true"
-        />
-    <android.support.v4.view.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/pager"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
     <FrameLayout
         xmlns:tools="http://schemas.android.com/tools"
         tools:layout="@layout/fragment_plants"
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/frame_plant_activity"
         android:name="chadamine.com.databaselist.PlantsActivityFragment"
         android:layout_width="match_parent"

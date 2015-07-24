@@ -5,12 +5,12 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v4.view.MenuItemCompat;
-import android.support.v4.view.ViewPager;
 import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -24,9 +24,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
-import android.widget.Toast;
 
 import chadamine.com.databaselist.Adapters.CustomFragmentPagerAdapter;
+import chadamine.com.databaselist.Adapters.CustomFragmentPagerAdapter.FirstPageFragmentListener;
 import chadamine.com.databaselist.Adapters.ListCursorAdapter;
 import chadamine.com.databaselist.Database.DatabaseSchema.Plants;
 import chadamine.com.databaselist.Objects.Plant;
@@ -47,7 +47,7 @@ public class PlantsFragment extends ListFragment
     private Bundle mBundle;
 
     private long mId;
-    private static CustomFragmentPagerAdapter.FirstPageFragmentListener mListener;
+    private static FirstPageFragmentListener mListener;
 
     private LoaderManager.LoaderCallbacks<Cursor> mLoaderManager;
 
@@ -103,11 +103,11 @@ public class PlantsFragment extends ListFragment
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        if(savedInstanceState != null) {
+        /*if(savedInstanceState != null) {
             mBundle = savedInstanceState;
             if(mBundle.containsKey("sortSelection"))
                 mSortSelection = mBundle.getInt("sortSelection");
-        } else if(getArguments() != null) {
+        } else */if(getArguments() != null) {
             mBundle = getArguments();
             if(mBundle.containsKey("sortSelection"))
                 mSortSelection = mBundle.getInt("sortSelection");
@@ -234,27 +234,32 @@ public class PlantsFragment extends ListFragment
         mBundle.putInt("position", position);
         mBundle.putLong("id", id);
         mBundle.putBoolean("hasPosition", true);
+        mBundle.putBoolean("isNew", false);
 
-        mListener.onSwitchToNextFragment(mBundle);
-        /*getFragmentManager().beginTransaction()
-                .replace(R.id.frame_plant_activity, PlantViewFragment.newInstance(mBundle))
-                .addToBackStack("plantView").commit();*/
+        //mListener.onSwitchToNextFragment(mBundle);
+        getFragmentManager().beginTransaction()
+                .replace(R.id.frame_plant_activity, PlantOverviewFragment.newInstance(mBundle))
+                .addToBackStack("plant overview")
+                .commit();
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        //mBundle.putInt("position", -1); // position not wanted in this case
-        mBundle.putBoolean("hasPosition", false);
+        mBundle.putInt("position", -1); // position not wanted in this case
+        //mBundle.putBoolean("hasPosition", false);
+        mBundle.putBoolean("isNew", true);
 
         switch(item.getItemId()) {
             case R.id.add_plant:
-                /*getFragmentManager().beginTransaction()
+                getFragmentManager().beginTransaction()
                         .replace(R.id.frame_plant_activity,
                                 PlantNewFragment.newInstance(mBundle))
                         .addToBackStack("newPlant")
-                        .commit();*/
-                mListener.onSwitchToNew(mBundle);
+                        .commit();
+
+                // USE LISTENER ONLY WHEN OVERVIEW IS ALREADY LOADED!!!
+                //mListener.onSwitchToNewFragment(mBundle);
                 break;
         }
 

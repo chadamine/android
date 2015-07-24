@@ -29,6 +29,7 @@ public class PlantViewFragment extends Fragment {
 
     private String mSortOrder;
     private Bundle mBundle;
+    private boolean mIsNew;
 
     public PlantViewFragment() {}
 
@@ -44,6 +45,12 @@ public class PlantViewFragment extends Fragment {
         PlantViewFragment f = new PlantViewFragment();
         if(args != null)
             f.setArguments(args);
+        mListener = listener;
+        return f;
+    }
+
+    public static PlantViewFragment newInstance(FirstPageFragmentListener listener) {
+        PlantViewFragment f = new PlantViewFragment();
         mListener = listener;
         return f;
     }
@@ -71,8 +78,14 @@ public class PlantViewFragment extends Fragment {
             if(mBundle.containsKey("position"))
                 mCursorPosition = mBundle.getInt("position");
 
+            if(mBundle.containsKey("isNew"))
+                mIsNew = mBundle.getBoolean("isNew");
+
             mPlant.setViewItemContent(mView, mCursorPosition, mSortOrder);
         }
+
+       /* if(mIsNew)
+            mListener.onSwitchToNewFragment(mBundle);*/
 
         return mView;
     }
@@ -104,10 +117,11 @@ public class PlantViewFragment extends Fragment {
 
         switch(item.getItemId()) {
             case R.id.edit_plant:
-                getFragmentManager().beginTransaction()
-                        .replace(R.id.frame_plant_activity, PlantNewFragment.newInstance(mBundle))
+                /*getFragmentManager().beginTransaction()
+                        .replace(R.id.frame_plant_activity, PlantNewFragment.newInstance(mBundle, mListener))
                         .addToBackStack("newPlant")
-                        .commit();
+                        .commit();*/
+                mListener.onSwitchToNewFragment(mBundle);
         }
 
         return true;

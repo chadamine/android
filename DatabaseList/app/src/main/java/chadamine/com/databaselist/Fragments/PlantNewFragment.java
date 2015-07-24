@@ -59,11 +59,18 @@ public class PlantNewFragment extends Fragment {
         f.setArguments(savedInstanceState);
         return f;
     }
+
     public static PlantNewFragment newInstance(Bundle savedInstanceState,
                                                FirstPageFragmentListener listener) {
         PlantNewFragment f = new PlantNewFragment();
         mListener = listener;
         f.setArguments(savedInstanceState);
+        return f;
+    }
+
+    public static PlantNewFragment newInstance(FirstPageFragmentListener listener) {
+        PlantNewFragment f = new PlantNewFragment();
+        mListener = listener;
         return f;
     }
 
@@ -88,17 +95,17 @@ public class PlantNewFragment extends Fragment {
 
         hideExtraUnits();
 
-        if(savedInstanceState != null) {
+       /* if(savedInstanceState != null) {
             mBundle = savedInstanceState;
 
-        } else if(getArguments() != null) {
+        } else*/ if(getArguments() != null) {
 
             mBundle = getArguments();
 
             if(mBundle.containsKey("hasPostion"))
                 mHasPosition = mBundle.getBoolean("hasPosition");
 
-            if(mHasPosition == true && mBundle.containsKey("position"))
+            if(mBundle.containsKey("position"))
                 mPosition = mBundle.getInt("position");
 
             if(mBundle.containsKey("sortOrder"))
@@ -113,7 +120,7 @@ public class PlantNewFragment extends Fragment {
         String name = "";
 
         //if(mPosition >= 0) {
-        if(mHasPosition) {
+        if(mPosition >= 0) {
             Cursor cursor = mContext.getContentResolver()
                     .query(mPlant.getUri(), mPlant.getKeyIdArray(),
                             null, null, mSortOrder);
@@ -176,8 +183,8 @@ public class PlantNewFragment extends Fragment {
         switch(item.getItemId()) {
             case R.id.save_plant:
 
-                //if(mPosition >= 0) {
-                if(mHasPosition) {
+                if(mPosition >= 0) {
+                //if(mHasPosition) {
                     mPlant.setName(
                             ((EditText) mView.findViewById(R.id.edittext_plant_new_name)).getText()
                                     .toString());
@@ -188,7 +195,10 @@ public class PlantNewFragment extends Fragment {
                     mPlant.saveFields(mView, false);
 
                 //getFragmentManager().popBackStack();
-                mListener.onSwitchToNew(mBundle);
+                /*getFragmentManager().beginTransaction()
+                        .replace(R.id.frame_plant_activity, PlantsFragment.newInstance(mBundle))
+                        .commit();*/
+                mListener.onSwitchToNewFragment(mBundle);
                 hideKeyboard();
                 break;
         }

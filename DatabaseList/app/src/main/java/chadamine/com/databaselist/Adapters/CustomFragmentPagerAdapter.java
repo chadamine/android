@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 import chadamine.com.databaselist.Fragments.PlantNewFragment;
+import chadamine.com.databaselist.Fragments.PlantOverviewFragment;
 import chadamine.com.databaselist.Fragments.PlantViewFragment;
 import chadamine.com.databaselist.Fragments.PlantsFragment;
 import chadamine.com.databaselist.R;
@@ -22,32 +23,31 @@ public class CustomFragmentPagerAdapter extends FragmentPagerAdapter {
     private final FragmentManager mFragmentManager;
     private Fragment mFragmentAtPos0;
     private Bundle mBundle;
-    private FirstPageListener mListener = new FirstPageListener();
+    public FirstPageListener mListener = new FirstPageListener();
 
-    public CustomFragmentPagerAdapter(FragmentManager fm, Context context) {
+    public CustomFragmentPagerAdapter(FragmentManager fm, Context context, Bundle args) {
         super(fm);
         mContext = context;
         mFragmentManager = fm;
-        mBundle = new Bundle();
+        mBundle = args;
     }
 
-
-
     private final class FirstPageListener implements FirstPageFragmentListener {
+
         @Override
-        public void onSwitchToNextFragment(Bundle bundle) {
+        public void onSwitchToNewFragment(Bundle bundle) {
             mBundle = bundle;
             mFragmentManager.beginTransaction().remove(mFragmentAtPos0).commit();
 
-            if(mFragmentAtPos0 instanceof PlantsFragment)
-                mFragmentAtPos0 = PlantViewFragment.newInstance(mBundle);
+            if(mFragmentAtPos0 instanceof PlantViewFragment)
+                mFragmentAtPos0 = PlantNewFragment.newInstance(mBundle, mListener);
             else
-                mFragmentAtPos0 = PlantsFragment.newInstance(mBundle, mListener);
+                mFragmentAtPos0 = PlantViewFragment.newInstance(mBundle, mListener);
 
             notifyDataSetChanged();
         }
 
-        public void onSwitchToNew(Bundle bundle) {
+        /*public void onSwitchToNew(Bundle bundle) {
             mBundle = bundle;
             mFragmentManager
                     .beginTransaction()
@@ -61,12 +61,11 @@ public class CustomFragmentPagerAdapter extends FragmentPagerAdapter {
                 mFragmentAtPos0 = PlantsFragment.newInstance(mBundle, mListener);
 
             notifyDataSetChanged();
-        }
+        }*/
 
-        public Fragment getFragmentAtPos0() {
-            return mFragmentAtPos0;
-        }
     }
+
+
 
     @Override
     public Fragment getItem(int position) {
@@ -74,17 +73,25 @@ public class CustomFragmentPagerAdapter extends FragmentPagerAdapter {
         //mBundle.putInt("position", position);
         mBundle.putInt("page_position", position + 1);
 
+        boolean isNew = false;
+
+        if(mBundle.containsKey("isNew"))
+            isNew = mBundle.getBoolean("isNew");
+
         switch(position) {
             case 0:
                 if (mFragmentAtPos0 == null) {
-                    mFragmentAtPos0 = PlantsFragment.newInstance(mBundle, mListener);
+                    if(isNew)
+                        mFragmentAtPos0 = PlantNewFragment.newInstance(mBundle, mListener);
+                    else
+                        mFragmentAtPos0 = PlantViewFragment.newInstance(mBundle, mListener);
                 }
                 return mFragmentAtPos0;
 
             case 1:
-                return PlantViewFragment.newInstance(mBundle);
+                return PlantViewFragment.newInstance(mBundle, mListener);
             case 2:
-                return PlantViewFragment.newInstance(mBundle);
+                return PlantViewFragment.newInstance(mBundle, mListener);
             default:
                 return null;
         }
@@ -105,27 +112,30 @@ public class CustomFragmentPagerAdapter extends FragmentPagerAdapter {
                 return "Measurements";
             case 2:
                 return "History";
+            default:
+                return "Page " + (position + 1);
         }
 
-        return "Page " + (position + 1);
     }
 
     public interface FirstPageFragmentListener
     {
-        void onSwitchToNextFragment(Bundle bundle);
-        void onSwitchToNew(Bundle bundle);
-        Fragment getFragmentAtPos0();
+        void onSwitchToNewFragment(Bundle bundle);
     }
 
     @Override
     public int getItemPosition(Object object) {
-        if(object instanceof PlantsFragment && mFragmentAtPos0 instanceof PlantViewFragment)
+        /*if(object instanceof PlantsFragment && mFragmentAtPos0 instanceof PlantViewFragment)
             return POSITION_NONE;
         if(object instanceof PlantViewFragment && mFragmentAtPos0 instanceof PlantsFragment)
             return POSITION_NONE;
         if(object instanceof PlantsFragment && mFragmentAtPos0 instanceof PlantNewFragment)
             return POSITION_NONE;
         if(object instanceof PlantNewFragment && mFragmentAtPos0 instanceof PlantsFragment)
+            return POSITION_NONE;*/
+        if(object instanceof PlantViewFragment && mFragmentAtPos0 instanceof PlantNewFragment)
+            return POSITION_NONE;
+        if(object instanceof PlantNewFragment && mFragmentAtPos0 instanceof PlantViewFragment)
             return POSITION_NONE;
 
         return POSITION_UNCHANGED;
