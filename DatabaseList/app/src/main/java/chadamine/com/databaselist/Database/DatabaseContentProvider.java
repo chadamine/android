@@ -28,7 +28,8 @@ public class DatabaseContentProvider extends ContentProvider {
     }
 
     @Override
-    public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
+    public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs,
+                        String sortOrder) {
 
         SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
 //        String keyId = "";
@@ -38,46 +39,56 @@ public class DatabaseContentProvider extends ContentProvider {
         switch(DatabaseSchema.URI_MATCHER.match(uri)) {
 
             case DatabaseSchema.JOURNAL_ID:
-                queryBuilder.appendWhere(DatabaseSchema.Journals.KEY_ID + "=" + uri.getLastPathSegment());
+                queryBuilder.appendWhere(DatabaseSchema.Journals.KEY_ID + "="
+                        + uri.getLastPathSegment());
 
             case DatabaseSchema.JOURNALS:
                 queryBuilder.setTables(DatabaseSchema.Journals.TABLE_NAME);
                 break;
 
             case DatabaseSchema.NUTRIENT_ID:
-                queryBuilder.appendWhere(DatabaseSchema.Nutrients.KEY_ID + "=" + uri.getLastPathSegment());
+                queryBuilder.appendWhere(DatabaseSchema.Nutrients.KEY_ID + "="
+                        + uri.getLastPathSegment());
 
             case DatabaseSchema.NUTRIENTS:
                 queryBuilder.setTables(DatabaseSchema.Nutrients.TABLE_NAME);
                 break;
 
             case DatabaseSchema.PHOTO_ID:
-                queryBuilder.appendWhere(DatabaseSchema.Photos.KEY_ID + "=" + uri.getLastPathSegment());
+                queryBuilder.appendWhere(DatabaseSchema.Photos.KEY_ID + "="
+                        + uri.getLastPathSegment());
 
             case DatabaseSchema.PHOTOS:
                 queryBuilder.setTables(DatabaseSchema.Photos.TABLE_NAME);
                 break;
 
             case DatabaseSchema.PLANT_ID:
-                queryBuilder.appendWhere(DatabaseSchema.Plants.KEY_ID + "=" + uri.getLastPathSegment());
+                queryBuilder.appendWhere(DatabaseSchema.Plants.KEY_ID + "="
+                        + uri.getLastPathSegment());
 
             case DatabaseSchema.PLANTS:
                 queryBuilder.setTables(DatabaseSchema.Plants.TABLE_NAME);
                 break;
 
+            case DatabaseSchema.PLANT_HISTORY_ID:
+                queryBuilder.appendWhere(DatabaseSchema.PlantHistory.KEY_ID + "="
+                        + uri.getLastPathSegment());
+
+            case DatabaseSchema.PLANT_HISTORY:
+                queryBuilder.setTables(DatabaseSchema.PlantHistory.TABLE_NAME);
+                break;
+
             case DatabaseSchema.PRODUCT_ID:
-                queryBuilder.appendWhere(DatabaseSchema.Products.KEY_ID + "=" + uri.getLastPathSegment());
-                //keyId = DatabaseContract.Products.KEY_ID;
-                //isItem = true;
+                queryBuilder.appendWhere(DatabaseSchema.Products.KEY_ID + "="
+                        + uri.getLastPathSegment());
 
             case DatabaseSchema.PRODUCTS:
                 queryBuilder.setTables(DatabaseSchema.Products.TABLE_NAME);
-                //tableName = DatabaseContract.Products.TABLE_NAME;
-
                 break;
 
             case DatabaseSchema.SUBSTRATE_ID:
-                queryBuilder.appendWhere(DatabaseSchema.Substrates.KEY_ID + "=" + uri.getLastPathSegment());
+                queryBuilder.appendWhere(DatabaseSchema.Substrates.KEY_ID + "="
+                        + uri.getLastPathSegment());
 
             case DatabaseSchema.SUBSTRATES:
                 queryBuilder.setTables(DatabaseSchema.Substrates.TABLE_NAME);
@@ -87,12 +98,8 @@ public class DatabaseContentProvider extends ContentProvider {
                 throw new IllegalArgumentException("Unknown uri: " + uri);
         }
 
-       /* if(isItem)
-            queryBuilder.appendWhere(keyId + "=" + uri.getLastPathSegment());
-
-        queryBuilder.setTables(tableName);*/
-
-        Cursor cursor = queryBuilder.query(mDatabase, projection, selection ,selectionArgs, null, null, sortOrder);
+        Cursor cursor = queryBuilder.query(mDatabase, projection, selection ,selectionArgs,
+                null, null, sortOrder);
         cursor.setNotificationUri(getContext().getContentResolver(), uri);
 
         return cursor;
@@ -129,6 +136,11 @@ public class DatabaseContentProvider extends ContentProvider {
             case DatabaseSchema.PLANTS:
                 id = mDatabase.insert(DatabaseSchema.Plants.TABLE_NAME, null, values);
                 tableName = DatabaseSchema.Plants.TABLE_NAME;
+                break;
+
+            case DatabaseSchema.PLANT_HISTORY:
+                id = mDatabase.insert(DatabaseSchema.PlantHistory.TABLE_NAME, null, values);
+                tableName = DatabaseSchema.PlantHistory.TABLE_NAME;
                 break;
 
             case DatabaseSchema.PRODUCTS:
@@ -174,7 +186,8 @@ public class DatabaseContentProvider extends ContentProvider {
                                             + "=" + id, null);
                 } else {
                     rowsDeleted = mDatabase.delete(DatabaseSchema.Journals.TABLE_NAME,
-                            DatabaseSchema.Journals.KEY_ID + "=" + id + " and " + selection, selectionArgs);
+                            DatabaseSchema.Journals.KEY_ID + "=" + id + " and " + selection,
+                            selectionArgs);
                 }
                 break;
 
@@ -193,7 +206,8 @@ public class DatabaseContentProvider extends ContentProvider {
                                             + "=" + id, null);
                 } else {
                     rowsDeleted = mDatabase.delete(DatabaseSchema.Nutrients.TABLE_NAME,
-                            DatabaseSchema.Nutrients.KEY_ID + "=" + id + " and " + selection, selectionArgs);
+                            DatabaseSchema.Nutrients.KEY_ID + "=" + id + " and " + selection,
+                            selectionArgs);
                 }
                 break;
 
@@ -216,6 +230,23 @@ public class DatabaseContentProvider extends ContentProvider {
                 }
                 break;
 
+            case DatabaseSchema.PLANT_HISTORY:
+                rowsDeleted = mDatabase.delete(DatabaseSchema.PlantHistory.TABLE_NAME,
+                        selection, selectionArgs);
+                break;
+            case DatabaseSchema.PLANT_HISTORY_ID:
+                id = uri.getLastPathSegment();
+
+                if (TextUtils.isEmpty(selection)) {
+                    rowsDeleted = mDatabase.delete(DatabaseSchema.PlantHistory.TABLE_NAME,
+                            DatabaseSchema.PlantHistory.KEY_ID + "=" + id, null);
+                } else {
+                    rowsDeleted = mDatabase.delete(DatabaseSchema.PlantHistory.TABLE_NAME,
+                            DatabaseSchema.PlantHistory.KEY_ID + "=" + id
+                                    + " and " + selection, selectionArgs);
+                }
+                break;
+
             case DatabaseSchema.PRODUCTS:
                 rowsDeleted = mDatabase.delete(DatabaseSchema.Products.TABLE_NAME,
                         selection, selectionArgs);
@@ -230,7 +261,8 @@ public class DatabaseContentProvider extends ContentProvider {
                                             + "=" + id, null);
                 } else {
                     rowsDeleted = mDatabase.delete(DatabaseSchema.Products.TABLE_NAME,
-                            DatabaseSchema.Products.KEY_ID + "=" + id + " and " + selection, selectionArgs);
+                            DatabaseSchema.Products.KEY_ID + "=" + id + " and " + selection,
+                            selectionArgs);
                 }
 
                 break;
@@ -249,7 +281,8 @@ public class DatabaseContentProvider extends ContentProvider {
                                             + "=" + id, null);
                 } else {
                     rowsDeleted = mDatabase.delete(DatabaseSchema.Substrates.TABLE_NAME,
-                            DatabaseSchema.Substrates.KEY_ID + "=" + id + " and " + selection, selectionArgs);
+                            DatabaseSchema.Substrates.KEY_ID + "=" + id + " and " + selection,
+                            selectionArgs);
                 }
                 break;
 
