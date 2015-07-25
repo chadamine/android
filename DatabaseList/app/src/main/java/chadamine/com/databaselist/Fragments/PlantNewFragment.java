@@ -198,7 +198,9 @@ public class PlantNewFragment extends Fragment {
                 /*getFragmentManager().beginTransaction()
                         .replace(R.id.frame_plant_activity, PlantsFragment.newInstance(mBundle))
                         .commit();*/
-                mListener.onSwitchToNewFragment(mBundle);
+
+                //TODO: MAKE THIS WORK AGAIN
+                //mListener.onSwitchToNewFragment(mBundle);
                 hideKeyboard();
                 break;
         }

@@ -37,6 +37,11 @@ public class Substrate implements DatabaseAdapter {
     }
 
     @Override
+    public Uri getHistoryUri() {
+        return null;
+    }
+
+    @Override
     public int getId() {
         return 0;
     }
@@ -52,6 +57,11 @@ public class Substrate implements DatabaseAdapter {
     }
 
     @Override
+    public ContentValues getHistoryValues() {
+        return null;
+    }
+
+    @Override
     public String getKeyID() {
         return null;
     }
@@ -63,6 +73,11 @@ public class Substrate implements DatabaseAdapter {
 
     @Override
     public String getName() {
+        return null;
+    }
+
+    @Override
+    public String getCurrentDate() {
         return null;
     }
 

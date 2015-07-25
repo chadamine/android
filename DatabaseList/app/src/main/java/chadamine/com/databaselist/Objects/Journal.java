@@ -43,6 +43,11 @@ public class Journal implements DatabaseAdapter {
     }
 
     @Override
+    public Uri getHistoryUri() {
+        return null;
+    }
+
+    @Override
     public int getId() {
         return 0;
     }
@@ -58,6 +63,11 @@ public class Journal implements DatabaseAdapter {
         values.put(KEY_NAME, getName());
 
         return values;
+    }
+
+    @Override
+    public ContentValues getHistoryValues() {
+        return null;
     }
 
     @Override
@@ -94,6 +104,11 @@ public class Journal implements DatabaseAdapter {
     @Override
     public String getName() {
         return mName;
+    }
+
+    @Override
+    public String getCurrentDate() {
+        return null;
     }
 
     @Override

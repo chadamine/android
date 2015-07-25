@@ -122,6 +122,11 @@ public class Nutrient implements DatabaseAdapter {
     }
 
     @Override
+    public Uri getHistoryUri() {
+        return null;
+    }
+
+    @Override
     public int getId() {
         return 0;
     }
@@ -149,12 +154,22 @@ public class Nutrient implements DatabaseAdapter {
     }
 
     @Override
+    public ContentValues getHistoryValues() {
+        return null;
+    }
+
+    @Override
     public Cursor getCursor() {
         return null;
     }
 
     public String getName() {
         return mName;
+    }
+
+    @Override
+    public String getCurrentDate() {
+        return null;
     }
 
     @Override

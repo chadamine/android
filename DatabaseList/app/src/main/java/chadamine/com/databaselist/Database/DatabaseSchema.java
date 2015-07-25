@@ -310,7 +310,7 @@ public class DatabaseSchema {
 
         public static final String KEY_ID = "_id";
         public static final String KEY_DATE = "date";
-        public static final String KEY_ACTION = "species";
+        public static final String KEY_ACTION = "action";
 
         //public static final String DIR_PHOTOS = Photos.DIR_PHOTOS + "PlantHistories/";
 
@@ -320,8 +320,9 @@ public class DatabaseSchema {
 
         public static final String TABLE_CREATE =
                 CT + TABLE_NAME + OB
-                        + KEY_ID + IPKA + KEY_DATE + TXT + KEY_ACTION
-                        + TXF
+                        + KEY_ID + IPKA
+                        + KEY_DATE + TXT
+                        + KEY_ACTION + TXF
                         + CLOSE;
 
         public static final Uri CONTENT_URI = Uri.withAppendedPath(DatabaseSchema.CONTENT_URI, TABLE_NAME);

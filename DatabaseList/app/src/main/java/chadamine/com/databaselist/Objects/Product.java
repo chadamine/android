@@ -55,6 +55,11 @@ public class Product implements DatabaseAdapter {
     }
 
     @Override
+    public String getCurrentDate() {
+        return null;
+    }
+
+    @Override
     public String getPhotoDir() {
         return Products.DIR_PHOTOS;
     }
@@ -85,6 +90,11 @@ public class Product implements DatabaseAdapter {
     }
 
     @Override
+    public Uri getHistoryUri() {
+        return null;
+    }
+
+    @Override
     public String[] getKeyIdArray() {
         return KEY_ID_ARRAY;
     }
@@ -95,6 +105,11 @@ public class Product implements DatabaseAdapter {
         values.put(KEY_NAME, getName());
 
         return values;
+    }
+
+    @Override
+    public ContentValues getHistoryValues() {
+        return null;
     }
 
     public int getListItemLayoutId() {

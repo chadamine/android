@@ -9,9 +9,15 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import chadamine.com.databaselist.Adapters.DatabaseAdapter;
 import chadamine.com.databaselist.Database.DatabaseSchema;
 import chadamine.com.databaselist.Database.DatabaseSchema.Plants;
+import chadamine.com.databaselist.Database.DatabaseSchema.PlantHistories;
+
 import chadamine.com.databaselist.R;
 
 /**
@@ -22,6 +28,7 @@ public class Plant extends Organism implements DatabaseAdapter {
     private int mID;
 
     private String mName;
+    //private String mCurrentDateTime;
     private String mCultivar;
     private String mHeight;
     private String mSpecies;
@@ -36,7 +43,10 @@ public class Plant extends Organism implements DatabaseAdapter {
     private String mPotSize;
 
     private Context mContext;
+    private Uri mUri;
+    private Uri mHistoryUri;
     private static final Uri CONTENT_URI = Plants.CONTENT_URI;
+    private static final Uri HISTORY_CONTENT_URI = PlantHistories.CONTENT_URI;
     private Cursor mCursor;
     private static final String KEY_ID = Plants.KEY_ID;
     private static final String[] KEY_ID_ARRAY = Plants.KEY_ID_ARRAY;
@@ -77,6 +87,11 @@ public class Plant extends Organism implements DatabaseAdapter {
     @Override
     public Uri getUri() {
         return CONTENT_URI;
+    }
+
+    @Override
+    public Uri getHistoryUri() {
+        return HISTORY_CONTENT_URI;
     }
 
     @Override
@@ -144,13 +159,15 @@ public class Plant extends Organism implements DatabaseAdapter {
 
     }
 
-    private Uri mUri;
+
 
     public void saveFields(View view, boolean isListItem) {
         if(!isListItem)
             setName(((EditText) view.findViewById(R.id.edittext_plant_new_name))
                     .getText().toString());
+
         mUri = mContext.getContentResolver().insert(getUri(), getValues());
+        mHistoryUri = mContext.getContentResolver().insert(getHistoryUri(), getHistoryValues());
     }
 
     /*public void updateFields(View view) {
@@ -158,10 +175,14 @@ public class Plant extends Organism implements DatabaseAdapter {
         mContext.getContentResolver().update(getUri(), getValues(), null, null);
     }*/
 
+
+
     public void update(View view, long id) {
         setName(((EditText) view.findViewById(R.id.edittext_plant_new_name)).getText().toString());
         mContext.getContentResolver().update(Uri.parse(Plants.CONTENT_URI + "/" + id),
                 getValues(), null, null);
+
+        mHistoryUri = mContext.getContentResolver().insert(getHistoryUri(), getHistoryValues());
     }
 
     public void setViewItemContent(View view, int cursorPosition, String sortOrder) {
@@ -218,9 +239,30 @@ public class Plant extends Organism implements DatabaseAdapter {
         return values;
     }
 
+    public String getActionType() {
+
+        //TODO: check for action type, return correct type
+        String update = "update_name";
+
+        return "creation";
+    }
+
+    @Override
+    public ContentValues getHistoryValues() {
+        ContentValues values = new ContentValues();
+        values.put(PlantHistories.KEY_DATE, getCurrentDate());
+        values.put(PlantHistories.KEY_ACTION, getActionType());
+        return values;
+    }
+
     @Override
     public String getName() {
         return mName;
+    }
+
+    @Override
+    public String getCurrentDate() {
+        return new SimpleDateFormat("yyy-MM-dd HH:mm:ss.SSS").format(new Date());
     }
 
     @Override

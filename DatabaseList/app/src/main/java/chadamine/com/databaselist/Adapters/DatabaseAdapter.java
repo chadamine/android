@@ -15,6 +15,8 @@ public interface DatabaseAdapter {
 
     Uri getUri();
 
+    Uri getHistoryUri();
+
     int getId();
 
     String getKeyID();
@@ -23,11 +25,15 @@ public interface DatabaseAdapter {
 
     ContentValues getValues();
 
+    ContentValues getHistoryValues();
+
     // TODO: MAKE NEWCURSOR OR REMOVE
     Cursor getCursor();
 
     // TODO: THIS SHOULD JUST BE ASSOCIATED WITH KEY_ID
     String getName();
+
+    String getCurrentDate();
 
     String getPhotoDir();
 

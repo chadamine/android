@@ -92,6 +92,11 @@ public class Photo implements DatabaseAdapter {
     }
 
     @Override
+    public Uri getHistoryUri() {
+        return null;
+    }
+
+    @Override
     public int getId() {
         return 0;
     }
@@ -139,6 +144,11 @@ public class Photo implements DatabaseAdapter {
         return values;
     }
 
+    @Override
+    public ContentValues getHistoryValues() {
+        return null;
+    }
+
     /*
         Renaming media Images.Media file
         stackoverflow.com/question/24564336/rename-an-image-with-mediastore-android
@@ -178,6 +188,11 @@ public class Photo implements DatabaseAdapter {
     @Override
     public String getName() {
         return mDatabaseObject.getName();
+    }
+
+    @Override
+    public String getCurrentDate() {
+        return null;
     }
 
     @Override

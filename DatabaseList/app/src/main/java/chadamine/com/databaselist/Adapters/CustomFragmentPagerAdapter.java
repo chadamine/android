@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
+import chadamine.com.databaselist.Fragments.PlantHistoriesFragment;
 import chadamine.com.databaselist.Fragments.PlantNewFragment;
 import chadamine.com.databaselist.Fragments.PlantOverviewFragment;
 import chadamine.com.databaselist.Fragments.PlantViewFragment;
@@ -91,7 +92,7 @@ public class CustomFragmentPagerAdapter extends FragmentPagerAdapter {
             case 1:
                 return PlantViewFragment.newInstance(mBundle, mListener);
             case 2:
-                return PlantViewFragment.newInstance(mBundle, mListener);
+                return PlantHistoriesFragment.newInstance(mBundle);
             default:
                 return null;
         }
