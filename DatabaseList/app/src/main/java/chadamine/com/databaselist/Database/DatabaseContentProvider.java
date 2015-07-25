@@ -8,8 +8,6 @@ import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 import android.text.TextUtils;
 
-import chadamine.com.databaselist.Database.DatabaseSchema;
-
 /**
  * Created by chadamine on 4/10/2015.
  */
@@ -71,11 +69,11 @@ public class DatabaseContentProvider extends ContentProvider {
                 break;
 
             case DatabaseSchema.PLANT_HISTORY_ID:
-                queryBuilder.appendWhere(DatabaseSchema.PlantHistory.KEY_ID + "="
+                queryBuilder.appendWhere(DatabaseSchema.PlantHistories.KEY_ID + "="
                         + uri.getLastPathSegment());
 
-            case DatabaseSchema.PLANT_HISTORY:
-                queryBuilder.setTables(DatabaseSchema.PlantHistory.TABLE_NAME);
+            case DatabaseSchema.PLANT_HISTORIES:
+                queryBuilder.setTables(DatabaseSchema.PlantHistories.TABLE_NAME);
                 break;
 
             case DatabaseSchema.PRODUCT_ID:
@@ -138,9 +136,9 @@ public class DatabaseContentProvider extends ContentProvider {
                 tableName = DatabaseSchema.Plants.TABLE_NAME;
                 break;
 
-            case DatabaseSchema.PLANT_HISTORY:
-                id = mDatabase.insert(DatabaseSchema.PlantHistory.TABLE_NAME, null, values);
-                tableName = DatabaseSchema.PlantHistory.TABLE_NAME;
+            case DatabaseSchema.PLANT_HISTORIES:
+                id = mDatabase.insert(DatabaseSchema.PlantHistories.TABLE_NAME, null, values);
+                tableName = DatabaseSchema.PlantHistories.TABLE_NAME;
                 break;
 
             case DatabaseSchema.PRODUCTS:
@@ -230,19 +228,19 @@ public class DatabaseContentProvider extends ContentProvider {
                 }
                 break;
 
-            case DatabaseSchema.PLANT_HISTORY:
-                rowsDeleted = mDatabase.delete(DatabaseSchema.PlantHistory.TABLE_NAME,
+            case DatabaseSchema.PLANT_HISTORIES:
+                rowsDeleted = mDatabase.delete(DatabaseSchema.PlantHistories.TABLE_NAME,
                         selection, selectionArgs);
                 break;
             case DatabaseSchema.PLANT_HISTORY_ID:
                 id = uri.getLastPathSegment();
 
                 if (TextUtils.isEmpty(selection)) {
-                    rowsDeleted = mDatabase.delete(DatabaseSchema.PlantHistory.TABLE_NAME,
-                            DatabaseSchema.PlantHistory.KEY_ID + "=" + id, null);
+                    rowsDeleted = mDatabase.delete(DatabaseSchema.PlantHistories.TABLE_NAME,
+                            DatabaseSchema.PlantHistories.KEY_ID + "=" + id, null);
                 } else {
-                    rowsDeleted = mDatabase.delete(DatabaseSchema.PlantHistory.TABLE_NAME,
-                            DatabaseSchema.PlantHistory.KEY_ID + "=" + id
+                    rowsDeleted = mDatabase.delete(DatabaseSchema.PlantHistories.TABLE_NAME,
+                            DatabaseSchema.PlantHistories.KEY_ID + "=" + id
                                     + " and " + selection, selectionArgs);
                 }
                 break;

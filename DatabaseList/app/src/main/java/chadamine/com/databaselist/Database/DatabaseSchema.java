@@ -31,7 +31,7 @@ public class DatabaseSchema {
             Photos.TABLE_CREATE,
             Journals.TABLE_CREATE,
             Plants.TABLE_CREATE,
-            PlantHistory.TABLE_CREATE,
+            PlantHistories.TABLE_CREATE,
             Substrates.TABLE_CREATE,
             Nutrients.TABLE_CREATE,
             NutrientConcentrations.TABLE_CREATE
@@ -53,7 +53,7 @@ public class DatabaseSchema {
     public static final int PLANTS = 7;
     public static final int PLANT_ID = 8;
 
-    public static final int PLANT_HISTORY = 15;
+    public static final int PLANT_HISTORIES = 15;
     public static final int PLANT_HISTORY_ID = 16;
 
     public static final int PRODUCTS = 9;
@@ -79,8 +79,8 @@ public class DatabaseSchema {
         URI_MATCHER.addURI(AUTHORITY, Plants.TABLE_NAME, PLANTS);
         URI_MATCHER.addURI(AUTHORITY, Plants.TABLE_NAME + "/#", PLANT_ID);
 
-        URI_MATCHER.addURI(AUTHORITY, PlantHistory.TABLE_NAME, PLANT_HISTORY);
-        URI_MATCHER.addURI(AUTHORITY, PlantHistory.TABLE_NAME + "/#", PLANT_HISTORY_ID);
+        URI_MATCHER.addURI(AUTHORITY, PlantHistories.TABLE_NAME, PLANT_HISTORIES);
+        URI_MATCHER.addURI(AUTHORITY, PlantHistories.TABLE_NAME + "/#", PLANT_HISTORY_ID);
 
         URI_MATCHER.addURI(AUTHORITY, Substrates.TABLE_NAME, SUBSTRATES);
         URI_MATCHER.addURI(AUTHORITY, Substrates.TABLE_NAME + "/#", SUBSTRATE_ID);
@@ -304,7 +304,7 @@ public class DatabaseSchema {
         public static final String DELETE = "DROP TABLE IF EXISTS " + TABLE_NAME;
     }
 
-    public static final class PlantHistory implements BaseColumns {
+    public static final class PlantHistories implements BaseColumns {
 
         public static final String TABLE_NAME = "plant_history";
 
@@ -312,7 +312,7 @@ public class DatabaseSchema {
         public static final String KEY_DATE = "date";
         public static final String KEY_ACTION = "species";
 
-        //public static final String DIR_PHOTOS = Photos.DIR_PHOTOS + "Plants/";
+        //public static final String DIR_PHOTOS = Photos.DIR_PHOTOS + "PlantHistories/";
 
         public static final String[] KEY_ID_ARRAY = { KEY_ID, KEY_DATE, KEY_ACTION };
 
