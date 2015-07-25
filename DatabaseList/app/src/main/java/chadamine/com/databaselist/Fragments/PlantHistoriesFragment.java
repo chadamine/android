@@ -1,8 +1,13 @@
 package chadamine.com.databaselist.Fragments;
 
 import android.app.Activity;
+import android.content.Context;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,29 +15,42 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
+import chadamine.com.databaselist.Adapters.ListCursorAdapter;
+import chadamine.com.databaselist.Objects.Plant;
 import chadamine.com.databaselist.R;
 
 import chadamine.com.databaselist.Fragments.dummy.DummyContent;
 
-public class PlantHistoriesFragment extends ListFragment implements AbsListView.OnItemClickListener {
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+public class PlantHistoriesFragment extends ListFragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
     private OnFragmentInteractionListener mListener;
-
     private AbsListView mListView;
-
     private ListAdapter mAdapter;
+
+    private Context mContext;
+    private Plant mPlant;
+    private View mView;
+
+    private String mSortOrder;
+    private int mSortSelection;
+    private Bundle mBundle;
+
+    private LoaderManager.LoaderCallbacks<Cursor> mLoaderManager;
+    private ListCursorAdapter mListCursorAdapter;
+
+    private static final int LIST_LOADER_ID = 0;
+    private static final String SORT_DESC = " DESC";
+    private static final String SORT_ASC = " ASC";
 
     // TODO: Rename and change types of parameters
     public static PlantHistoriesFragment newInstance(Bundle args) {
-        PlantHistoriesFragment fragment = new PlantHistoriesFragment();
-        fragment.setArguments(args);
-        return fragment;
+        PlantHistoriesFragment f = new PlantHistoriesFragment();
+        if(args != null)
+            f.setArguments(args);
+        return f;
     }
 
     public PlantHistoriesFragment() {}
@@ -41,26 +59,21 @@ public class PlantHistoriesFragment extends ListFragment implements AbsListView.
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (getArguments() != null) {
+        setHasOptionsMenu(true);
+        setRetainInstance(true);
+        /*if (getArguments() != null) {
             return;
         }
 
         // TODO: Change Adapter to display your content
         mAdapter = new ArrayAdapter<DummyContent.DummyItem>(getActivity(),
-                android.R.layout.simple_list_item_1, android.R.id.text1, DummyContent.ITEMS);
+                android.R.layout.simple_list_item_1, android.R.id.text1, DummyContent.ITEMS);*/
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_plant_history, container, false);
-
-        // Set the adapter
-        mListView = (AbsListView) view.findViewById(android.R.id.list);
-        ((AdapterView<ListAdapter>) mListView).setAdapter(mAdapter);
-
-        // Set OnItemClickListener so we can be notified on item clicks
-        mListView.setOnItemClickListener(this);
 
         return view;
     }
@@ -83,12 +96,12 @@ public class PlantHistoriesFragment extends ListFragment implements AbsListView.
     }
 
     @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        if (null != mListener) {
+    public void onListItemClick(ListView l, View v, int position, long id) {
+        /*if (null != mListener) {
             // Notify the active callbacks interface (the activity, if the
             // fragment is attached to one) that an item has been selected.
             mListener.onFragmentInteraction(DummyContent.ITEMS.get(position).id);
-        }
+        }*/
     }
 
     public void setEmptyText(CharSequence emptyText) {
@@ -97,6 +110,27 @@ public class PlantHistoriesFragment extends ListFragment implements AbsListView.
         if (emptyView instanceof TextView) {
             ((TextView) emptyView).setText(emptyText);
         }
+    }
+
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+
+        String sortOrder = "";
+        if(args != null) {
+            sortOrder = args.getString("sortOrder");
+        }
+        return new CursorLoader(mContext, mPlant.getUri(),
+                mPlant.getKeyIdArray(), null, null, sortOrder);
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        mListCursorAdapter.swapCursor(data);
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+        mListCursorAdapter.swapCursor(null);
     }
 
     public interface OnFragmentInteractionListener {
