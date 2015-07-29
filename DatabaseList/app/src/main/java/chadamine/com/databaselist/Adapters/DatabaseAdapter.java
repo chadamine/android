@@ -45,7 +45,6 @@ public interface DatabaseAdapter {
     void setContent(View view);
 
     int getListItemLayoutId();
-
     // TODO: ADD GETNEWITEMLAYOUT
 
 }
