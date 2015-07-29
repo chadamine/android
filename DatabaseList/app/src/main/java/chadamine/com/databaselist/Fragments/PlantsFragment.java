@@ -27,6 +27,7 @@ import android.widget.SpinnerAdapter;
 
 import chadamine.com.databaselist.Adapters.CustomFragmentPagerAdapter;
 import chadamine.com.databaselist.Adapters.CustomFragmentPagerAdapter.FirstPageFragmentListener;
+import chadamine.com.databaselist.Adapters.DatabaseAdapter;
 import chadamine.com.databaselist.Adapters.ListCursorAdapter;
 import chadamine.com.databaselist.Database.DatabaseSchema.Plants;
 import chadamine.com.databaselist.Objects.Plant;
