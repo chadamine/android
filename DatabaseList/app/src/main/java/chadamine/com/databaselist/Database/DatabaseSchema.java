@@ -158,6 +158,7 @@ public class DatabaseSchema {
                         + CLOSE;
     }
 
+    // TODO: CHANGE TO CONCENTRATIONS_TABLE
     public static final class NutrientConcentrations implements BaseColumns {
 
         public static final String TABLE_NAME = "nutrient_concentration";
