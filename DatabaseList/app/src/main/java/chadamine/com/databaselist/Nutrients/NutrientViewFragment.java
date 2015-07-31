@@ -1,4 +1,4 @@
-package chadamine.com.databaselist.Fragments;
+package chadamine.com.databaselist.Nutrients;
 
 import android.content.Context;
 import android.database.Cursor;

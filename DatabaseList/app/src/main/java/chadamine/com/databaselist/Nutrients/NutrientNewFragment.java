@@ -1,9 +1,7 @@
-package chadamine.com.databaselist.Fragments;
+package chadamine.com.databaselist.Nutrients;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -12,26 +10,26 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
-import android.widget.EditText;
 
-import chadamine.com.databaselist.Database.DatabaseSchema;
-import chadamine.com.databaselist.Objects.Journal;
+import chadamine.com.databaselist.Objects.Nutrient;
 import chadamine.com.databaselist.R;
 
 /**
- * Created by chadamine on 4/12/2015.
+ * Created by chadamine on 5/9/2015.
  */
-public class JournalNewFragment extends Fragment {
+public class NutrientNewFragment extends Fragment {
 
+    private Nutrient mNutrient;
     private View mView;
-    private ContentValues mValues;
-    private Journal mJournal;
-    private Context mContext;
-    private Bundle mBundle;
 
-    public static JournalNewFragment newInstance(Bundle args) {
-        JournalNewFragment f = new JournalNewFragment();
+    private int mPosition;
+    //private String mSortOrder;
+    //private int mSortSelection;
+    private Bundle mBundle;
+    private Context mContext;
+
+    public static NutrientNewFragment newInstance(Bundle args) {
+        NutrientNewFragment f = new NutrientNewFragment();
         f.setArguments(args);
         return f;
     }
@@ -41,19 +39,18 @@ public class JournalNewFragment extends Fragment {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
         setRetainInstance(true);
+        mContext = getActivity();
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        mNutrient = new Nutrient(getActivity());
 
-        mView = inflater.inflate(R.layout.fragment_journal_new, container, false);
-        mValues = new ContentValues();
-        mContext = getActivity();
-
-        // restore previous state (i.e. on screen rotation)
         if(savedInstanceState != null) {
             mBundle = savedInstanceState;
         }
+
+        mView = inflater.inflate(R.layout.fragment_nutrient_new, container, false);
 
         return mView;
     }
@@ -70,42 +67,28 @@ public class JournalNewFragment extends Fragment {
             mBundle = new Bundle();
     }
 
-    private void saveData() {
-
-        createJournal();
-
-        mValues.put(DatabaseSchema.Products.KEY_NAME,
-                ((EditText) mView.findViewById(R.id.edittext_newjournal_name))
-                        .getText().toString());
-
-        getActivity().getContentResolver().insert(mJournal.getUri(), mJournal.getValues());
-        getFragmentManager().popBackStack();
-    }
-
-    private void createJournal() {
-        mJournal = new Journal(mContext);
-        mJournal.setName(
-                ((EditText) mView.findViewById(R.id.edittext_newjournal_name))
-                        .getText().toString());
-    }
-
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.menu_journal_new, menu);
+        inflater.inflate(R.menu.menu_nutrient_new, menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
+        mBundle.putBoolean("isListItem", false);
+
+        Fragment f;
+
         switch(item.getItemId()) {
-            case R.id.save_journal:
-                saveData();
+            case R.id.save_nutrient:
+                mNutrient.saveFields(mView, false);
                 getFragmentManager().popBackStack();
                 hideKeyboard();
                 break;
         }
-        return super.onOptionsItemSelected(item);
+
+        return true;
     }
 
     private void hideKeyboard() {
@@ -113,4 +96,5 @@ public class JournalNewFragment extends Fragment {
                 .hideSoftInputFromWindow(mView.getWindowToken(),
                         InputMethodManager.HIDE_NOT_ALWAYS);
     }
+
 }

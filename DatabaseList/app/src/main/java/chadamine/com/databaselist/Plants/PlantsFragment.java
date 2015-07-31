@@ -1,11 +1,10 @@
-package chadamine.com.databaselist.Fragments;
+package chadamine.com.databaselist.Plants;
 
 import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
@@ -27,7 +26,6 @@ import android.widget.SpinnerAdapter;
 
 import chadamine.com.databaselist.Adapters.CustomFragmentPagerAdapter;
 import chadamine.com.databaselist.Adapters.CustomFragmentPagerAdapter.FirstPageFragmentListener;
-import chadamine.com.databaselist.Adapters.DatabaseAdapter;
 import chadamine.com.databaselist.Adapters.ListCursorAdapter;
 import chadamine.com.databaselist.Database.DatabaseSchema.Plants;
 import chadamine.com.databaselist.Objects.Plant;

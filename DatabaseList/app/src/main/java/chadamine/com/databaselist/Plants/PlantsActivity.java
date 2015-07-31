@@ -1,20 +1,15 @@
-package chadamine.com.databaselist;
+package chadamine.com.databaselist.Plants;
 
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.view.Menu;
 
-import com.astuetz.PagerSlidingTabStrip;
-
-import chadamine.com.databaselist.Adapters.CustomFragmentPagerAdapter;
-import chadamine.com.databaselist.Fragments.PlantOverviewFragment;
-import chadamine.com.databaselist.Fragments.PlantsFragment;
+import chadamine.com.databaselist.Plants.PlantOverviewFragment;
+import chadamine.com.databaselist.Plants.PlantsFragment;
+import chadamine.com.databaselist.R;
 
 public class PlantsActivity extends ActionBarActivity {
 

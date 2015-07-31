@@ -37,23 +37,23 @@
             android:authorities="chadamine.com.databaselist.database.provider" />
 
         <activity
-            android:name=".PlantsActivity"
+            android:name=".Plants.PlantsActivity"
             android:label="@string/title_activity_plants" >
         </activity>
         <activity
-            android:name=".NutrientsActivity"
+            android:name=".Nutrients.NutrientsActivity"
             android:label="@string/title_activity_nutrients" >
         </activity>
         <activity
-            android:name=".ScheduleActivity"
+            android:name=".Schedules.ScheduleActivity"
             android:label="@string/title_activity_schedule" >
         </activity>
         <activity
-            android:name=".ProductsActivity"
+            android:name=".Products.ProductsActivity"
             android:label="@string/title_activity_products" >
         </activity>
         <activity
-            android:name=".JournalsActivity"
+            android:name=".Journals.JournalsActivity"
             android:label="@string/title_activity_journals" >
         </activity>
     </application>

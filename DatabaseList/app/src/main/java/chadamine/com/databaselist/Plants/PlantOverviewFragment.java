@@ -1,4 +1,4 @@
-package chadamine.com.databaselist.Fragments;
+package chadamine.com.databaselist.Plants;
 
 import android.content.Context;
 import android.os.Bundle;

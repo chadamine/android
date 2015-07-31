@@ -17,7 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import chadamine.com.databaselist.Database.DatabaseSchema;
-import chadamine.com.databaselist.Fragments.PlantViewFragment;
+import chadamine.com.databaselist.Plants.PlantViewFragment;
 import chadamine.com.databaselist.Objects.Product;
 import chadamine.com.databaselist.R;
 

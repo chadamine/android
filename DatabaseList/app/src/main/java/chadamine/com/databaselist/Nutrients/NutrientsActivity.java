@@ -1,11 +1,11 @@
-package chadamine.com.databaselist;
+package chadamine.com.databaselist.Nutrients;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.MenuItem;
 
-import chadamine.com.databaselist.Fragments.NutrientsFragment;
+import chadamine.com.databaselist.Nutrients.NutrientsFragment;
+import chadamine.com.databaselist.R;
 
 
 public class NutrientsActivity extends ActionBarActivity {

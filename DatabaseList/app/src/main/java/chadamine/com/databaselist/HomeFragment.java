@@ -1,4 +1,4 @@
-package chadamine.com.databaselist.Fragments;
+package chadamine.com.databaselist;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,13 +9,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import chadamine.com.databaselist.JournalsActivity;
-import chadamine.com.databaselist.PlantsActivity;
-import chadamine.com.databaselist.NutrientsActivity;
+import chadamine.com.databaselist.Journals.JournalsActivity;
+import chadamine.com.databaselist.Plants.PlantsActivity;
+import chadamine.com.databaselist.Nutrients.NutrientsActivity;
 
-import chadamine.com.databaselist.ProductsActivity;
-import chadamine.com.databaselist.R;
-import chadamine.com.databaselist.ScheduleActivity;
+import chadamine.com.databaselist.Products.ProductsActivity;
+import chadamine.com.databaselist.Schedules.ScheduleActivity;
 
 /**
  * Created by chadamine on 4/10/2015.

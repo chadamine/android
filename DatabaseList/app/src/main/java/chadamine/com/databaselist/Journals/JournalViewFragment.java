@@ -1,4 +1,4 @@
-package chadamine.com.databaselist.Fragments;
+package chadamine.com.databaselist.Journals;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 
 import java.util.List;
 
+import chadamine.com.databaselist.Plants.PlantNewFragment;
 import chadamine.com.databaselist.Objects.Journal;
 import chadamine.com.databaselist.Database.DatabaseSchema.Journals;
 import chadamine.com.databaselist.R;

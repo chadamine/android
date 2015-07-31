@@ -5,14 +5,10 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.FragmentStatePagerAdapter;
 
-import chadamine.com.databaselist.Fragments.PlantHistoriesFragment;
-import chadamine.com.databaselist.Fragments.PlantNewFragment;
-import chadamine.com.databaselist.Fragments.PlantOverviewFragment;
-import chadamine.com.databaselist.Fragments.PlantViewFragment;
-import chadamine.com.databaselist.Fragments.PlantsFragment;
-import chadamine.com.databaselist.R;
+import chadamine.com.databaselist.Plants.PlantHistoriesFragment;
+import chadamine.com.databaselist.Plants.PlantNewFragment;
+import chadamine.com.databaselist.Plants.PlantViewFragment;
 
 /**
  * Created by chadamine on 6/7/2015.

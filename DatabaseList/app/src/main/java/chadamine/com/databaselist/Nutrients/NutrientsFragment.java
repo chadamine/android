@@ -1,10 +1,9 @@
-package chadamine.com.databaselist.Fragments;
+package chadamine.com.databaselist.Nutrients;
 
 import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;

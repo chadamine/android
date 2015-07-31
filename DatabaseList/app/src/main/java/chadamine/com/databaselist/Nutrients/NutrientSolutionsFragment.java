@@ -1,4 +1,4 @@
-package chadamine.com.databaselist.Fragments;
+package chadamine.com.databaselist.Nutrients;
 
 import android.app.Activity;
 import android.os.Bundle;

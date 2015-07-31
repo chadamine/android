@@ -1,4 +1,4 @@
-package chadamine.com.databaselist.Fragments;
+package chadamine.com.databaselist.Pots;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

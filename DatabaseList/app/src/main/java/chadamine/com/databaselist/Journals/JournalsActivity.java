@@ -1,11 +1,11 @@
-package chadamine.com.databaselist;
+package chadamine.com.databaselist.Journals;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import chadamine.com.databaselist.Fragments.JournalsFragment;
+import chadamine.com.databaselist.Journals.JournalsFragment;
 import chadamine.com.databaselist.R;
 
 public class JournalsActivity extends ActionBarActivity {

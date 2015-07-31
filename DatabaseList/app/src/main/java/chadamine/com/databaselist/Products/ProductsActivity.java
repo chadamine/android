@@ -1,12 +1,12 @@
-package chadamine.com.databaselist;
+package chadamine.com.databaselist.Products;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import chadamine.com.databaselist.Fragments.ProductNewFragment;
-import chadamine.com.databaselist.Fragments.ProductsFragment;
+import chadamine.com.databaselist.Products.ProductsFragment;
+import chadamine.com.databaselist.R;
 
 public class ProductsActivity extends ActionBarActivity {
 
