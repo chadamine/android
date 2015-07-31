@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="chadamine.com.databaselist.Fragments.NutriSolverHome">
+    tools:context="chadamine.com.databaselist.Fragments.NutriSolver.NutriSolverInputs">
 
     <TextView
         android:layout_width="wrap_content"
@@ -98,24 +98,6 @@
         android:layout_height="165dp"
         android:id="@+id/listView"
         android:layout_below="@+id/button"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Results"
-        android:id="@+id/textView6"
-        android:layout_below="@+id/listView"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <ListView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/listView2"
-        android:layout_below="@+id/textView6"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
