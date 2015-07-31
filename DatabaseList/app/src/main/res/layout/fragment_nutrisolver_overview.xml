@@ -1,27 +1,10 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="chadamine.com.databaselist.NutriSolver.NutriSolverOverview"
-    android:id="@+id/linear_layout_nutrisolver_activity"
-    android:layout_width="match_parent"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    >
-    <com.astuetz.PagerSlidingTabStrip
-        android:id="@+id/pager_sliding_tab_strip_nutrisolver"
-        android:layout_width="match_parent"
-        android:layout_height="45dip"
-        app:pstsShouldExpand="true"
-        />
-    <android.support.v4.view.ViewPager
-        android:id="@+id/pager_nutrisolver"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
-    <FrameLayout
-        android:id="@+id/frame_nutrisolver_overview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
-    </FrameLayout>
-</LinearLayout>
+    tools:context="chadamine.com.databaselist.Fragments.NutriSolver.NutriSolverOverview">
+
+    <!-- TODO: Update blank fragment layout -->
+    <TextView android:layout_width="match_parent" android:layout_height="match_parent"
+        android:text="@string/hello_blank_fragment" />
+
+</FrameLayout>
