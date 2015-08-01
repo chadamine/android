@@ -1,29 +1,24 @@
 package chadamine.com.databaselist.NutriSolver;
 
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import chadamine.com.databaselist.R;
 
-public class NutriSolverActivity extends ActionBarActivity {
+public class NutriSolverActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nutrisolver);
-
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.frame_nutrisolver_activity, new NutriSolverOverview())
-        .commit();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_nutrisolver_activity, menu);
+        getMenuInflater().inflate(R.menu.menu_nutrisolver, menu);
         return true;
     }
 
