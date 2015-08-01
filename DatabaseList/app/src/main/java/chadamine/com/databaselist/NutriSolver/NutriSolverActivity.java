@@ -1,18 +1,23 @@
 package chadamine.com.databaselist.NutriSolver;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import chadamine.com.databaselist.R;
 
-public class NutriSolverActivity extends AppCompatActivity {
+public class NutriSolverActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nutrisolver);
+
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.frame_nutrisolver_activity, new NutriSolverOverview())
+        .commit();
     }
 
     @Override
