@@ -14,8 +14,6 @@ import android.widget.TextView;
 
 import chadamine.com.databaselist.R;
 
-import chadamine.com.databaselist.Fragments.dummy.DummyContent;
-
 /**
  * A fragment representing a list of Items.
  * <p/>
@@ -75,9 +73,6 @@ public class NutrientSolutionsFragment extends Fragment implements AbsListView.O
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
-        // TODO: Change Adapter to display your content
-        mAdapter = new ArrayAdapter<DummyContent.DummyItem>(getActivity(),
-                android.R.layout.simple_list_item_1, android.R.id.text1, DummyContent.ITEMS);
     }
 
     @Override
@@ -118,7 +113,6 @@ public class NutrientSolutionsFragment extends Fragment implements AbsListView.O
         if (null != mListener) {
             // Notify the active callbacks interface (the activity, if the
             // fragment is attached to one) that an item has been selected.
-            mListener.onFragmentInteraction(DummyContent.ITEMS.get(position).id);
         }
     }
 
