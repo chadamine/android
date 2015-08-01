@@ -105,6 +105,7 @@ public class PlantOverviewFragment extends Fragment {
                 mIsNew = mBundle.getBoolean("isNew");
         }
 
+        mBundle.putString("type", "plant");
         mCustomFragmentPagerAdapter =
                 new CustomFragmentPagerAdapter(getFragmentManager(), mContext, mBundle);
 

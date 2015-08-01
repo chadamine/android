@@ -234,6 +234,7 @@ public class PlantsFragment extends ListFragment
         mBundle.putLong("id", id);
         mBundle.putBoolean("hasPosition", true);
         mBundle.putBoolean("isNew", false);
+        mBundle.putString("type", "plant");
 
         //mListener.onSwitchToNextFragment(mBundle);
         getFragmentManager().beginTransaction()
