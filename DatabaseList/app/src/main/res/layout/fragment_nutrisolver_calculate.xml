@@ -1,7 +1,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="chadamine.com.databaselist.Fragments.NutriSolver.NutriSolverCalculate">
+    tools:context="chadamine.com.databaselist.NutriSolver.NutriSolver.NutriSolverCalculate">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView android:layout_width="match_parent" android:layout_height="match_parent"
