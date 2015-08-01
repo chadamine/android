@@ -1,4 +1,4 @@
-package chadamine.com.databaselist.NutriSolver.NutriSolver;
+package chadamine.com.databaselist.NutriSolver;
 
 
 import android.os.Bundle;

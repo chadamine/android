@@ -56,6 +56,10 @@
             android:name=".Journals.JournalsActivity"
             android:label="@string/title_activity_journals" >
         </activity>
+        <activity
+            android:name=".NutriSolver.NutriSolverActivity"
+            android:label="@string/title_activity_nutri_solver" >
+        </activity>
     </application>
 
 </manifest>

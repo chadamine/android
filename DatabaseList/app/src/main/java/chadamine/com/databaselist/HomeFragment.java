@@ -76,6 +76,15 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        Button btnNutriSolver = (Button) rootView.findViewById(R.id.button_to_nutrisolver);
+        btnNutriSolver.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, NutriSolverActivity.class);
+                startActivity(intent);
+            }
+        });
+
         return rootView;
     }
 }
