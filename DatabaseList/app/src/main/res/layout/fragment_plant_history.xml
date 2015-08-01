@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="chadamine.com.databaselist.Plants.PlantHistoriesFragment">
+    tools:context="chadamine.com.databaselist.Cultivation.Plants.PlantHistoriesFragment">
 
     <ListView android:id="@android:id/list"
         android:layout_width="match_parent"

@@ -12,8 +12,7 @@ import android.view.ViewGroup;
 
 import java.util.List;
 
-import chadamine.com.databaselist.Plants.PlantNewFragment;
-import chadamine.com.databaselist.Objects.Journal;
+import chadamine.com.databaselist.Cultivation.Plants.PlantNewFragment;
 import chadamine.com.databaselist.Database.DatabaseSchema.Journals;
 import chadamine.com.databaselist.R;
 

@@ -11,10 +11,10 @@ import android.widget.Button;
 
 import chadamine.com.databaselist.Journals.JournalsActivity;
 import chadamine.com.databaselist.NutriSolver.NutriSolverActivity;
-import chadamine.com.databaselist.Plants.PlantsActivity;
-import chadamine.com.databaselist.Nutrients.NutrientsActivity;
+import chadamine.com.databaselist.Cultivation.Plants.PlantsActivity;
+import chadamine.com.databaselist.Cultivation.Nutrients.NutrientsActivity;
 
-import chadamine.com.databaselist.Products.ProductsActivity;
+import chadamine.com.databaselist.Business.Products.ProductsActivity;
 import chadamine.com.databaselist.Schedules.ScheduleActivity;
 
 /**

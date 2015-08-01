@@ -15,7 +15,6 @@ import chadamine.com.databaselist.Database.DatabaseSchema.Journals;
 
 import chadamine.com.databaselist.Adapters.ListCursorAdapter;
 
-import chadamine.com.databaselist.Objects.Journal;
 import chadamine.com.databaselist.R;
 
 /**

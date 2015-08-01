@@ -8,9 +8,9 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import chadamine.com.databaselist.NutriSolver.NutriSolverCalculate;
 import chadamine.com.databaselist.NutriSolver.NutriSolverInputs;
-import chadamine.com.databaselist.Plants.PlantHistoriesFragment;
-import chadamine.com.databaselist.Plants.PlantNewFragment;
-import chadamine.com.databaselist.Plants.PlantViewFragment;
+import chadamine.com.databaselist.Cultivation.Plants.PlantHistoriesFragment;
+import chadamine.com.databaselist.Cultivation.Plants.PlantNewFragment;
+import chadamine.com.databaselist.Cultivation.Plants.PlantViewFragment;
 
 /**
  * Created by chadamine on 6/7/2015.

@@ -27,14 +27,17 @@ public class DatabaseSchema {
     public static final String SORT_ASC = " ASC";
 
     public static final String[] CREATE_TABLES = {
-            Products.TABLE_CREATE,
-            Photos.TABLE_CREATE,
+            ChemicalCompounds.TABLE_CREATE,
+            ChemicalElements.TABLE_CREATE,
             Journals.TABLE_CREATE,
-            Plants.TABLE_CREATE,
-            PlantHistories.TABLE_CREATE,
-            Substrates.TABLE_CREATE,
+            NutrientCompoundConcentrations.TABLE_CREATE,
             Nutrients.TABLE_CREATE,
-            NutrientConcentrations.TABLE_CREATE
+            Photos.TABLE_CREATE,
+            PlantHistories.TABLE_CREATE,
+            Plants.TABLE_CREATE,
+            Products.TABLE_CREATE,
+            Substrates.TABLE_CREATE
+
             // TODO: add all tables
     };
 
@@ -94,9 +97,112 @@ public class DatabaseSchema {
     }
 
     public static final class ChemicalCompounds implements BaseColumns {
+
+        public static final String TABLE_NAME = "chemical_compounds";
+
+        public static final String KEY_ID = "_id";
+        public static final String KEY_NAME = "name";
+        public static final String KEY_FORMULA = "formula";
+
+        public static final String DIR_PHOTOS = "ChemicalElements/";
+
+        public static final String[] KEY_ID_ARRAY = { KEY_ID, KEY_NAME, KEY_FORMULA };
+
+        public static final Uri CONTENT_URI = Uri.withAppendedPath(DatabaseSchema.CONTENT_URI, TABLE_NAME);
+
+        public static final String TABLE_CREATE =
+                CT + TABLE_NAME + OB
+                        + KEY_ID + IPKA
+                        + KEY_NAME + TXT
+                        + KEY_FORMULA + TXF
+                        + CLOSE;
+
+        public static final String DELETE = DTIE + TABLE_NAME;
     }
 
     public static final class ChemicalElements implements BaseColumns {
+
+        public static final String TABLE_NAME = "chemical_elements";
+
+        public static final String KEY_ID = "_id";
+        public static final String KEY_NAME = "name";
+        public static final String FKEY_COMPOUND_ID = "compound_id";
+
+        // numerical values, stored as mol
+        public static final String KEY_H = "h";
+        public static final String KEY_HE = "he";
+        public static final String KEY_LI = "li";
+        public static final String KEY_BE = "be";
+        public static final String KEY_B = "b";
+
+        public static final String KEY_C = "c";
+        public static final String KEY_N = "n";
+        public static final String KEY_O = "o";
+        public static final String KEY_F = "f";
+        public static final String KEY_NE = "ne";
+
+        public static final String KEY_NA = "na";
+        public static final String KEY_MG = "mg";
+        public static final String KEY_AL = "al";
+        public static final String KEY_SI = "si";
+        public static final String KEY_P = "p";
+
+        public static final String KEY_S = "s";
+        public static final String KEY_CL = "cl";
+        public static final String KEY_AR = "ar";
+        public static final String KEY_K = "k";
+        public static final String KEY_CA = "ca";
+
+        public static final String KEY_SC = "sc";
+        public static final String KEY_TI = "ti";
+        public static final String KEY_V = "v";
+        public static final String KEY_CR = "cr";
+        public static final String KEY_MN = "mn";
+
+        public static final String KEY_FE = "fe";
+        public static final String KEY_CO = "co";
+        public static final String KEY_NI = "ni";
+        public static final String KEY_CU = "cu";
+        public static final String KEY_ZN = "zn";
+
+        public static final String KEY_GA = "ga";
+        public static final String KEY_GE = "ge";
+        public static final String KEY_AS = "as";
+        public static final String KEY_SE = "se";
+        public static final String KEY_BR = "br";
+
+        public static final String KEY_KR = "kr";
+        public static final String KEY_RB = "rb";
+        public static final String KEY_SR = "sr";
+        public static final String KEY_Y = "y";
+        public static final String KEY_ZR = "zr";
+
+        public static final String KEY_NB = "nb";
+        public static final String KEY_MO = "mo";
+
+        public static final String DIR_PHOTOS = "ChemicalElements/";
+
+        public static final String[] KEY_ID_ARRAY = { KEY_ID, KEY_NAME, FKEY_COMPOUND_ID
+                /*KEY_H, KEY_HE, KEY_LI, KEY_BE, KEY_B,
+                KEY_C, KEY_N, KEY_O, KEY_F, KEY_NE,
+                KEY_NA, KEY_MG, KEY_AL, KEY_SI, KEY_P,
+                KEY_S, KEY_CL, KEY_AR, KEY_K, KEY_CA,
+                KEY_SC, KEY_TI, KEY_V, KEY_CR, KEY_MN,
+                KEY_FE, KEY_CO, KEY_NI, KEY_CU, KEY_ZN,
+                KEY_GA, KEY_GE, KEY_AS, KEY_SE, KEY_BR,
+                KEY_KR, KEY_RB, KEY_SR, KEY_Y, KEY_ZR,
+                KEY_NB, KEY_MO*/
+        };
+
+        public static final Uri CONTENT_URI = Uri.withAppendedPath(DatabaseSchema.CONTENT_URI, TABLE_NAME);
+
+        public static final String TABLE_CREATE =
+                CT + TABLE_NAME + OB
+                        + KEY_ID + IPKA
+                        + KEY_NAME + TXF
+                        + CLOSE;
+
+        public static final String DELETE = DTIE + TABLE_NAME;
     }
 
     public static final class CultivationSystems implements BaseColumns {
@@ -125,6 +231,36 @@ public class DatabaseSchema {
     }
 
     public static final class Lineages implements BaseColumns {
+    }
+
+    public static final class NutrientCompoundConcentrations implements BaseColumns {
+
+        public static final String TABLE_NAME = "nutrient_compound_concentrations";
+        public static final String KEY_ID = "_id";
+        public static final String FKEY_NUTRIENT_ID = "nutrient_id";
+        public static final String FKEY_COMPOUND_ID = "compound_id";
+        public static final String KEY_CONCENTRATION = "concentration";
+        public static final String KEY_TIMESTAMP = "timestamp";
+
+        public static final String DIR_PHOTOS = "NutrientCompounds/";
+
+        public static final String[] KEY_ID_ARRAY = { KEY_ID, KEY_TIMESTAMP,FKEY_NUTRIENT_ID,
+                FKEY_COMPOUND_ID, KEY_CONCENTRATION, };
+
+        public static final Uri CONTENT_URI =
+                Uri.withAppendedPath(DatabaseSchema.CONTENT_URI, TABLE_NAME);
+
+        public static final String TABLE_CREATE =
+                CT + TABLE_NAME + OB
+                        + KEY_ID + IPKA
+                        + FKEY_NUTRIENT_ID + TXT
+                        + KEY_TIMESTAMP + TXT
+                        + FKEY_COMPOUND_ID + TXT
+                        + KEY_CONCENTRATION + TXF
+                        + CLOSE;
+
+        public static final String DELETE = DTIE + TABLE_NAME;
+
     }
 
     public static final class Nutrients implements BaseColumns {
@@ -169,7 +305,7 @@ public class DatabaseSchema {
 
         // SPECIAL COMPOUNDS
         // TODO: GET FROM COMPOUNDS TABLE?
-        public static final String KEY_NO3 = "no3";
+        /*public static final String KEY_NO3 = "no3";
         public static final String KEY_NH4 = "nh4";
         public static final String KEY_P2O5 = "p2o5";
         public static final String KEY_K2O = "k2o";
@@ -223,12 +359,12 @@ public class DatabaseSchema {
         public static final String KEY_ZR = "zr";
 
         public static final String KEY_NB = "nb";
-        public static final String KEY_MO = "mo";
+        public static final String KEY_MO = "mo";*/
 
         public static final String DIR_PHOTOS = "NutrientConcentrations/";
 
         public static final String[] KEY_ID_ARRAY = { KEY_ID, KEY_NAME,
-                KEY_H, KEY_HE, KEY_LI, KEY_BE, KEY_B,
+                /*KEY_H, KEY_HE, KEY_LI, KEY_BE, KEY_B,
                 KEY_C, KEY_N, KEY_O, KEY_F, KEY_NE,
                 KEY_NA, KEY_MG, KEY_AL, KEY_SI, KEY_P,
                 KEY_S, KEY_CL, KEY_AR, KEY_K, KEY_CA,
@@ -236,7 +372,8 @@ public class DatabaseSchema {
                 KEY_FE, KEY_CO, KEY_NI, KEY_CU, KEY_ZN,
                 KEY_GA, KEY_GE, KEY_AS, KEY_SE, KEY_BR,
                 KEY_KR, KEY_RB, KEY_SR, KEY_Y, KEY_ZR,
-                KEY_NB, KEY_MO };
+                KEY_NB, KEY_MO*/
+        };
 
         public static final Uri CONTENT_URI = Uri.withAppendedPath(DatabaseSchema.CONTENT_URI, TABLE_NAME);
 

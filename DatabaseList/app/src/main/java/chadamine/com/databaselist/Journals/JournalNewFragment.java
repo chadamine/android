@@ -15,7 +15,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import chadamine.com.databaselist.Database.DatabaseSchema;
-import chadamine.com.databaselist.Objects.Journal;
 import chadamine.com.databaselist.R;
 
 /**

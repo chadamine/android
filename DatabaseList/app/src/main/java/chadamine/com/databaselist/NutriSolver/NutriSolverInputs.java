@@ -17,7 +17,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import chadamine.com.databaselist.Adapters.ListCursorAdapter;
-import chadamine.com.databaselist.Objects.Nutrient;
+import chadamine.com.databaselist.Cultivation.Nutrients.Nutrient;
 import chadamine.com.databaselist.R;
 
 public class NutriSolverInputs extends ListFragment implements LoaderManager.LoaderCallbacks<Cursor> {
