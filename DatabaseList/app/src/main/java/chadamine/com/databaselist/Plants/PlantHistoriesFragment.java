@@ -20,8 +20,6 @@ import chadamine.com.databaselist.Adapters.ListCursorAdapter;
 import chadamine.com.databaselist.Objects.Plant;
 import chadamine.com.databaselist.R;
 
-import chadamine.com.databaselist.Fragments.dummy.DummyContent;
-
 public class PlantHistoriesFragment extends ListFragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
     private OnFragmentInteractionListener mListener;
