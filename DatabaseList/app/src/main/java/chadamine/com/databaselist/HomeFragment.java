@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import chadamine.com.databaselist.Journals.JournalsActivity;
+import chadamine.com.databaselist.NutriSolver.NutriSolverActivity;
 import chadamine.com.databaselist.Plants.PlantsActivity;
 import chadamine.com.databaselist.Nutrients.NutrientsActivity;
 
