@@ -19,16 +19,16 @@ import chadamine.com.databaselist.R;
 /**
  * Created by chadamine on 5/9/2015.
  */
-public class NutrientViewFragment extends Fragment {
+public class ViewNutrientFragment extends Fragment {
 
     private Bundle mBundle;
     private Context mContext;
     private View mView;
     private Nutrient mNutrient;
 
-    public static NutrientViewFragment newInstance(Bundle savedInstanceState) {
+    public static ViewNutrientFragment newInstance(Bundle savedInstanceState) {
 
-        NutrientViewFragment f = new NutrientViewFragment();
+        ViewNutrientFragment f = new ViewNutrientFragment();
         f.setArguments(savedInstanceState);
 
         return f;

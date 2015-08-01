@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import chadamine.com.databaselist.Adapters.DatabaseAdapter;
-import chadamine.com.databaselist.Cultivation.Chemicals.ChemicalCompound;
+import chadamine.com.databaselist.Cultivation.Chemicals.Molecule;
 import chadamine.com.databaselist.Cultivation.Chemicals.ChemicalElement;
 import chadamine.com.databaselist.Database.DatabaseSchema.Nutrients;
 import chadamine.com.databaselist.R;
@@ -55,9 +55,9 @@ public class Nutrient implements DatabaseAdapter {
     HashMap<String, String> mFields;
 
     private List<ChemicalElement> mChemicalElements;
-    private List<ChemicalCompound> mChemicalCompounds;
+    private List<Molecule> mMolecules;
     private HashMap<ChemicalElement, Double> mElementRatios;
-    private HashMap<ChemicalCompound, Double> mCompoundRatios;
+    private HashMap<Molecule, Double> mCompoundRatios;
 
     public Nutrient(Context context) {
         //TODO: Manufacturer, ProductLine classes
@@ -92,11 +92,11 @@ public class Nutrient implements DatabaseAdapter {
         return percent;
     }
 
-    public double getCompoundRatio(ChemicalCompound c) {
+    public double getCompoundRatio(Molecule c) {
 
         double percent = 0;
 
-        for(ChemicalCompound compound : mChemicalCompounds) {
+        for(Molecule compound : mMolecules) {
             if(compound.getName() == c.getName()) {
                 percent = mCompoundRatios.get(compound);
             }

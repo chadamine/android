@@ -157,7 +157,7 @@ public class NutrientsFragment extends ListFragment
         //mBundle.putString("sortOrder", mSortOrder);
 
         getFragmentManager().beginTransaction()
-                .replace(R.id.frame_nutrient_activity, NutrientViewFragment.newInstance(mBundle))
+                .replace(R.id.frame_nutrient_activity, ViewNutrientFragment.newInstance(mBundle))
                 .addToBackStack("nutrientView").commit();
     }
 
@@ -169,7 +169,7 @@ public class NutrientsFragment extends ListFragment
             case R.id.add_nutrient:
                 getFragmentManager().beginTransaction()
                         .replace(R.id.frame_nutrient_activity,
-                                NutrientNewFragment.newInstance(mBundle))
+                                NewNutrientFragment.newInstance(mBundle))
                         .addToBackStack("newNutrient")
                         .commit();
                 break;

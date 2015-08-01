@@ -16,7 +16,7 @@ import chadamine.com.databaselist.R;
 /**
  * Created by chadamine on 5/9/2015.
  */
-public class NutrientNewFragment extends Fragment {
+public class NewNutrientFragment extends Fragment {
 
     private Nutrient mNutrient;
     private View mView;
@@ -27,8 +27,8 @@ public class NutrientNewFragment extends Fragment {
     private Bundle mBundle;
     private Context mContext;
 
-    public static NutrientNewFragment newInstance(Bundle args) {
-        NutrientNewFragment f = new NutrientNewFragment();
+    public static NewNutrientFragment newInstance(Bundle args) {
+        NewNutrientFragment f = new NewNutrientFragment();
         f.setArguments(args);
         return f;
     }
