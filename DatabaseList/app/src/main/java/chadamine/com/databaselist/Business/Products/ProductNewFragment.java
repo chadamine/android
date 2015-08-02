@@ -9,7 +9,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.internal.widget.TintEditText;
+//import android.support.v7.internal.widget.TintEditText;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -210,7 +210,7 @@ public class ProductNewFragment extends Fragment {
         View view = null;
         for(int i = 0; i < mFields.size(); i++)  {
             view = mFields.get(i);
-            if(view.getClass().getName() == TintEditText.class.getName().toString())
+            //if(view.getClass().getName() == TintEditText.class.getName().toString())
                 ((EditText) view).setText("");
             //TODO: if(Spinner) choose option: 0
 
