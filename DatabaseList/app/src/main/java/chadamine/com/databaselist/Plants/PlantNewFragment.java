@@ -196,7 +196,6 @@ public class PlantNewFragment extends Fragment {
                 else
                     mPlant.saveFields(mView, false);
 
-                //getFragmentManager().popBackStack();
                 /*getFragmentManager().beginTransaction()
                         .replace(R.id.frame_plant_activity, PlantsFragment.newInstance(mBundle))
                         .commit();*/
@@ -204,6 +203,7 @@ public class PlantNewFragment extends Fragment {
                 //TODO: MAKE THIS WORK AGAIN
                 //mListener.onSwitchToNewFragment(mBundle);
                 hideKeyboard();
+                getFragmentManager().popBackStack();
                 break;
         }
 
