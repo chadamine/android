@@ -4,16 +4,17 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 
 import chadamine.com.databaselist.Plants.PlantHistoriesFragment;
 import chadamine.com.databaselist.Plants.PlantNewFragment;
+import chadamine.com.databaselist.Plants.PlantOverviewFragment;
 import chadamine.com.databaselist.Plants.PlantViewFragment;
 
 /**
  * Created by chadamine on 6/7/2015.
  */
-public class CustomFragmentPagerAdapter extends FragmentPagerAdapter {
+public class CustomFragmentPagerAdapter extends FragmentStatePagerAdapter {
 
     Context mContext;
     static final int NUM_ITEMS = 3;
@@ -43,26 +44,7 @@ public class CustomFragmentPagerAdapter extends FragmentPagerAdapter {
 
             notifyDataSetChanged();
         }
-
-        /*public void onSwitchToNew(Bundle bundle) {
-            mBundle = bundle;
-            mFragmentManager
-                    .beginTransaction()
-                    .remove(mFragmentAtPos0)
-                    //.addToBackStack("plant fragment removed")
-                    .commit();
-
-            if(mFragmentAtPos0 instanceof PlantsFragment)
-                mFragmentAtPos0 = PlantNewFragment.newInstance(mBundle, mListener);
-            else
-                mFragmentAtPos0 = PlantsFragment.newInstance(mBundle, mListener);
-
-            notifyDataSetChanged();
-        }*/
-
     }
-
-
 
     @Override
     public Fragment getItem(int position) {
@@ -83,10 +65,12 @@ public class CustomFragmentPagerAdapter extends FragmentPagerAdapter {
                     else
                         mFragmentAtPos0 = PlantViewFragment.newInstance(mBundle, mListener);
                 }
+
+                (new PlantOverviewFragment()).changeMenu();
                 return mFragmentAtPos0;
 
             case 1:
-                return PlantViewFragment.newInstance(mBundle, mListener);
+                return PlantHistoriesFragment.newInstance(mBundle);
             case 2:
                 return PlantHistoriesFragment.newInstance(mBundle);
             default:

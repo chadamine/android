@@ -47,7 +47,8 @@ public class PlantNewFragment extends Fragment {
     private String mSortOrder;
     private long mId;
     private final String NEW = "New...";
-    private boolean mHasPosition;
+    private boolean mIsNew;
+    private Cursor mCursor;
 
     private EditText mHeightValue;
     private TextView mHeightExtraUnit;
@@ -79,7 +80,7 @@ public class PlantNewFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
+        //setHasOptionsMenu(true);
         setRetainInstance(true);
     }
 
@@ -104,9 +105,6 @@ public class PlantNewFragment extends Fragment {
 
             mBundle = getArguments();
 
-            if(mBundle.containsKey("hasPostion"))
-                mHasPosition = mBundle.getBoolean("hasPosition");
-
             if(mBundle.containsKey("position"))
                 mPosition = mBundle.getInt("position");
 
@@ -116,24 +114,29 @@ public class PlantNewFragment extends Fragment {
             if(mBundle.containsKey("id"))
                 mId = mBundle.getLong("id");
 
+            if(mBundle.containsKey("isNew"))
+                mIsNew =  mBundle.getBoolean("isNew");
+
         } else
             mBundle = new Bundle();
 
         String name = "";
 
-        //if(mPosition >= 0) {
-        if(mPosition >= 0) {
-            Cursor cursor = mContext.getContentResolver()
-                    .query(mPlant.getUri(), mPlant.getKeyIdArray(),
-                            null, null, mSortOrder);
+        mCursor = mContext.getContentResolver()
+                .query(mPlant.getUri(), mPlant.getKeyIdArray(),
+                        null, null, mSortOrder);
 
-            cursor.moveToPosition(mPosition);
+        if(!mIsNew) {
+            mCursor.moveToPosition(mPosition);
 
-            name = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseSchema.Plants.KEY_NAME));
+            name = mCursor.getString(mCursor.getColumnIndexOrThrow(DatabaseSchema.Plants.KEY_NAME));
 
             ((EditText) mView.findViewById(R.id.edittext_plant_new_name))
                     .setText(name == null ? "" : name);
+            mCursor.close();
         }
+
+
         return mView;
     }
 
@@ -143,7 +146,6 @@ public class PlantNewFragment extends Fragment {
         mSubstrate = new Substrate(mContext);
         mHeightValue = (EditText) mView.findViewById(R.id.edittext_plant_new_height_2);
         mHeightExtraUnit = (TextView) mView.findViewById(R.id.textview_plant_new_height_2_unit);
-
     }
 
     private void setCalculatorImages() {
@@ -165,7 +167,6 @@ public class PlantNewFragment extends Fragment {
         super.onCreateContextMenu(menu, v, menuInfo);
         MenuInflater inflater = getActivity().getMenuInflater();
         //inflater.inflate(R.menu.menu_plant_age_calculator, menu);
-
     }
 
     @Override
@@ -184,26 +185,23 @@ public class PlantNewFragment extends Fragment {
 
         switch(item.getItemId()) {
             case R.id.save_plant:
-
-                if(mPosition >= 0) {
-                //if(mHasPosition) {
+                if(!mIsNew) {
                     mPlant.setName(
                             ((EditText) mView.findViewById(R.id.edittext_plant_new_name)).getText()
                                     .toString());
-
                     mPlant.update(mView, mId);
+                    //mBundle.putInt("position", mCursor.getCount() - 1);
                 }
-                else
+                else {
                     mPlant.saveFields(mView, false);
+                    mBundle.putInt("position", mCursor.getCount());
+                }
 
-                /*getFragmentManager().beginTransaction()
-                        .replace(R.id.frame_plant_activity, PlantsFragment.newInstance(mBundle))
-                        .commit();*/
+                mBundle.putBoolean("isNew", false);
 
-                //TODO: MAKE THIS WORK AGAIN
-                //mListener.onSwitchToNewFragment(mBundle);
                 hideKeyboard();
-                getFragmentManager().popBackStack();
+                //mListener.onSwitchToNewFragment(mBundle);
+                getActivity().getSupportFragmentManager().popBackStack();
                 break;
         }
 
@@ -365,6 +363,10 @@ public class PlantNewFragment extends Fragment {
     private void saveToDB() {
         getActivity().getContentResolver()
                 .insert(DatabaseSchema.Plants.CONTENT_URI, mPlant.getValues());
+    }
+
+    public void backPressed() {
+        mListener.onSwitchToNewFragment(mBundle);
     }
 
     @Override

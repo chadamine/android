@@ -77,7 +77,7 @@ public class PlantsFragment extends ListFragment
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setHasOptionsMenu(true);
+        //setHasOptionsMenu(true);
         setRetainInstance(true);
     }
 
@@ -94,6 +94,9 @@ public class PlantsFragment extends ListFragment
 
         mListCursorAdapter = new ListCursorAdapter(mContext, null, 0, mPlant);
         setListAdapter(mListCursorAdapter);
+
+        if(getArguments() != null)
+            mBundle = getArguments();
 
         return mView;
     }
@@ -232,29 +235,29 @@ public class PlantsFragment extends ListFragment
 
         mBundle.putInt("position", position);
         mBundle.putLong("id", id);
-        mBundle.putBoolean("hasPosition", true);
         mBundle.putBoolean("isNew", false);
 
         //mListener.onSwitchToNextFragment(mBundle);
         getFragmentManager().beginTransaction()
-                .replace(R.id.frame_plant_activity, PlantOverviewFragment.newInstance(mBundle))
-                .addToBackStack("plant overview")
+                .replace(R.id.frame_plant_activity,
+                        PlantOverviewFragment.newInstance(mBundle), "plant_overview")
+                .addToBackStack("plant_overview")
                 .commit();
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        mBundle.putInt("position", -1); // position not wanted in this case
-        //mBundle.putBoolean("hasPosition", false);
+        //mBundle.putInt("position", -1); // position not wanted in this case
         mBundle.putBoolean("isNew", true);
 
         switch(item.getItemId()) {
             case R.id.add_plant:
+
                 getFragmentManager().beginTransaction()
                         .replace(R.id.frame_plant_activity,
-                                PlantNewFragment.newInstance(mBundle))
-                        .addToBackStack("newPlant")
+                                PlantOverviewFragment.newInstance(mBundle), "plant_overview")
+                        .addToBackStack("plant_new_fragment")
                         .commit();
 
                 // USE LISTENER ONLY WHEN OVERVIEW IS ALREADY LOADED!!!

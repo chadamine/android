@@ -58,16 +58,16 @@ public class PlantViewFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
+        //setHasOptionsMenu(true);
         setRetainInstance(true);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        mView = inflater.inflate(R.layout.fragment_plant_view, container, false);
-        mContext = getActivity();
-        mPlant = new Plant(mContext);
+            mView = inflater.inflate(R.layout.fragment_plant_view, container, false);
+            mContext = getActivity();
+            mPlant = new Plant(mContext);
 
         if(getArguments() != null) {
             mBundle = getArguments();
@@ -80,12 +80,9 @@ public class PlantViewFragment extends Fragment {
 
             if(mBundle.containsKey("isNew"))
                 mIsNew = mBundle.getBoolean("isNew");
-
+            //if(mCursorPosition > 0)
             mPlant.setViewItemContent(mView, mCursorPosition, mSortOrder);
         }
-
-       /* if(mIsNew)
-            mListener.onSwitchToNewFragment(mBundle);*/
 
         return mView;
     }
@@ -117,10 +114,6 @@ public class PlantViewFragment extends Fragment {
 
         switch(item.getItemId()) {
             case R.id.edit_plant:
-                /*getFragmentManager().beginTransaction()
-                        .replace(R.id.frame_plant_activity, PlantNewFragment.newInstance(mBundle, mListener))
-                        .addToBackStack("newPlant")
-                        .commit();*/
                 mListener.onSwitchToNewFragment(mBundle);
         }
 
