@@ -50,7 +50,6 @@ public class PlantOverviewFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-//        mBundle = new Bundle();
         mContext = getActivity();
 
         mView = inflater.inflate(R.layout.fragment_plant_overview, container, false);
@@ -98,14 +97,14 @@ public class PlantOverviewFragment extends Fragment {
 
     }
 
-    public void changeMenu() {
+    /*public void changeMenu() {
         FragmentManager mManager = getFragmentManager();
         Fragment f = mManager.findFragmentByTag("plant_new_fragment");
 
         if(f != null && f.isVisible()) {
             mMenuItem.setVisible(false);
         }
-    }
+    }*/
 
     public void backPressed() {
         if(mViewPager.getCurrentItem() == 0) {

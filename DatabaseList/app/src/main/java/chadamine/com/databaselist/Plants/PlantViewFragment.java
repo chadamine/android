@@ -58,7 +58,7 @@ public class PlantViewFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setHasOptionsMenu(true);
+        setHasOptionsMenu(true);
         setRetainInstance(true);
     }
 
@@ -80,7 +80,7 @@ public class PlantViewFragment extends Fragment {
 
             if(mBundle.containsKey("isNew"))
                 mIsNew = mBundle.getBoolean("isNew");
-            //if(mCursorPosition > 0)
+
             mPlant.setViewItemContent(mView, mCursorPosition, mSortOrder);
         }
 
@@ -106,6 +106,13 @@ public class PlantViewFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
+
+        if(menu.size() > 0) {
+            menu.removeItem(R.id.add_plant);
+            menu.removeItem(R.id.save_plant);
+            menu.removeItem(R.id.action_settings);
+        }
+
         inflater.inflate(R.menu.menu_plant_view, menu);
     }
 

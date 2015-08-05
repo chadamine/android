@@ -2,17 +2,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="chadamine.com.databaselist.Plants.PlantsActivity">
-
-    <item
-        android:id="@+id/add_plant"
-        app:showAsAction="ifRoom"
-        android:orderInCategory="50"
-        android:title="Add Plant">
-    </item>
-    <item android:id="@+id/edit_plant" android:title="Edit Plant"
-        android:orderInCategory="100" app:showAsAction="ifRoom" />
-    <item android:id="@+id/save_plant" android:title="Save Plant"
-        android:orderInCategory="100" app:showAsAction="ifRoom" />
     <item android:id="@+id/action_settings" android:title="@string/action_settings"
         android:orderInCategory="100" app:showAsAction="never" />
 </menu>

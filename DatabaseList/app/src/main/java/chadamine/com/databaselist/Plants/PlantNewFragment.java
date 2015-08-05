@@ -80,7 +80,7 @@ public class PlantNewFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setHasOptionsMenu(true);
+        setHasOptionsMenu(true);
         setRetainInstance(true);
     }
 
@@ -98,10 +98,7 @@ public class PlantNewFragment extends Fragment {
 
         hideExtraUnits();
 
-       /* if(savedInstanceState != null) {
-            mBundle = savedInstanceState;
-
-        } else*/ if(getArguments() != null) {
+        if(getArguments() != null) {
 
             mBundle = getArguments();
 
@@ -135,7 +132,6 @@ public class PlantNewFragment extends Fragment {
                     .setText(name == null ? "" : name);
             mCursor.close();
         }
-
 
         return mView;
     }
@@ -177,6 +173,12 @@ public class PlantNewFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
+
+        if(menu.size() > 0) {
+            menu.removeItem(R.id.add_plant);
+            menu.removeItem(R.id.save_plant);
+        }
+
         inflater.inflate(R.menu.menu_plant_new, menu);
     }
 
@@ -201,11 +203,12 @@ public class PlantNewFragment extends Fragment {
 
                 hideKeyboard();
                 //mListener.onSwitchToNewFragment(mBundle);
+                //getActivity().supportInvalidateOptionsMenu();
                 getActivity().getSupportFragmentManager().popBackStack();
                 break;
         }
 
-        return true;
+        return false;
     }
 
     private void hideKeyboard() {

@@ -66,7 +66,7 @@ public class CustomFragmentPagerAdapter extends FragmentStatePagerAdapter {
                         mFragmentAtPos0 = PlantViewFragment.newInstance(mBundle, mListener);
                 }
 
-                (new PlantOverviewFragment()).changeMenu();
+                //(new PlantOverviewFragment()).changeMenu();
                 return mFragmentAtPos0;
 
             case 1:

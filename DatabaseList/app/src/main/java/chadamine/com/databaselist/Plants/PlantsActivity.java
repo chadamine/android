@@ -36,62 +36,39 @@ public class PlantsActivity extends ActionBarActivity {
                 .beginTransaction()
                 .replace(R.id.frame_plant_activity, new PlantsFragment())
                 .commit();
+
+        getSupportFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
+            @Override
+            public void onBackStackChanged() {
+
+            }
+        });
     }
 
     //TODO: FRAGMENT INTERACTION LISTENER TO HIDE/SHOW MENUITEMS
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Bundle mBundle = new Bundle();
-        mBundle.putBoolean("isNew", true);
 
-        switch (item.getItemId()) {
-            case R.id.add_plant:
-
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.frame_plant_activity,
-                                PlantOverviewFragment.newInstance(mBundle), "plant_overview")
-                        .addToBackStack("plant_overview")
-                        .commit();
-                break;
-            case R.id.save_plant:
-                Plant mPlant = new Plant(this);
-                /*if(!mIsNew) {
-                    mPlant.setName(
-                            ((EditText) mView.findViewById(R.id.edittext_plant_new_name)).getText()
-                                    .toString());
-                    mPlant.update(mView, mId);
-                    //mBundle.putInt("position", mCursor.getCount() - 1);
-                }
-                else {
-                    mPlant.saveFields(mView, false);
-                    mBundle.putInt("position", mCursor.getCount());
-                }
-
-                mBundle.putBoolean("isNew", false);
-
-                hideKeyboard();
-                //mListener.onSwitchToNewFragment(mBundle);
-                getActivity().getSupportFragmentManager().popBackStack();*/
-                break;
-        }
-
-        return true;
+        // return (true: normal menu processing | false: consume here)
+        return false;
     }
 
+    private Menu mMenu;
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        //getMenuInflater().inflate(R.menu.menu_plants_activity, menu);
-        return true;
+        mMenu = menu;
+        getMenuInflater().inflate(R.menu.menu_plants_activity, menu);
+        return false;
     }
 
-    @Override
+    /*@Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         Fragment f = mManager.findFragmentByTag("plant_new_fragment");
         if(f != null && f.isVisible()) {
             menu.findItem(R.id.edit_plant).setVisible(false);
         }
         return super.onPrepareOptionsMenu(menu);
-    }
+    }*/
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -106,9 +83,6 @@ public class PlantsActivity extends ActionBarActivity {
             f.backPressed();
         else
             finish();
-
-        //invalidateOptionsMenu();
-
     }
 }
 

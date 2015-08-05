@@ -77,14 +77,14 @@ public class PlantsFragment extends ListFragment
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //setHasOptionsMenu(true);
+        setHasOptionsMenu(true);
         setRetainInstance(true);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        if(mView == null)
+//        if(mView == null)
             mView = inflater.inflate(R.layout.fragment_plants, container, false);
         mContext = getActivity();
         mPlant = new Plant(mContext);
@@ -105,11 +105,7 @@ public class PlantsFragment extends ListFragment
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        /*if(savedInstanceState != null) {
-            mBundle = savedInstanceState;
-            if(mBundle.containsKey("sortSelection"))
-                mSortSelection = mBundle.getInt("sortSelection");
-        } else */if(getArguments() != null) {
+        if(getArguments() != null) {
             mBundle = getArguments();
             if(mBundle.containsKey("sortSelection"))
                 mSortSelection = mBundle.getInt("sortSelection");
@@ -175,6 +171,11 @@ public class PlantsFragment extends ListFragment
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
+
+        if(menu.size() > 0) {
+            menu.removeItem(R.id.add_plant);
+            menu.removeItem(R.id.save_plant);
+        }
 
         inflater.inflate(R.menu.menu_plants, menu);
 
