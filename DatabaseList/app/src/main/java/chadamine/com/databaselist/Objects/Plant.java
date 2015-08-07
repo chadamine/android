@@ -9,12 +9,10 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import chadamine.com.databaselist.Adapters.DatabaseAdapter;
-import chadamine.com.databaselist.Database.DatabaseSchema;
 import chadamine.com.databaselist.Database.DatabaseSchema.Plants;
 import chadamine.com.databaselist.Database.DatabaseSchema.PlantHistories;
 
@@ -25,7 +23,7 @@ import chadamine.com.databaselist.R;
  */
 public class Plant extends Organism implements DatabaseAdapter {
 
-    private int mID;
+    private int mId;
 
     private String mName;
     //private String mCurrentDateTime;
@@ -96,7 +94,10 @@ public class Plant extends Organism implements DatabaseAdapter {
 
     @Override
     public int getId() {
-        return 0;
+        mCursor = getNewCursor(KEY_ID_ARRAY, null, null, null);
+        mCursor.moveToLast();
+        mId = mCursor.getInt(mCursor.getColumnIndex("_id"));
+        return mId;
     }
 
     @Override
@@ -159,8 +160,6 @@ public class Plant extends Organism implements DatabaseAdapter {
 
     }
 
-
-
     public void saveFields(View view, boolean isListItem) {
         if(!isListItem)
             setName(((EditText) view.findViewById(R.id.edittext_plant_new_name))
@@ -168,14 +167,16 @@ public class Plant extends Organism implements DatabaseAdapter {
 
         mUri = mContext.getContentResolver().insert(getUri(), getValues());
         mHistoryUri = mContext.getContentResolver().insert(getHistoryUri(), getHistoryValues());
+
+
+
+
     }
 
     /*public void updateFields(View view) {
         setName(((EditText) view.findViewById(R.id.edittext_plant_new_name)).getText().toString());
         mContext.getContentResolver().update(getUri(), getValues(), null, null);
     }*/
-
-
 
     public void update(View view, long id) {
         setName(((EditText) view.findViewById(R.id.edittext_plant_new_name)).getText().toString());
@@ -196,7 +197,6 @@ public class Plant extends Organism implements DatabaseAdapter {
 
             ((TextView) view.findViewById(R.id.textview_plant_view_info_name))
                     .setText(name == null ? "" : name);
-
 
             String species = mCursor.getString(mCursor.getColumnIndexOrThrow(Plants.KEY_SPECIES));
             ((TextView) view.findViewById(R.id.textview_plant_view_info_species))

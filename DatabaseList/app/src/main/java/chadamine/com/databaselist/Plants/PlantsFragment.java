@@ -70,14 +70,6 @@ public class PlantsFragment extends ListFragment
         return f;
     }
 
-    public static PlantsFragment newInstance(Bundle args, CustomFragmentPagerAdapter.FirstPageFragmentListener listener) {
-        PlantsFragment f = new PlantsFragment();
-        mListener = listener;
-        if(args != null)
-            f.setArguments(args);
-        return f;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,8 +81,7 @@ public class PlantsFragment extends ListFragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-//        if(mView == null)
-            mView = inflater.inflate(R.layout.fragment_plants, container, false);
+        mView = inflater.inflate(R.layout.fragment_plants, container, false);
         mContext = getActivity();
         mPlant = new Plant(mContext);
         mLoaderManager = this;
@@ -112,17 +103,11 @@ public class PlantsFragment extends ListFragment
         FragmentManager manager = getFragmentManager();
         List<Fragment> fragments = manager.getFragments();
 
-        Toast.makeText(mContext, "fragments in manager (before): " + fragments.size(),
-                Toast.LENGTH_SHORT).show();
-
         for(Fragment f : fragments) {
             if(f != null)
                 if (fragments.indexOf(f) > 0)
                     manager.beginTransaction().remove(f).commit();
         }
-
-        Toast.makeText(mContext, "fragments in manager (after): " + fragments.size(),
-                Toast.LENGTH_SHORT).show();
 
         return mView;
     }
@@ -270,6 +255,7 @@ public class PlantsFragment extends ListFragment
     public boolean onOptionsItemSelected(MenuItem item) {
 
         mBundle.putBoolean("isNew", true);
+        mBundle.remove("id");
 
         switch(item.getItemId()) {
             case R.id.add_plant:

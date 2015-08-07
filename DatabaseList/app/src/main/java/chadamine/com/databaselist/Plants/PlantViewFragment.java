@@ -108,20 +108,19 @@ public class PlantViewFragment extends Fragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
 
-        /*if(menu.size() > 0) {
-            menu.removeItem(R.id.add_plant);
-            menu.removeItem(R.id.save_plant);
-            menu.removeItem(R.id.action_settings);
-        }*/
-
         inflater.inflate(R.menu.menu_plant_view, menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        switch(item.getItemId()) {
+        /*int id = -1;
+        if(mBundle.containsKey("id"))
+                id = mBundle.getInt("id");*/
+
+        switch (item.getItemId()) {
             case R.id.edit_plant:
+                //mBundle.putInt("id", mPlant.getId() + 1);
                 mListener.onSwitchToNewFragment(mBundle);
         }
 
