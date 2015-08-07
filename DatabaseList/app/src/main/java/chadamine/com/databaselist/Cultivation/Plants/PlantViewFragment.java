@@ -64,6 +64,7 @@ public class PlantViewFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         mView = inflater.inflate(R.layout.fragment_plant_view, container, false);
         mContext = getActivity();
         mPlant = new Plant(mContext);
@@ -82,9 +83,6 @@ public class PlantViewFragment extends Fragment {
 
             mPlant.setViewItemContent(mView, mCursorPosition, mSortOrder);
         }
-
-       /* if(mIsNew)
-            mListener.onSwitchToNewFragment(mBundle);*/
 
         return mView;
     }
@@ -108,18 +106,20 @@ public class PlantViewFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
+
         inflater.inflate(R.menu.menu_plant_view, menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        switch(item.getItemId()) {
+        /*int id = -1;
+        if(mBundle.containsKey("id"))
+                id = mBundle.getInt("id");*/
+
+        switch (item.getItemId()) {
             case R.id.edit_plant:
-                /*getFragmentManager().beginTransaction()
-                        .replace(R.id.frame_plant_activity, PlantNewFragment.newInstance(mBundle, mListener))
-                        .addToBackStack("newPlant")
-                        .commit();*/
+                //mBundle.putInt("id", mPlant.getId() + 1);
                 mListener.onSwitchToNewFragment(mBundle);
         }
 

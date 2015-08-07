@@ -5,6 +5,8 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
@@ -23,6 +25,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
+import android.widget.Toast;
+
+import java.util.List;
 
 import chadamine.com.databaselist.Adapters.CustomFragmentPagerAdapter;
 import chadamine.com.databaselist.Adapters.CustomFragmentPagerAdapter.FirstPageFragmentListener;
@@ -64,14 +69,6 @@ public class PlantsFragment extends ListFragment
         return f;
     }
 
-    public static PlantsFragment newInstance(Bundle args, CustomFragmentPagerAdapter.FirstPageFragmentListener listener) {
-        PlantsFragment f = new PlantsFragment();
-        mListener = listener;
-        if(args != null)
-            f.setArguments(args);
-        return f;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,16 +80,33 @@ public class PlantsFragment extends ListFragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        if(mView == null)
-            mView = inflater.inflate(R.layout.fragment_plants, container, false);
+        mView = inflater.inflate(R.layout.fragment_plants, container, false);
         mContext = getActivity();
         mPlant = new Plant(mContext);
         mLoaderManager = this;
 
         getLoaderManager().initLoader(LIST_LOADER_ID, mBundle, this);
 
+
+        getFragmentManager().beginTransaction().remove(getFragmentManager().findFragmentByTag("plant_overview"));
+
         mListCursorAdapter = new ListCursorAdapter(mContext, null, 0, mPlant);
         setListAdapter(mListCursorAdapter);
+
+        if(getArguments() != null)
+            mBundle = getArguments();
+
+        //TODO: FIND BETTER WAY (VIEWPAGER?) TO HANDLE EXCESS FRAGMENTS
+        // HACK TO REMOVE FRAGMENTS LEFTOVER FROM OVERVIEW FIASCO
+
+        FragmentManager manager = getFragmentManager();
+        List<Fragment> fragments = manager.getFragments();
+
+        for(Fragment f : fragments) {
+            if(f != null)
+                if (fragments.indexOf(f) > 0)
+                    manager.beginTransaction().remove(f).commit();
+        }
 
         return mView;
     }
@@ -101,11 +115,7 @@ public class PlantsFragment extends ListFragment
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        /*if(savedInstanceState != null) {
-            mBundle = savedInstanceState;
-            if(mBundle.containsKey("sortSelection"))
-                mSortSelection = mBundle.getInt("sortSelection");
-        } else */if(getArguments() != null) {
+        if(getArguments() != null) {
             mBundle = getArguments();
             if(mBundle.containsKey("sortSelection"))
                 mSortSelection = mBundle.getInt("sortSelection");
@@ -231,38 +241,35 @@ public class PlantsFragment extends ListFragment
 
         mBundle.putInt("position", position);
         mBundle.putLong("id", id);
-        mBundle.putBoolean("hasPosition", true);
         mBundle.putBoolean("isNew", false);
         mBundle.putString("type", "plant");
 
-        //mListener.onSwitchToNextFragment(mBundle);
         getFragmentManager().beginTransaction()
-                .replace(R.id.frame_plant_activity, PlantOverviewFragment.newInstance(mBundle))
-                .addToBackStack("plant overview")
+                .replace(R.id.frame_plant_activity,
+                        PlantOverviewFragment.newInstance(mBundle), "plant_overview")
+                .addToBackStack("plant_overview")
                 .commit();
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        mBundle.putInt("position", -1); // position not wanted in this case
-        //mBundle.putBoolean("hasPosition", false);
         mBundle.putBoolean("isNew", true);
+        mBundle.remove("id");
 
         switch(item.getItemId()) {
             case R.id.add_plant:
+
                 getFragmentManager().beginTransaction()
                         .replace(R.id.frame_plant_activity,
-                                PlantNewFragment.newInstance(mBundle))
-                        .addToBackStack("newPlant")
+                                PlantOverviewFragment.newInstance(mBundle), "plant_overview")
+                        .addToBackStack("plant_overview")
                         .commit();
 
-                // USE LISTENER ONLY WHEN OVERVIEW IS ALREADY LOADED!!!
-                //mListener.onSwitchToNewFragment(mBundle);
                 break;
         }
 
-        return true;
+        return false;
     }
 
     @Override

@@ -7,6 +7,7 @@ import android.database.MergeCursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.ContextMenu;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -46,7 +47,8 @@ public class PlantNewFragment extends Fragment {
     private String mSortOrder;
     private long mId;
     private final String NEW = "New...";
-    private boolean mHasPosition;
+    private boolean mIsNew;
+    private Cursor mCursor;
 
     private EditText mHeightValue;
     private TextView mHeightExtraUnit;
@@ -66,12 +68,6 @@ public class PlantNewFragment extends Fragment {
         PlantNewFragment f = new PlantNewFragment();
         mListener = listener;
         f.setArguments(savedInstanceState);
-        return f;
-    }
-
-    public static PlantNewFragment newInstance(FirstPageFragmentListener listener) {
-        PlantNewFragment f = new PlantNewFragment();
-        mListener = listener;
         return f;
     }
 
@@ -96,15 +92,9 @@ public class PlantNewFragment extends Fragment {
 
         hideExtraUnits();
 
-       /* if(savedInstanceState != null) {
-            mBundle = savedInstanceState;
-
-        } else*/ if(getArguments() != null) {
+        if(getArguments() != null) {
 
             mBundle = getArguments();
-
-            if(mBundle.containsKey("hasPostion"))
-                mHasPosition = mBundle.getBoolean("hasPosition");
 
             if(mBundle.containsKey("position"))
                 mPosition = mBundle.getInt("position");
@@ -112,27 +102,40 @@ public class PlantNewFragment extends Fragment {
             if(mBundle.containsKey("sortOrder"))
                 mSortOrder = mBundle.getString("sortOrder");
 
+            if(mBundle.containsKey("isNew"))
+                mIsNew =  mBundle.getBoolean("isNew");
+
             if(mBundle.containsKey("id"))
                 mId = mBundle.getLong("id");
+            else
+                mId = mPlant.getId() + 1;
 
+        } else if (savedInstanceState != null) {
+
+            mBundle = savedInstanceState;
+
+            if (mBundle.containsKey("id"))
+                mId = mBundle.getInt("id");
         } else
+        // if somehow user got here from "nowhere"
             mBundle = new Bundle();
 
         String name = "";
 
-        //if(mPosition >= 0) {
-        if(mPosition >= 0) {
-            Cursor cursor = mContext.getContentResolver()
-                    .query(mPlant.getUri(), mPlant.getKeyIdArray(),
-                            null, null, mSortOrder);
+        mCursor = mContext.getContentResolver()
+                .query(mPlant.getUri(), mPlant.getKeyIdArray(),
+                        null, null, mSortOrder);
 
-            cursor.moveToPosition(mPosition);
+        //TODO: MOVE TO PLANT OBJECT
+        if(!mIsNew) {
+            mCursor.moveToPosition(mPosition);
 
-            name = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseSchema.Plants.KEY_NAME));
+            name = mCursor.getString(mCursor.getColumnIndexOrThrow(DatabaseSchema.Plants.KEY_NAME));
 
             ((EditText) mView.findViewById(R.id.edittext_plant_new_name))
                     .setText(name == null ? "" : name);
         }
+
         return mView;
     }
 
@@ -142,7 +145,6 @@ public class PlantNewFragment extends Fragment {
         mSubstrate = new Substrate(mContext);
         mHeightValue = (EditText) mView.findViewById(R.id.edittext_plant_new_height_2);
         mHeightExtraUnit = (TextView) mView.findViewById(R.id.textview_plant_new_height_2_unit);
-
     }
 
     private void setCalculatorImages() {
@@ -164,7 +166,6 @@ public class PlantNewFragment extends Fragment {
         super.onCreateContextMenu(menu, v, menuInfo);
         MenuInflater inflater = getActivity().getMenuInflater();
         //inflater.inflate(R.menu.menu_plant_age_calculator, menu);
-
     }
 
     @Override
@@ -175,6 +176,9 @@ public class PlantNewFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
+
+        //menu.clear();
+
         inflater.inflate(R.menu.menu_plant_new, menu);
     }
 
@@ -183,30 +187,29 @@ public class PlantNewFragment extends Fragment {
 
         switch(item.getItemId()) {
             case R.id.save_plant:
-
-                if(mPosition >= 0) {
-                //if(mHasPosition) {
+                if(!mIsNew) {
                     mPlant.setName(
                             ((EditText) mView.findViewById(R.id.edittext_plant_new_name)).getText()
                                     .toString());
+                    mPlant.update(mView, mBundle.getLong("id"));
 
-                    mPlant.update(mView, mId);
-                }
-                else
+                } else {
                     mPlant.saveFields(mView, false);
 
-                //getFragmentManager().popBackStack();
-                /*getFragmentManager().beginTransaction()
-                        .replace(R.id.frame_plant_activity, PlantsFragment.newInstance(mBundle))
-                        .commit();*/
+                    mBundle.putBoolean("isNew", false);
+                    mBundle.putInt("position", mCursor.getCount());
+                    mBundle.putLong("id", mId);
+                }
 
-                //TODO: MAKE THIS WORK AGAIN
-                //mListener.onSwitchToNewFragment(mBundle);
                 hideKeyboard();
+                mListener.onSwitchToNewFragment(mBundle);
+                Toast toast = new Toast(mContext);
+                toast.setGravity(Gravity.TOP, 0, 0);
+                toast.makeText(mContext, "Plant Saved", Toast.LENGTH_SHORT).show();
                 break;
         }
 
-        return true;
+        return false;
     }
 
     private void hideKeyboard() {
@@ -366,11 +369,18 @@ public class PlantNewFragment extends Fragment {
                 .insert(DatabaseSchema.Plants.CONTENT_URI, mPlant.getValues());
     }
 
+    public void backPressed() {
+        if(mIsNew)
+            getFragmentManager().popBackStack();
+        else
+            mListener.onSwitchToNewFragment(mBundle);
+    }
+
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(mBundle);
-        // outState = mBundle;
+        outState = mBundle;
 
-        Toast.makeText(mContext, "Plant Saved", Toast.LENGTH_SHORT).show();
+
     }
 }
