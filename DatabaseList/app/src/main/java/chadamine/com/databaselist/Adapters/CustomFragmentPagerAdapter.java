@@ -2,6 +2,7 @@ package chadamine.com.databaselist.Adapters;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -44,6 +45,11 @@ public class CustomFragmentPagerAdapter extends FragmentStatePagerAdapter {
 
             notifyDataSetChanged();
         }
+    }
+
+    @Override
+    public Parcelable saveState() {
+        return null;
     }
 
     @Override
@@ -106,14 +112,7 @@ public class CustomFragmentPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public int getItemPosition(Object object) {
-        /*if(object instanceof PlantsFragment && mFragmentAtPos0 instanceof PlantViewFragment)
-            return POSITION_NONE;
-        if(object instanceof PlantViewFragment && mFragmentAtPos0 instanceof PlantsFragment)
-            return POSITION_NONE;
-        if(object instanceof PlantsFragment && mFragmentAtPos0 instanceof PlantNewFragment)
-            return POSITION_NONE;
-        if(object instanceof PlantNewFragment && mFragmentAtPos0 instanceof PlantsFragment)
-            return POSITION_NONE;*/
+
         if(object instanceof PlantViewFragment && mFragmentAtPos0 instanceof PlantNewFragment)
             return POSITION_NONE;
         if(object instanceof PlantNewFragment && mFragmentAtPos0 instanceof PlantViewFragment)

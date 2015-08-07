@@ -71,12 +71,6 @@ public class PlantNewFragment extends Fragment {
         return f;
     }
 
-    public static PlantNewFragment newInstance(FirstPageFragmentListener listener) {
-        PlantNewFragment f = new PlantNewFragment();
-        mListener = listener;
-        return f;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -174,10 +168,7 @@ public class PlantNewFragment extends Fragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
 
-        if(menu.size() > 0) {
-            menu.removeItem(R.id.add_plant);
-            menu.removeItem(R.id.save_plant);
-        }
+        //menu.clear();
 
         inflater.inflate(R.menu.menu_plant_new, menu);
     }
@@ -202,9 +193,13 @@ public class PlantNewFragment extends Fragment {
                 mBundle.putBoolean("isNew", false);
 
                 hideKeyboard();
-                //mListener.onSwitchToNewFragment(mBundle);
+                mListener.onSwitchToNewFragment(mBundle);
                 //getActivity().supportInvalidateOptionsMenu();
-                getActivity().getSupportFragmentManager().popBackStack();
+                //getActivity().getSupportFragmentManager().popBackStack();
+                /*getFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.frame_plant_activity, new PlantsFragment()*//*.newInstance(mBundle)*//*)
+                        .commit();*/
                 break;
         }
 

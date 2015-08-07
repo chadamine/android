@@ -65,9 +65,10 @@ public class PlantViewFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-            mView = inflater.inflate(R.layout.fragment_plant_view, container, false);
-            mContext = getActivity();
-            mPlant = new Plant(mContext);
+
+        mView = inflater.inflate(R.layout.fragment_plant_view, container, false);
+        mContext = getActivity();
+        mPlant = new Plant(mContext);
 
         if(getArguments() != null) {
             mBundle = getArguments();
@@ -107,11 +108,11 @@ public class PlantViewFragment extends Fragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
 
-        if(menu.size() > 0) {
+        /*if(menu.size() > 0) {
             menu.removeItem(R.id.add_plant);
             menu.removeItem(R.id.save_plant);
             menu.removeItem(R.id.action_settings);
-        }
+        }*/
 
         inflater.inflate(R.menu.menu_plant_view, menu);
     }

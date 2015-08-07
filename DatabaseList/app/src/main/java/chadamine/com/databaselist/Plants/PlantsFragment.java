@@ -5,6 +5,8 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
@@ -23,6 +25,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
+import android.widget.Toast;
+
+import java.util.List;
 
 import chadamine.com.databaselist.Adapters.CustomFragmentPagerAdapter;
 import chadamine.com.databaselist.Adapters.CustomFragmentPagerAdapter.FirstPageFragmentListener;
@@ -92,11 +97,32 @@ public class PlantsFragment extends ListFragment
 
         getLoaderManager().initLoader(LIST_LOADER_ID, mBundle, this);
 
+
+        getFragmentManager().beginTransaction().remove(getFragmentManager().findFragmentByTag("plant_overview"));
+
         mListCursorAdapter = new ListCursorAdapter(mContext, null, 0, mPlant);
         setListAdapter(mListCursorAdapter);
 
         if(getArguments() != null)
             mBundle = getArguments();
+
+        //TODO: FIND BETTER WAY (VIEWPAGER?) TO HANDLE EXCESS FRAGMENTS
+        // HACK TO REMOVE FRAGMENTS LEFTOVER FROM OVERVIEW FIASCO
+
+        FragmentManager manager = getFragmentManager();
+        List<Fragment> fragments = manager.getFragments();
+
+        Toast.makeText(mContext, "fragments in manager (before): " + fragments.size(),
+                Toast.LENGTH_SHORT).show();
+
+        for(Fragment f : fragments) {
+            if(f != null)
+                if (fragments.indexOf(f) > 0)
+                    manager.beginTransaction().remove(f).commit();
+        }
+
+        Toast.makeText(mContext, "fragments in manager (after): " + fragments.size(),
+                Toast.LENGTH_SHORT).show();
 
         return mView;
     }
@@ -172,11 +198,6 @@ public class PlantsFragment extends ListFragment
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
 
-        if(menu.size() > 0) {
-            menu.removeItem(R.id.add_plant);
-            menu.removeItem(R.id.save_plant);
-        }
-
         inflater.inflate(R.menu.menu_plants, menu);
 
         Spinner spinner = (Spinner) MenuItemCompat.getActionView(menu.findItem(R.id.spinner_plant_menu));
@@ -238,7 +259,6 @@ public class PlantsFragment extends ListFragment
         mBundle.putLong("id", id);
         mBundle.putBoolean("isNew", false);
 
-        //mListener.onSwitchToNextFragment(mBundle);
         getFragmentManager().beginTransaction()
                 .replace(R.id.frame_plant_activity,
                         PlantOverviewFragment.newInstance(mBundle), "plant_overview")
@@ -249,7 +269,6 @@ public class PlantsFragment extends ListFragment
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        //mBundle.putInt("position", -1); // position not wanted in this case
         mBundle.putBoolean("isNew", true);
 
         switch(item.getItemId()) {
@@ -258,15 +277,13 @@ public class PlantsFragment extends ListFragment
                 getFragmentManager().beginTransaction()
                         .replace(R.id.frame_plant_activity,
                                 PlantOverviewFragment.newInstance(mBundle), "plant_overview")
-                        .addToBackStack("plant_new_fragment")
+                        .addToBackStack("plant_overview")
                         .commit();
 
-                // USE LISTENER ONLY WHEN OVERVIEW IS ALREADY LOADED!!!
-                //mListener.onSwitchToNewFragment(mBundle);
                 break;
         }
 
-        return true;
+        return false;
     }
 
     @Override

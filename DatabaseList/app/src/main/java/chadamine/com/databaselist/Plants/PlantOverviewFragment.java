@@ -12,8 +12,11 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.astuetz.PagerSlidingTabStrip;
+
+import java.util.List;
 
 import chadamine.com.databaselist.Adapters.CustomFragmentPagerAdapter;
 import chadamine.com.databaselist.R;
@@ -23,8 +26,6 @@ public class PlantOverviewFragment extends Fragment {
     private Context mContext;
     private View mView;
     private Bundle mBundle;
-    private static CustomFragmentPagerAdapter.FirstPageFragmentListener mListener;
-    private boolean mIsNew;
     private CustomFragmentPagerAdapter mCustomFragmentPagerAdapter;
     private ViewPager mViewPager;
 
@@ -56,18 +57,13 @@ public class PlantOverviewFragment extends Fragment {
 
         if(getArguments() != null) {
             mBundle = getArguments();
-            if(mBundle.containsKey("isNew"))
-                mIsNew = mBundle.getBoolean("isNew");
         }
 
         if(savedInstanceState != null) {
             mBundle = savedInstanceState;
-            if(mBundle.containsKey("isNew"))
-                mIsNew = mBundle.getBoolean("isNew");
         }
 
-        if(mCustomFragmentPagerAdapter == null)
-            mCustomFragmentPagerAdapter =
+        mCustomFragmentPagerAdapter =
                 new CustomFragmentPagerAdapter(getFragmentManager(), mContext, mBundle);
 
         PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) mView.findViewById(R.id.pager_sliding_tab_strip);
@@ -97,27 +93,13 @@ public class PlantOverviewFragment extends Fragment {
 
     }
 
-    /*public void changeMenu() {
-        FragmentManager mManager = getFragmentManager();
-        Fragment f = mManager.findFragmentByTag("plant_new_fragment");
-
-        if(f != null && f.isVisible()) {
-            mMenuItem.setVisible(false);
-        }
-    }*/
-
     public void backPressed() {
         if(mViewPager.getCurrentItem() == 0) {
             if (mCustomFragmentPagerAdapter.getItem(0) instanceof PlantNewFragment)
                 ((PlantNewFragment) mCustomFragmentPagerAdapter.getItem(0)).backPressed();
             else
-                getFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.frame_plant_activity, PlantsFragment.newInstance(mBundle))
-                        .addToBackStack("plant_list")
-                .commit();
-        }
-        else
+                getFragmentManager().popBackStack();
+        } else
             mViewPager.setCurrentItem(0);
     }
 }
