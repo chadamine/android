@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import java.util.ArrayList;
 import java.util.List;
 
-import chadamine.com.databaselist.Objects.Photo;
+import chadamine.com.databaselist.Photos.Photo;
 
 /**
  * Created by chadamine on 5/18/2015.

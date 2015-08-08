@@ -5,8 +5,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import chadamine.com.databaselist.Fragments.HomeFragment;
-
 
 public class HomeActivity extends ActionBarActivity {
 

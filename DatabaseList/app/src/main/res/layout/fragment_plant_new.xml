@@ -237,14 +237,14 @@
 		android:layout_marginLeft="10dp"
 		android:id="@+id/textview_plant_new_height_2_unit" />
 
-	<chadamine.com.databaselist.CustomWidgets.CustomSpinner
+	<chadamine.com.databaselist.Widgets.CustomSpinner
 		android:id="@+id/spinner_plant_new_substrate"
 		android:layout_height="wrap_content"
 		android:layout_width="wrap_content"
 		android:layout_toRightOf="@+id/textview_plant_new_substrate_title"
 		android:layout_alignBaseline="@+id/textview_plant_new_substrate_title" />
 
-	<chadamine.com.databaselist.CustomWidgets.CustomSpinner
+	<chadamine.com.databaselist.Widgets.CustomSpinner
 		android:id="@+id/spinner_plant_new_potsize"
 		android:layout_height="40dp"
 		android:layout_width="wrap_content"
