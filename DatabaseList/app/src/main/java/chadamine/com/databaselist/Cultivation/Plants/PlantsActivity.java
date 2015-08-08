@@ -24,7 +24,7 @@ public class PlantsActivity extends ActionBarActivity {
         setContentView(R.layout.activity_plants);
 
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.frame_plant_activity, new PlantsFragment())
+                .replace(R.id.frame_plant_activity, new PlantListFragment())
                 .commit();
 
         /*if (savedInstanceState != null) {

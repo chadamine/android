@@ -44,12 +44,12 @@ public class BaseListFragment extends ListFragment
     public Bundle mBundle;
     //private Bundle mLoaderBundle;
     public Context mContext;
-    public View mView;
+    //public View mView;
     public Uri mUri;
     public int mUrId;
     public DatabaseAdapter mDBObject;
     public ListCursorAdapter mListCursorAdapter;
-    private LoaderManager.LoaderCallbacks<Cursor> mLoaderManager;
+    private LoaderManager.LoaderCallbacks<Cursor> mLoaderManager = this;
     public int mSortSelection;
     public String mSortOrder;
     public BaseOverviewFragment mBaseFragment;
@@ -70,14 +70,10 @@ public class BaseListFragment extends ListFragment
     public @ArrayRes int mSortArray;
     public @IdRes int mSpinnerSort;
 
-    public void setUri(Uri uri) {
+/*    public void setUri(Uri uri) {
         mUri = uri;
         mUrId = DatabaseSchema.URI_MATCHER.match(mUri);
-    }
-
-    private Uri getUri() {
-        return mUri;
-    }
+    }*/
 
     private int getUrId() {
         return mUrId;
@@ -136,6 +132,7 @@ public class BaseListFragment extends ListFragment
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
         prepareList();
     }
 
