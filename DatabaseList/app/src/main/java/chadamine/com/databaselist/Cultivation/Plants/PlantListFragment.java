@@ -13,11 +13,12 @@ import chadamine.com.databaselist.R;
 
 public class PlantListFragment extends BaseListFragment {
 
-    public PlantListFragment() {}
+    public PlantListFragment() {
+
+    }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
 
         mContext = getActivity();
         mDBObject = new Plant(mContext);
@@ -30,6 +31,13 @@ public class PlantListFragment extends BaseListFragment {
         mActionMenu = R.menu.menu_plants_action;
         mSortArray = R.array.plant_sort_items;
         mSpinnerSort = R.id.spinner_plant_menu;
+
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
 
         if(getArguments() != null)
             mBundle = getArguments();

@@ -42,9 +42,7 @@ public class BaseListFragment extends ListFragment
         implements LoaderManager.LoaderCallbacks<Cursor> {
 
     public Bundle mBundle;
-    //private Bundle mLoaderBundle;
     public Context mContext;
-    //public View mView;
     public Uri mUri;
     public int mUrId;
     public DatabaseAdapter mDBObject;
@@ -54,26 +52,15 @@ public class BaseListFragment extends ListFragment
     public String mSortOrder;
     public BaseOverviewFragment mBaseFragment;
 
-    private final String KEY_LAYOUT = "layout";
-    private final String KEY_MENU = "menu";
-    private final String KEY_ACTION_MENU = "action_menu";
-    private final String KEY_URID = "urid";
     private final String KEY_SORT_SELECTION = "sort_selection";
-    private final String KEY_DELETE_ITEM = "delete_item";
     private final String KEY_SORT_ORDER = "sort_order";
 
     public @LayoutRes int mLayout;
-    public @LayoutRes int mViewId;
     public @MenuRes int mMenu;
     public @MenuRes int mActionMenu;
     public @IdRes int mDelete;
     public @ArrayRes int mSortArray;
     public @IdRes int mSpinnerSort;
-
-/*    public void setUri(Uri uri) {
-        mUri = uri;
-        mUrId = DatabaseSchema.URI_MATCHER.match(mUri);
-    }*/
 
     private int getUrId() {
         return mUrId;
@@ -87,32 +74,20 @@ public class BaseListFragment extends ListFragment
         return f;
     }
 
-    public BaseListFragment() {}
+    public BaseListFragment() {
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        mUrId = DatabaseSchema.URI_MATCHER.match(mUri);
+
         if (getArguments() != null) {
             mBundle = getArguments();
 
-            /*if(mBundle.containsKey(KEY_LAYOUT))
-                mLayout = mBundle.getInt(KEY_LAYOUT);
-
-            if(mBundle.containsKey(KEY_URID))
-                mUrId = mBundle.getInt(KEY_URID);*/
-
             if(mBundle.containsKey(KEY_SORT_SELECTION))
                 mSortSelection = mBundle.getInt(KEY_SORT_SELECTION);
-
-            /*if(mBundle.containsKey(KEY_MENU))
-                mMenu = mBundle.getInt(KEY_MENU);
-
-            if(mBundle.containsKey(KEY_ACTION_MENU))
-                mActionMenu = mBundle.getInt(KEY_ACTION_MENU);
-
-            if(mBundle.containsKey(KEY_DELETE_ITEM))
-                mDelete = mBundle.getInt(KEY_DELETE_ITEM);*/
         }
 
         setHasOptionsMenu(true);
