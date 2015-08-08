@@ -11,12 +11,6 @@ import chadamine.com.databaselist.R;
 
 public class PlantsActivity extends ActionBarActivity {
 
-    private final String PLANTS_FRAGMENT_TAG = "plantsFragmentTag";
-    private PlantOverviewFragment mPlantOverviewFragment;
-    private PagerAdapter mCustomFragmentPagerAdapter;
-
-    private ViewPager mViewPager;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,21 +20,6 @@ public class PlantsActivity extends ActionBarActivity {
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.frame_plant_activity, new PlantListFragment())
                 .commit();
-
-        /*if (savedInstanceState != null) {
-            mPlantOverviewFragment = (PlantOverviewFragment) getSupportFragmentManager()
-                    .findFragmentByTag(PLANTS_FRAGMENT_TAG);
-
-        } else {
-
-            if (mPlantOverviewFragment == null) {
-                mPlantOverviewFragment = new PlantOverviewFragment();
-            }*/
-
-
-        //}
-
-
     }
 
     @Override
@@ -57,11 +36,6 @@ public class PlantsActivity extends ActionBarActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-
-    //mCustomFragmentPagerAdapter.FirstPageListener mListener = new FirstPageListener();
-    /*getSupportFragmentManager().beginTransaction()
-            .replace(R.id.frame_plant_activity, new PlantsFragment())
-            .commit();*/
    }
 }
 

@@ -13,9 +13,7 @@ import chadamine.com.databaselist.R;
 
 public class PlantListFragment extends BaseListFragment {
 
-    public PlantListFragment() {
-
-    }
+    public PlantListFragment() {}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -47,7 +45,7 @@ public class PlantListFragment extends BaseListFragment {
         else
             mBundle = new Bundle();
 
-        mBaseFragment = BaseOverviewFragment.newInstance(mBundle);
+        mBaseFragment = PlantNewOverviewFragment.newInstance(mBundle);
 
         View view = inflateView(mLayout, inflater, container);
         return view;

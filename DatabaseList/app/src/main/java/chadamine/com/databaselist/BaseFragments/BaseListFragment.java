@@ -97,8 +97,6 @@ public class BaseListFragment extends ListFragment
     protected View inflateView(@LayoutRes int resId, LayoutInflater inflater, ViewGroup container) {
         View view = inflater.inflate(resId, container, false);
 
-        FrameLayout layout = (FrameLayout) view.findViewById(R.id.frame_base_list);
-
         prepareView();
         trimFragmentManager();
 
