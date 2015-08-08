@@ -37,8 +37,6 @@ public class DatabaseSchema {
             Plants.TABLE_CREATE,
             Products.TABLE_CREATE,
             Substrates.TABLE_CREATE
-
-            // TODO: add all tables
     };
 
     public static final int JOURNALS = 1;
@@ -64,8 +62,6 @@ public class DatabaseSchema {
 
     public static final int SUBSTRATES = 11;
     public static final int SUBSTRATE_ID = 12;
-
-    // TODO: ADD REMAINING TABLES
 
     public static final UriMatcher URI_MATCHER = new UriMatcher(UriMatcher.NO_MATCH);
 
@@ -93,7 +89,6 @@ public class DatabaseSchema {
 
         URI_MATCHER.addURI(AUTHORITY, NutrientConcentrations.TABLE_NAME, NUTRIENT_CONCENTRATIONS);
         URI_MATCHER.addURI(AUTHORITY, NutrientConcentrations.TABLE_NAME + "/#", NUTRIENT_CONCENTRATION_ID);
-        // TODO: ADD REMAINING TABLES TO URI_MATCHER
     }
 
     public static final class ChemicalCompounds implements BaseColumns {

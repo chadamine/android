@@ -3,6 +3,7 @@ package chadamine.com.databaselist.Cultivation.Plants;
 import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.annotation.MenuRes;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -32,6 +33,7 @@ import java.util.List;
 import chadamine.com.databaselist.Adapters.CustomFragmentPagerAdapter;
 import chadamine.com.databaselist.Adapters.CustomFragmentPagerAdapter.FirstPageFragmentListener;
 import chadamine.com.databaselist.Adapters.ListCursorAdapter;
+import chadamine.com.databaselist.Database.DatabaseSchema;
 import chadamine.com.databaselist.Database.DatabaseSchema.Plants;
 import chadamine.com.databaselist.R;
 
@@ -57,8 +59,8 @@ public class PlantsFragment extends ListFragment
     private ListCursorAdapter mListCursorAdapter;
 
     private static final int LIST_LOADER_ID = 0;
-    private static final String SORT_DESC = " DESC";
-    private static final String SORT_ASC = " ASC";
+    private static final String SORT_DESC = DatabaseSchema.SORT_DESC;
+    private static final String SORT_ASC = DatabaseSchema.SORT_ASC;
 
    public PlantsFragment() { }
 
@@ -86,7 +88,6 @@ public class PlantsFragment extends ListFragment
         mLoaderManager = this;
 
         getLoaderManager().initLoader(LIST_LOADER_ID, mBundle, this);
-
 
         getFragmentManager().beginTransaction().remove(getFragmentManager().findFragmentByTag("plant_overview"));
 
