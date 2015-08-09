@@ -25,6 +25,8 @@ public class CustomFragmentPagerAdapter extends FragmentPagerAdapter {
     private Bundle mBundle;
     public FirstPageListener mListener = new FirstPageListener();
     private static final String KEY_TYPE = "type";
+    private static final String KEY_IS_NEW = "is_new";
+    //private static final String
     private String mType;
     private boolean mIsNew;
 
@@ -38,8 +40,8 @@ public class CustomFragmentPagerAdapter extends FragmentPagerAdapter {
 
             if (mBundle.containsKey(KEY_TYPE))
                 mType = mBundle.getString(KEY_TYPE);
-            if (mBundle.containsKey("isNew"))
-                mIsNew = mBundle.getBoolean("isNew");
+            if (mBundle.containsKey(KEY_IS_NEW))
+                mIsNew = mBundle.getBoolean(KEY_IS_NEW);
         }
         else
             mBundle = new Bundle();

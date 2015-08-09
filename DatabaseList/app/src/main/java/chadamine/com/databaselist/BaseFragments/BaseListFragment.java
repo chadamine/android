@@ -35,32 +35,46 @@ import java.util.List;
 
 import chadamine.com.databaselist.Adapters.DatabaseAdapter;
 import chadamine.com.databaselist.Adapters.ListCursorAdapter;
+import chadamine.com.databaselist.Cultivation.Plants.PlantNewOverviewFragment;
 import chadamine.com.databaselist.Database.DatabaseSchema;
 import chadamine.com.databaselist.R;
 
 public class BaseListFragment extends ListFragment
         implements LoaderManager.LoaderCallbacks<Cursor> {
 
-    public Bundle mBundle;
-    public Context mContext;
-    public Uri mUri;
-    public int mUrId;
-    public DatabaseAdapter mDBObject;
-    public ListCursorAdapter mListCursorAdapter;
-    private LoaderManager.LoaderCallbacks<Cursor> mLoaderManager = this;
-    public int mSortSelection;
-    public String mSortOrder;
     public BaseOverviewFragment mBaseFragment;
 
-    private final String KEY_SORT_SELECTION = "sort_selection";
-    private final String KEY_SORT_ORDER = "sort_order";
+    public Bundle mBundle;
+    public Context mContext;
+    public DatabaseAdapter mDBObject;
+
+    public int mUrId;
+    public int mSortSelection;
 
     public @LayoutRes int mLayout;
     public @MenuRes int mMenu;
     public @MenuRes int mActionMenu;
     public @IdRes int mDelete;
+    public @IdRes int mAdd;
     public @ArrayRes int mSortArray;
     public @IdRes int mSpinnerSort;
+    public @IdRes int mActivityFrame;
+
+    public ListCursorAdapter mListCursorAdapter;
+    private LoaderManager.LoaderCallbacks<Cursor> mLoaderManager = this;
+
+    public String mAddBackstack;
+    public String mSortOrder;
+    public String mSingular;
+    public String mPlural;
+
+    public final String KEY_SORT_SELECTION = "sort_selection";
+    public final String KEY_SORT_ORDER = "sort_order";
+    public final String KEY_POSITION = "position";
+    public final String KEY_ID = "id";
+    public final String KEY_IS_NEW = "is_new";
+
+    public Uri mUri;
 
     private int getUrId() {
         return mUrId;
@@ -117,29 +131,37 @@ public class BaseListFragment extends ListFragment
         Spinner spinner = (Spinner) MenuItemCompat
                 .getActionView(menu.findItem(mSpinnerSort));
         prepareSpinner(spinner);
-
     }
-
+/*
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        return super.onOptionsItemSelected(item);
-    }
 
-    @Override
+        mBundle.putBoolean(KEY_IS_NEW, true);
+        mBundle.remove(KEY_ID);
+
+        if(item.getItemId() == mAdd) {
+            getFragmentManager().beginTransaction()
+                    .replace(mActivityFrame, mBaseFragment.newInstance(mBundle), mAddBackstack)
+                    .addToBackStack(mAddBackstack)
+                    .commit();
+        }
+
+        return false;
+    }*/
+
+    /*@Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
 
-        mBundle.putInt("position", position);
-        mBundle.putLong("id", id);
-        mBundle.putBoolean("isNew", false);
-        mBundle.putString("type", "plant");
+        mBundle.putInt(KEY_POSITION, position);
+        mBundle.putLong(KEY_ID, id);
+        mBundle.putBoolean(KEY_IS_NEW, false);
 
         getFragmentManager().beginTransaction()
-                .replace(R.id.frame_plant_activity,
-                        mBaseFragment.newInstance(mBundle), "plant_overview")
-                .addToBackStack("plant_overview")
+                .replace(mActivityFrame, mBaseFragment.newInstance(mBundle), mAddBackstack)
+                .addToBackStack(mAddBackstack)
                 .commit();
-    }
+    }*/
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
@@ -166,7 +188,7 @@ public class BaseListFragment extends ListFragment
     private void prepareView() {
         getLoaderManager().initLoader(getUrId(), mBundle, this);
 
-        getFragmentManager().beginTransaction().remove(getFragmentManager().findFragmentByTag("plant_overview"));
+        getFragmentManager().beginTransaction().remove(getFragmentManager().findFragmentByTag(mAddBackstack));
 
         mListCursorAdapter = new ListCursorAdapter(mContext, null, 0, mDBObject);
         setListAdapter(mListCursorAdapter);
@@ -232,7 +254,7 @@ public class BaseListFragment extends ListFragment
 
                 mListCursorAdapter.toggleSelection(position);
                 String plurality = mListCursorAdapter
-                        .getSelectedItems().size() == 1 ? " Plant Selected" : " Plants Selected";
+                        .getSelectedItems().size() == 1 ? " " + mSingular + " Selected" : " " + mPlural + " Selected";
                 mode.setTitle(getListView().getCheckedItemCount() + plurality);
             }
 
@@ -280,8 +302,8 @@ public class BaseListFragment extends ListFragment
                         break;
                 }
 
-                mBundle.putString("sortOrder", mSortOrder);
-                mBundle.putInt("sortSelection", mSortSelection);
+                mBundle.putString(KEY_SORT_ORDER, mSortOrder);
+                mBundle.putInt(KEY_SORT_SELECTION, mSortSelection);
 
                 getLoaderManager().restartLoader(getUrId(), mBundle, mLoaderManager);
             }

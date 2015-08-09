@@ -1,11 +1,9 @@
 package chadamine.com.databaselist.Cultivation.Plants;
 
 import android.os.Bundle;
-import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import chadamine.com.databaselist.BaseFragments.BaseOverviewFragment;
 import chadamine.com.databaselist.R;
@@ -13,6 +11,13 @@ import chadamine.com.databaselist.R;
 public class PlantNewOverviewFragment extends BaseOverviewFragment {
 
     public PlantNewOverviewFragment() {
+    }
+
+    public static PlantNewOverviewFragment newInstance(Bundle args) {
+        PlantNewOverviewFragment f = new PlantNewOverviewFragment();
+        if(args != null)
+            f.setArguments(args);
+        return f;
     }
 
     @Override
@@ -26,6 +31,8 @@ public class PlantNewOverviewFragment extends BaseOverviewFragment {
         else
             mBundle = new Bundle();
 
+        mBundle.putString("type", "plant");
+        mContext = getActivity();
         mMenu = R.menu.menu_plants_activity;
         mEdit = R.id.edit_plant;
         super.onCreate(savedInstanceState);
@@ -37,6 +44,4 @@ public class PlantNewOverviewFragment extends BaseOverviewFragment {
 
         return inflateView(R.layout.fragment_plant_overview, inflater, container, mBundle);
     }
-
-
 }

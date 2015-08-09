@@ -1,5 +1,6 @@
 package chadamine.com.databaselist.BaseFragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
@@ -23,6 +24,7 @@ public class BaseOverviewFragment extends Fragment {
     public Bundle mBundle;
     public @MenuRes int mMenu;
     public @IdRes int mEdit;
+    public Context mContext;
 
     public BaseOverviewFragment() {}
 
@@ -43,9 +45,26 @@ public class BaseOverviewFragment extends Fragment {
 
     public View inflateView(@LayoutRes int layout, LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        if(savedInstanceState != null)
+
+        if(getArguments() != null)
+            mBundle = getArguments();
+        else if(savedInstanceState != null)
             mBundle = savedInstanceState;
-        return prepareView(inflater.inflate(layout, container, false));
+        else
+            mBundle = new Bundle();
+
+        View view = inflater.inflate(layout, container, false);
+        CustomFragmentPagerAdapter customFragmentPagerAdapter =
+                new CustomFragmentPagerAdapter(getFragmentManager(), mContext, mBundle);
+
+        PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) view.findViewById(R.id.pager_sliding_tab_strip);
+
+        ViewPager viewPager = (ViewPager) view.findViewById(R.id.pager);
+        viewPager.setAdapter(customFragmentPagerAdapter);
+
+        tabs.setViewPager(viewPager);
+
+        return view;
     }
 
     @Override
@@ -56,24 +75,5 @@ public class BaseOverviewFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         return super.onOptionsItemSelected(item);
-    }
-
-    private View prepareView(View view) {
-
-        CustomFragmentPagerAdapter customFragmentPagerAdapter;
-
-        // TODO: USE URI INSTEAD
-        mBundle.putString("type", "plant");
-        customFragmentPagerAdapter =
-                new CustomFragmentPagerAdapter(getFragmentManager(), getActivity(), mBundle);
-
-        PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) view.findViewById(R.id.pager_sliding_tab_strip);
-
-        ViewPager viewPager = (ViewPager) view.findViewById(R.id.pager);
-        viewPager.setAdapter(customFragmentPagerAdapter);
-
-        tabs.setViewPager(viewPager);
-
-        return view;
     }
 }
