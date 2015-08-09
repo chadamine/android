@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import chadamine.com.databaselist.Adapters.CustomFragmentPagerAdapter.FirstPageFragmentListener;
+import chadamine.com.databaselist.BaseFragments.BaseListFragment;
 import chadamine.com.databaselist.R;
 
 public class PlantViewFragment extends Fragment {
@@ -72,14 +73,14 @@ public class PlantViewFragment extends Fragment {
         if(getArguments() != null) {
             mBundle = getArguments();
 
-            if(mBundle.containsKey("sortOrder"))
-                mSortOrder = mBundle.getString("sortOrder");
+            if(mBundle.containsKey(BaseListFragment.KEY_SORT_ORDER))
+                mSortOrder = mBundle.getString(BaseListFragment.KEY_SORT_ORDER);
 
-            if(mBundle.containsKey("position"))
-                mCursorPosition = mBundle.getInt("position");
+            if(mBundle.containsKey(BaseListFragment.KEY_POSITION))
+                mCursorPosition = mBundle.getInt(BaseListFragment.KEY_POSITION);
 
-            if(mBundle.containsKey("isNew"))
-                mIsNew = mBundle.getBoolean("isNew");
+            if(mBundle.containsKey(BaseListFragment.KEY_IS_NEW))
+                mIsNew = mBundle.getBoolean(BaseListFragment.KEY_IS_NEW);
 
             mPlant.setViewItemContent(mView, mCursorPosition, mSortOrder);
         }

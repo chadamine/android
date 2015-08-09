@@ -30,6 +30,7 @@ import chadamine.com.databaselist.Adapters.CustomFragmentPagerAdapter.FirstPageF
 import chadamine.com.databaselist.Adapters.SpinnerCursorAdapter;
 import chadamine.com.databaselist.Widgets.CustomSpinner;
 import chadamine.com.databaselist.Database.DatabaseSchema;
+import chadamine.com.databaselist.BaseFragments.*;
 import chadamine.com.databaselist.Dialogs.PlantAgeDialogFragment;
 import chadamine.com.databaselist.Cultivation.Pots.PotsizesNewFragment;
 import chadamine.com.databaselist.Cultivation.Substrates.SubstrateNewFragment;
@@ -96,17 +97,17 @@ public class PlantNewFragment extends Fragment {
 
             mBundle = getArguments();
 
-            if(mBundle.containsKey("position"))
-                mPosition = mBundle.getInt("position");
+            if(mBundle.containsKey(BaseListFragment.KEY_POSITION))
+                mPosition = mBundle.getInt(BaseListFragment.KEY_POSITION);
 
-            if(mBundle.containsKey("sortOrder"))
-                mSortOrder = mBundle.getString("sortOrder");
+            if(mBundle.containsKey(BaseListFragment.KEY_SORT_ORDER))
+                mSortOrder = mBundle.getString(BaseListFragment.KEY_SORT_ORDER);
 
-            if(mBundle.containsKey("isNew"))
-                mIsNew =  mBundle.getBoolean("isNew");
+            if(mBundle.containsKey(BaseListFragment.KEY_IS_NEW))
+                mIsNew =  mBundle.getBoolean(BaseListFragment.KEY_IS_NEW);
 
-            if(mBundle.containsKey("id"))
-                mId = mBundle.getLong("id");
+            if(mBundle.containsKey(BaseListFragment.KEY_ID))
+                mId = mBundle.getLong(BaseListFragment.KEY_ID);
             else
                 mId = mPlant.getId() + 1;
 
@@ -114,8 +115,8 @@ public class PlantNewFragment extends Fragment {
 
             mBundle = savedInstanceState;
 
-            if (mBundle.containsKey("id"))
-                mId = mBundle.getInt("id");
+            if (mBundle.containsKey(BaseListFragment.KEY_ID))
+                mId = mBundle.getInt(BaseListFragment.KEY_ID);
         } else
         // if somehow user got here from "nowhere"
             mBundle = new Bundle();

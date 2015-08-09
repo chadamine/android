@@ -68,11 +68,11 @@ public class BaseListFragment extends ListFragment
     public String mSingular;
     public String mPlural;
 
-    public final String KEY_SORT_SELECTION = "sort_selection";
-    public final String KEY_SORT_ORDER = "sort_order";
-    public final String KEY_POSITION = "position";
-    public final String KEY_ID = "id";
-    public final String KEY_IS_NEW = "is_new";
+    public static final String KEY_SORT_SELECTION = "sort_selection";
+    public static final String KEY_SORT_ORDER = "sort_order";
+    public static final String KEY_POSITION = "position";
+    public static final String KEY_ID = "id";
+    public static final String KEY_IS_NEW = "is_new";
 
     public Uri mUri;
 
@@ -132,36 +132,6 @@ public class BaseListFragment extends ListFragment
                 .getActionView(menu.findItem(mSpinnerSort));
         prepareSpinner(spinner);
     }
-/*
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        mBundle.putBoolean(KEY_IS_NEW, true);
-        mBundle.remove(KEY_ID);
-
-        if(item.getItemId() == mAdd) {
-            getFragmentManager().beginTransaction()
-                    .replace(mActivityFrame, mBaseFragment.newInstance(mBundle), mAddBackstack)
-                    .addToBackStack(mAddBackstack)
-                    .commit();
-        }
-
-        return false;
-    }*/
-
-    /*@Override
-    public void onListItemClick(ListView l, View v, int position, long id) {
-        super.onListItemClick(l, v, position, id);
-
-        mBundle.putInt(KEY_POSITION, position);
-        mBundle.putLong(KEY_ID, id);
-        mBundle.putBoolean(KEY_IS_NEW, false);
-
-        getFragmentManager().beginTransaction()
-                .replace(mActivityFrame, mBaseFragment.newInstance(mBundle), mAddBackstack)
-                .addToBackStack(mAddBackstack)
-                .commit();
-    }*/
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
