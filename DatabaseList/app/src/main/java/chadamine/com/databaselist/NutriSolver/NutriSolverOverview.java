@@ -47,10 +47,10 @@ public class NutriSolverOverview extends Fragment {
         mBundle.putString(KEY_TYPE, VALUE_TYPE);
 
         View view = inflater.inflate(R.layout.fragment_nutrisolver_overview, container, false);
-        CustomFragmentPagerAdapter adapter = new CustomFragmentPagerAdapter(getFragmentManager(), getActivity(), mBundle);
+        //CustomFragmentPagerAdapter adapter = new CustomFragmentPagerAdapter(getFragmentManager(), getActivity(), mBundle);
         PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) view.findViewById(R.id.pager_sliding_tab_strip_nutrisolver);
         ViewPager pager = (ViewPager) view.findViewById(R.id.pager_nutrisolver);
-        pager.setAdapter(adapter);
+        //pager.setAdapter(adapter);
         tabs.setViewPager(pager);
 
         return view;

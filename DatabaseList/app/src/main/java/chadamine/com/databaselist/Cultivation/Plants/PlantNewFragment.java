@@ -28,12 +28,11 @@ import java.util.List;
 
 import chadamine.com.databaselist.Adapters.CustomFragmentPagerAdapter.FirstPageFragmentListener;
 import chadamine.com.databaselist.Adapters.SpinnerCursorAdapter;
+import chadamine.com.databaselist.BaseFragments.SortableListFragment;
 import chadamine.com.databaselist.Widgets.CustomSpinner;
 import chadamine.com.databaselist.Database.DatabaseSchema;
-import chadamine.com.databaselist.BaseFragments.*;
 import chadamine.com.databaselist.Dialogs.PlantAgeDialogFragment;
 import chadamine.com.databaselist.Cultivation.Pots.PotsizesNewFragment;
-import chadamine.com.databaselist.Cultivation.Substrates.SubstrateNewFragment;
 import chadamine.com.databaselist.Cultivation.Substrate;
 import chadamine.com.databaselist.R;
 
@@ -97,17 +96,17 @@ public class PlantNewFragment extends Fragment {
 
             mBundle = getArguments();
 
-            if(mBundle.containsKey(BaseListFragment.KEY_POSITION))
-                mPosition = mBundle.getInt(BaseListFragment.KEY_POSITION);
+            if(mBundle.containsKey(SortableListFragment.KEY_POSITION))
+                mPosition = mBundle.getInt(SortableListFragment.KEY_POSITION);
 
-            if(mBundle.containsKey(BaseListFragment.KEY_SORT_ORDER))
-                mSortOrder = mBundle.getString(BaseListFragment.KEY_SORT_ORDER);
+            if(mBundle.containsKey(SortableListFragment.KEY_SORT_ORDER))
+                mSortOrder = mBundle.getString(SortableListFragment.KEY_SORT_ORDER);
 
-            if(mBundle.containsKey(BaseListFragment.KEY_IS_NEW))
-                mIsNew =  mBundle.getBoolean(BaseListFragment.KEY_IS_NEW);
+            if(mBundle.containsKey(SortableListFragment.KEY_IS_NEW))
+                mIsNew =  mBundle.getBoolean(SortableListFragment.KEY_IS_NEW);
 
-            if(mBundle.containsKey(BaseListFragment.KEY_ID))
-                mId = mBundle.getLong(BaseListFragment.KEY_ID);
+            if(mBundle.containsKey(SortableListFragment.KEY_ID))
+                mId = mBundle.getLong(SortableListFragment.KEY_ID);
             else
                 mId = mPlant.getId() + 1;
 
@@ -115,8 +114,8 @@ public class PlantNewFragment extends Fragment {
 
             mBundle = savedInstanceState;
 
-            if (mBundle.containsKey(BaseListFragment.KEY_ID))
-                mId = mBundle.getInt(BaseListFragment.KEY_ID);
+            if (mBundle.containsKey(SortableListFragment.KEY_ID))
+                mId = mBundle.getInt(SortableListFragment.KEY_ID);
         } else
         // if somehow user got here from "nowhere"
             mBundle = new Bundle();
@@ -170,16 +169,8 @@ public class PlantNewFragment extends Fragment {
     }
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-    }
-
-    @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-
-        //menu.clear();
-
         inflater.inflate(R.menu.menu_plant_new, menu);
     }
 
@@ -221,6 +212,7 @@ public class PlantNewFragment extends Fragment {
 
     private void setSpinnerAgeUnits() {
 
+        // TODO: USE ARRAY RESOURCE FILE
         List<String> ageUnits = new ArrayList<>();
         ageUnits.add("sec");
         ageUnits.add("min");
@@ -250,8 +242,9 @@ public class PlantNewFragment extends Fragment {
     }
 
     private void setSpinnerHeightUnits() {
-        List<String> list = new ArrayList<String>();
 
+        // TODO: USE ARRAY RESOURCE FILE
+        List<String> list = new ArrayList<String>();
         list.add("mm");
         list.add("cm");
         list.add("in");
@@ -271,13 +264,10 @@ public class PlantNewFragment extends Fragment {
                 } else {
                     hideExtraUnits();
                 }
-
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
+            public void onNothingSelected(AdapterView<?> parent) {}
         });
     }
 
@@ -294,10 +284,10 @@ public class PlantNewFragment extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
                 if (position == 0) {
-                    getFragmentManager().beginTransaction()
+                    /*getFragmentManager().beginTransaction()
                             .replace(R.id.frame_plant_activity, new SubstrateNewFragment())
                             .addToBackStack("newSubstrate")
-                            .commit();
+                            .commit();*/
                 }
             }
 

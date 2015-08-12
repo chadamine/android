@@ -6,16 +6,14 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
-import chadamine.com.databaselist.BaseFragments.BaseListFragment;
+import chadamine.com.databaselist.BaseFragments.SortableListFragment;
 import chadamine.com.databaselist.Database.DatabaseSchema.Plants;
 import chadamine.com.databaselist.R;
 
-public class PlantListFragment extends BaseListFragment {
-
-    private final String BACKSTACK_LABEL = "plant_overview";
-
+public class PlantListFragment extends SortableListFragment {
 
     public PlantListFragment() {}
 
@@ -32,6 +30,7 @@ public class PlantListFragment extends BaseListFragment {
 
         mSingular = "Plant";
         mPlural = "Plants";
+        mAddBackStack = "plant_overview";
         mSortSelection = -1;
         mMenu = R.menu.menu_plants;
         mActionMenu = R.menu.menu_plants_action;
@@ -55,8 +54,17 @@ public class PlantListFragment extends BaseListFragment {
             mBundle = new Bundle();
 
         View view = inflateView(mLayout, inflater, container);
+        ((ListView)view.findViewById(R.id.list)).setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                onListItemClick(position, id);
+            }
+        });
+
         return view;
     }
+
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -71,8 +79,7 @@ public class PlantListFragment extends BaseListFragment {
         return false;
     }
 
-    @Override
-    public void onListItemClick(ListView l, View v, int position, long id) {
+    public void onListItemClick(int position, long id) {
 
         mBundle.putInt(KEY_POSITION, position);
         mBundle.putLong(KEY_ID, id);
@@ -83,8 +90,8 @@ public class PlantListFragment extends BaseListFragment {
 
     private void replaceFragment() {
         getFragmentManager().beginTransaction()
-                .replace(mActivityFrame, PlantNewOverviewFragment.newInstance(mBundle), BACKSTACK_LABEL)
-                .addToBackStack(BACKSTACK_LABEL)
+                .replace(mActivityFrame, PlantNewOverviewFragment.newInstance(mBundle))
+                .addToBackStack(mAddBackStack)
                 .commit();
     }
 }

@@ -1,29 +1,23 @@
 package chadamine.com.databaselist.Cultivation.Plants;
 
-import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import chadamine.com.databaselist.Adapters.ListCursorAdapter;
+import chadamine.com.databaselist.BaseFragments.SortableListFragment;
+import chadamine.com.databaselist.Database.DatabaseSchema;
 import chadamine.com.databaselist.R;
 
-public class PlantHistoriesFragment extends ListFragment implements LoaderManager.LoaderCallbacks<Cursor> {
-
-    private OnFragmentInteractionListener mListener;
-    private AbsListView mListView;
-    private ListAdapter mAdapter;
+public class PlantHistoriesFragment extends SortableListFragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
     private Context mContext;
     private Plant mPlant;
@@ -48,21 +42,16 @@ public class PlantHistoriesFragment extends ListFragment implements LoaderManage
         return f;
     }
 
-    public PlantHistoriesFragment() {}
+    public PlantHistoriesFragment() {
+        mAddBackStack = "plant_histories";
+        mUri = DatabaseSchema.PlantHistories.CONTENT_URI;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setHasOptionsMenu(true);
-        setRetainInstance(true);
-        /*if (getArguments() != null) {
-            return;
-        }
 
-        // TODO: Change Adapter to display your content
-        mAdapter = new ArrayAdapter<DummyContent.DummyItem>(getActivity(),
-                android.R.layout.simple_list_item_1, android.R.id.text1, DummyContent.ITEMS);*/
     }
 
     @Override
@@ -73,30 +62,9 @@ public class PlantHistoriesFragment extends ListFragment implements LoaderManage
         return view;
     }
 
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-       /* try {
-            mListener = (OnFragmentInteractionListener) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }*/
-    }
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
-    @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
-        /*if (null != mListener) {
-            // Notify the active callbacks interface (the activity, if the
-            // fragment is attached to one) that an item has been selected.
-            mListener.onFragmentInteraction(DummyContent.ITEMS.get(position).id);
-        }*/
+
     }
 
     public void setEmptyText(CharSequence emptyText) {
@@ -126,11 +94,6 @@ public class PlantHistoriesFragment extends ListFragment implements LoaderManage
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
         mListCursorAdapter.swapCursor(null);
-    }
-
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        public void onFragmentInteraction(String id);
     }
 
 }

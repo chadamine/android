@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import chadamine.com.databaselist.Adapters.CustomFragmentPagerAdapter;
 import chadamine.com.databaselist.R;
 
 public class SubstrateNewFragment extends Fragment {
@@ -16,12 +17,19 @@ public class SubstrateNewFragment extends Fragment {
         return fragment;
     }
 
+    public static SubstrateNewFragment newInstance(Bundle args, CustomFragmentPagerAdapter.FirstPageFragmentListener listener) {
+        SubstrateNewFragment fragment = new SubstrateNewFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     public SubstrateNewFragment() {}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //if (getArguments() != null) { }
+
+        //mAddBackStack = "new_substrate";
     }
 
     @Override
