@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 
 import chadamine.com.databaselist.Adapters.DatabaseAdapter;
 import chadamine.com.databaselist.Database.DatabaseSchema.Plants;
@@ -52,6 +54,7 @@ public class Plant extends Organism implements DatabaseAdapter {
     private static final Uri CONTENT_URI = Plants.CONTENT_URI;
     private static final Uri HISTORY_CONTENT_URI = PlantHistories.CONTENT_URI;
     private Cursor mCursor;
+    private Cursor mBasicCursor;
     private static final String KEY_ID = Plants.KEY_ID;
     private static final String[] KEY_ID_ARRAY = Plants.KEY_ID_ARRAY;
     private static final String[] KEY_ARRAY = Plants.KEY_ARRAY;
@@ -61,26 +64,12 @@ public class Plant extends Organism implements DatabaseAdapter {
 
     public Plant (Context context) {
         mContext = context;
-
+        mBasicCursor = getNewCursor(null, null, null, null);
     }
 
     public int getListItemLayoutId() {
         return mContext.getResources()
                 .getIdentifier("list_item_plant", "layout", mContext.getPackageName());
-    }
-
-    public int getViewItemLayoutId() {
-        return  R.layout.fragment_plant_new;
-                //mContext.getResources().getIdentifier("fragment_plant_view_info", "layout", mContext.getPackageName());
-    }
-
-    public int getNewItemLayoutId() {
-        return mContext.getResources().getIdentifier("fragment_plant_new", "layout", mContext.getPackageName());
-    }
-
-    public int getNewPlantLayoutId() {
-        return mContext.getResources()
-                .getIdentifier("fragment_view_plant", "layout", mContext.getPackageName());
     }
 
     // TODO: REMOVE
@@ -111,6 +100,7 @@ public class Plant extends Organism implements DatabaseAdapter {
         return KEY_ID;
     }
 
+    // TODO: USE GETNEWCURSOR FUNCTIONS, KEEP THIS NAME
     @Override
     public Cursor getCursor() {
 
@@ -135,7 +125,6 @@ public class Plant extends Organism implements DatabaseAdapter {
 
         return cursor;
     }
-
 
     // TODO: CHANGE TO setLayoutContent(View view)
     public void setListItemContent(View view, Cursor c) {
@@ -173,16 +162,7 @@ public class Plant extends Organism implements DatabaseAdapter {
 
         mUri = mContext.getContentResolver().insert(getUri(), getValues());
         mHistoryUri = mContext.getContentResolver().insert(getHistoryUri(), getHistoryValues());
-
-
-
-
     }
-
-    /*public void updateFields(View view) {
-        setName(((EditText) view.findViewById(R.id.edittext_plant_new_name)).getText().toString());
-        mContext.getContentResolver().update(getUri(), getValues(), null, null);
-    }*/
 
     public void update(View view, long id) {
         setName(((EditText) view.findViewById(R.id.edittext_plant_new_name)).getText().toString());

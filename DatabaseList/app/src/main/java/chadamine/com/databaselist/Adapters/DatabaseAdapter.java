@@ -38,7 +38,7 @@ public interface DatabaseAdapter {
     String getPhotoDir();
 
     // SET LIST ITEMS USING CURSOR FROM LISTCURSORADAPTER
-    void setListItemContent(View view, Cursor cursor);
+    void setListItemContent(View v, Cursor c);
 
     // SET CONTENT OF FRAGMENTS
     // TODO: SET WITH CURSOR FOR PAGERADAPTER?
