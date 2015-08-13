@@ -57,11 +57,6 @@ public class Substrate implements DatabaseAdapter {
     }
 
     @Override
-    public ContentValues getHistoryValues() {
-        return null;
-    }
-
-    @Override
     public String getKeyID() {
         return null;
     }

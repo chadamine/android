@@ -25,7 +25,8 @@ public interface DatabaseAdapter {
 
     ContentValues getValues();
 
-    ContentValues getHistoryValues();
+    // TODO: REMOVE THIS
+    //ContentValues getHistoryValues();
 
     // TODO: MAKE NEWCURSOR OR REMOVE
     Cursor getCursor();

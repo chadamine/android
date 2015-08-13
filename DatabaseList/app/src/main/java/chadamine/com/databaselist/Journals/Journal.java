@@ -66,11 +66,6 @@ public class Journal implements DatabaseAdapter {
     }
 
     @Override
-    public ContentValues getHistoryValues() {
-        return null;
-    }
-
-    @Override
     public String getKeyID() {
         return KEY_ID;
     }

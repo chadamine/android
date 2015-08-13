@@ -68,12 +68,12 @@ public class DatabaseContentProvider extends ContentProvider {
                 queryBuilder.setTables(DatabaseSchema.Plants.TABLE_NAME);
                 break;
 
-            case DatabaseSchema.PLANT_HISTORY_ID:
-                queryBuilder.appendWhere(DatabaseSchema.PlantHistories.KEY_ID + "="
+            case DatabaseSchema.HISTORY_ID:
+                queryBuilder.appendWhere(DatabaseSchema.Histories.KEY_ID + "="
                         + uri.getLastPathSegment());
 
-            case DatabaseSchema.PLANT_HISTORIES:
-                queryBuilder.setTables(DatabaseSchema.PlantHistories.TABLE_NAME);
+            case DatabaseSchema.HISTORIES:
+                queryBuilder.setTables(DatabaseSchema.Histories.TABLE_NAME);
                 break;
 
             case DatabaseSchema.PRODUCT_ID:
@@ -136,9 +136,9 @@ public class DatabaseContentProvider extends ContentProvider {
                 tableName = DatabaseSchema.Plants.TABLE_NAME;
                 break;
 
-            case DatabaseSchema.PLANT_HISTORIES:
-                id = mDatabase.insert(DatabaseSchema.PlantHistories.TABLE_NAME, null, values);
-                tableName = DatabaseSchema.PlantHistories.TABLE_NAME;
+            case DatabaseSchema.HISTORIES:
+                id = mDatabase.insert(DatabaseSchema.Histories.TABLE_NAME, null, values);
+                tableName = DatabaseSchema.Histories.TABLE_NAME;
                 break;
 
             case DatabaseSchema.PRODUCTS:
@@ -228,19 +228,19 @@ public class DatabaseContentProvider extends ContentProvider {
                 }
                 break;
 
-            case DatabaseSchema.PLANT_HISTORIES:
-                rowsDeleted = mDatabase.delete(DatabaseSchema.PlantHistories.TABLE_NAME,
+            case DatabaseSchema.HISTORIES:
+                rowsDeleted = mDatabase.delete(DatabaseSchema.Histories.TABLE_NAME,
                         selection, selectionArgs);
                 break;
-            case DatabaseSchema.PLANT_HISTORY_ID:
+            case DatabaseSchema.HISTORY_ID:
                 id = uri.getLastPathSegment();
 
                 if (TextUtils.isEmpty(selection)) {
-                    rowsDeleted = mDatabase.delete(DatabaseSchema.PlantHistories.TABLE_NAME,
-                            DatabaseSchema.PlantHistories.KEY_ID + "=" + id, null);
+                    rowsDeleted = mDatabase.delete(DatabaseSchema.Histories.TABLE_NAME,
+                            DatabaseSchema.Histories.KEY_ID + "=" + id, null);
                 } else {
-                    rowsDeleted = mDatabase.delete(DatabaseSchema.PlantHistories.TABLE_NAME,
-                            DatabaseSchema.PlantHistories.KEY_ID + "=" + id
+                    rowsDeleted = mDatabase.delete(DatabaseSchema.Histories.TABLE_NAME,
+                            DatabaseSchema.Histories.KEY_ID + "=" + id
                                     + " and " + selection, selectionArgs);
                 }
                 break;

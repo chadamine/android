@@ -144,11 +144,6 @@ public class Photo implements DatabaseAdapter {
         return values;
     }
 
-    @Override
-    public ContentValues getHistoryValues() {
-        return null;
-    }
-
     /*
         Renaming media Images.Media file
         stackoverflow.com/question/24564336/rename-an-image-with-mediastore-android

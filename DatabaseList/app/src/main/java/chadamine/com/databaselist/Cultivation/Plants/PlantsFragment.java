@@ -3,7 +3,6 @@ package chadamine.com.databaselist.Cultivation.Plants;
 import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.annotation.MenuRes;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -26,11 +25,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
-import android.widget.Toast;
 
 import java.util.List;
 
-import chadamine.com.databaselist.Adapters.CustomFragmentPagerAdapter;
 import chadamine.com.databaselist.Adapters.CustomFragmentPagerAdapter.FirstPageFragmentListener;
 import chadamine.com.databaselist.Adapters.ListCursorAdapter;
 import chadamine.com.databaselist.Database.DatabaseSchema;
@@ -82,7 +79,7 @@ public class PlantsFragment extends ListFragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        mView = inflater.inflate(R.layout.fragment_plants, container, false);
+        mView = inflater.inflate(R.layout.fragment_simple_list, container, false);
         mContext = getActivity();
         mPlant = new Plant(mContext);
         mLoaderManager = this;

@@ -155,11 +155,6 @@ public class Nutrient implements DatabaseAdapter {
     }
 
     @Override
-    public ContentValues getHistoryValues() {
-        return null;
-    }
-
-    @Override
     public Cursor getCursor() {
         return null;
     }

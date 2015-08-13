@@ -33,7 +33,7 @@ public class DatabaseSchema {
             NutrientCompoundConcentrations.TABLE_CREATE,
             Nutrients.TABLE_CREATE,
             Photos.TABLE_CREATE,
-            PlantHistories.TABLE_CREATE,
+            Histories.TABLE_CREATE,
             Plants.TABLE_CREATE,
             Products.TABLE_CREATE,
             Substrates.TABLE_CREATE
@@ -54,8 +54,8 @@ public class DatabaseSchema {
     public static final int PLANTS = 7;
     public static final int PLANT_ID = 8;
 
-    public static final int PLANT_HISTORIES = 15;
-    public static final int PLANT_HISTORY_ID = 16;
+    public static final int HISTORIES = 15;
+    public static final int HISTORY_ID = 16;
 
     public static final int PRODUCTS = 9;
     public static final int PRODUCT_ID = 10;
@@ -78,8 +78,8 @@ public class DatabaseSchema {
         URI_MATCHER.addURI(AUTHORITY, Plants.TABLE_NAME, PLANTS);
         URI_MATCHER.addURI(AUTHORITY, Plants.TABLE_NAME + "/#", PLANT_ID);
 
-        URI_MATCHER.addURI(AUTHORITY, PlantHistories.TABLE_NAME, PLANT_HISTORIES);
-        URI_MATCHER.addURI(AUTHORITY, PlantHistories.TABLE_NAME + "/#", PLANT_HISTORY_ID);
+        URI_MATCHER.addURI(AUTHORITY, Histories.TABLE_NAME, HISTORIES);
+        URI_MATCHER.addURI(AUTHORITY, Histories.TABLE_NAME + "/#", HISTORY_ID);
 
         URI_MATCHER.addURI(AUTHORITY, Substrates.TABLE_NAME, SUBSTRATES);
         URI_MATCHER.addURI(AUTHORITY, Substrates.TABLE_NAME + "/#", SUBSTRATE_ID);
@@ -437,35 +437,37 @@ public class DatabaseSchema {
         public static final String DELETE = "DROP TABLE IF EXISTS " + TABLE_NAME;
     }
 
-    public static final class PlantHistories implements BaseColumns {
+    public static final class Histories implements BaseColumns {
 
-        public static final String TABLE_NAME = "plant_history";
+        public static final String TABLE_NAME = "histories";
 
         public static final String KEY_ID = "_id";
         public static final String KEY_DATE = "date";
+        public static final String KEY_CATEGORY = "category";
+        public static final String KEY_TYPE = "type";
         public static final String KEY_ACTION = "action";
 
-        //public static final String DIR_PHOTOS = Photos.DIR_PHOTOS + "PlantHistories/";
+        public static final String[] KEY_ID_ARRAY = { KEY_ID, KEY_DATE, KEY_CATEGORY, KEY_TYPE, KEY_ACTION };
 
-        public static final String[] KEY_ID_ARRAY = { KEY_ID, KEY_DATE, KEY_ACTION };
-
-        public static final String[] KEY_ARRAY = { KEY_DATE, KEY_ACTION };
+        public static final String[] KEY_ARRAY = { KEY_DATE, KEY_CATEGORY, KEY_TYPE, KEY_ACTION };
 
         public static final String TABLE_CREATE =
                 CT + TABLE_NAME + OB
                         + KEY_ID + IPKA
                         + KEY_DATE + TXT
+                        + KEY_CATEGORY + TXT
+                        + KEY_TYPE + TXT
                         + KEY_ACTION + TXF
                         + CLOSE;
 
         public static final Uri CONTENT_URI = Uri.withAppendedPath(DatabaseSchema.CONTENT_URI, TABLE_NAME);
 
         public static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE
-                + "/plant_histories";
+                + "/histories";
         public static final String CONTENT_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE
-                + "/plant_history";
+                + "/history";
 
-        public static final String DELETE = "DROP TABLE IF EXISTS " + TABLE_NAME;
+        public static final String DELETE = DTIE + TABLE_NAME;
     }
 
     public static final class Products implements BaseColumns {

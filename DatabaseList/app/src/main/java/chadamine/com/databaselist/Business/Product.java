@@ -108,11 +108,6 @@ public class Product implements DatabaseAdapter {
         return values;
     }
 
-    @Override
-    public ContentValues getHistoryValues() {
-        return null;
-    }
-
     public int getListItemLayoutId() {
         return mContext.getResources()
                 .getIdentifier("list_item_product", "layout", mContext.getPackageName());

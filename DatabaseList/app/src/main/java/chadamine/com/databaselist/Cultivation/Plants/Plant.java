@@ -8,23 +8,21 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
 
 import chadamine.com.databaselist.Adapters.DatabaseAdapter;
-import chadamine.com.databaselist.Database.DatabaseSchema.Plants;
-import chadamine.com.databaselist.Database.DatabaseSchema.PlantHistories;
-
-import chadamine.com.databaselist.Cultivation.CultivationSystem;
 import chadamine.com.databaselist.Cultivation.Biologicals.Lineage;
 import chadamine.com.databaselist.Cultivation.Biologicals.Organism;
+import chadamine.com.databaselist.Cultivation.CultivationSystem;
+import chadamine.com.databaselist.Cultivation.Substrate;
+import chadamine.com.databaselist.Database.DatabaseSchema.Plants;
+import chadamine.com.databaselist.History.History;
+import chadamine.com.databaselist.R;
 import chadamine.com.databaselist.Schedules.Progress;
 import chadamine.com.databaselist.Schedules.Schedule;
-import chadamine.com.databaselist.Cultivation.Substrate;
-import chadamine.com.databaselist.R;
 
 /**
  * Created by chadamine on 4/30/2015.
@@ -34,10 +32,11 @@ public class Plant extends Organism implements DatabaseAdapter {
     private int mId;
 
     private String mName;
-    //private String mCurrentDateTime;
+    private History mHistory;
     private String mCultivar;
     private String mHeight;
     private String mSpecies;
+    private ViewHolderItem mViewHolder;
 
     private Substrate mSubstrate;
     private CultivationSystem mSystem;
@@ -49,10 +48,7 @@ public class Plant extends Organism implements DatabaseAdapter {
     private String mPotSize;
 
     private Context mContext;
-    private Uri mUri;
-    private Uri mHistoryUri;
     private static final Uri CONTENT_URI = Plants.CONTENT_URI;
-    private static final Uri HISTORY_CONTENT_URI = PlantHistories.CONTENT_URI;
     private Cursor mCursor;
     private Cursor mBasicCursor;
     private static final String KEY_ID = Plants.KEY_ID;
@@ -62,9 +58,18 @@ public class Plant extends Organism implements DatabaseAdapter {
 
     public Plant() {}
 
+    static class ViewHolderItem {
+        TextView txtName;
+        TextView txtSpecies;
+        TextView txtCultivar;
+        TextView txtStage;
+        TextView txtAge;
+    }
+
     public Plant (Context context) {
         mContext = context;
         mBasicCursor = getNewCursor(null, null, null, null);
+        mHistory = new History(context, this);
     }
 
     public int getListItemLayoutId() {
@@ -84,14 +89,15 @@ public class Plant extends Organism implements DatabaseAdapter {
 
     @Override
     public Uri getHistoryUri() {
-        return HISTORY_CONTENT_URI;
+        return mHistory.getUri();
     }
 
     @Override
     public int getId() {
         mCursor = getNewCursor(KEY_ID_ARRAY, null, null, null);
         mCursor.moveToLast();
-        mId = mCursor.getInt(mCursor.getColumnIndex("_id"));
+        if(mCursor.getPosition() >= 0)
+            mId = mCursor.getInt(mCursor.getColumnIndex("_id"));
         return mId;
     }
 
@@ -121,7 +127,7 @@ public class Plant extends Organism implements DatabaseAdapter {
             idA = idArray;
 
         Cursor cursor = mContext.getContentResolver().query(CONTENT_URI, idA, selection, selectionArgs, sortOrder);
-        cursor.moveToFirst();
+        //cursor.moveToFirst();
 
         return cursor;
     }
@@ -129,25 +135,29 @@ public class Plant extends Organism implements DatabaseAdapter {
     // TODO: CHANGE TO setLayoutContent(View view)
     public void setListItemContent(View view, Cursor c) {
 
+        if(mViewHolder == null) {
+            mViewHolder = new ViewHolderItem();
+            mViewHolder.txtName = (TextView) view.findViewById(R.id.textview_plants_item_name);
+            mViewHolder.txtSpecies = (TextView) view.findViewById(R.id.textview_plants_item_species);
+            mViewHolder.txtCultivar = (TextView) view.findViewById(R.id.textview_plants_item_cultivar);
+            mViewHolder.txtStage = (TextView) view.findViewById(R.id.textview_plants_item_stage);
+            mViewHolder.txtAge = (TextView) view.findViewById(R.id.textview_plants_item_age);
+        }
+
         String name = c.getString(c.getColumnIndexOrThrow(Plants.KEY_NAME));
-        ((TextView) view.findViewById(R.id.textview_plants_item_name))
-                .setText(name != null ? name : "");
+        (mViewHolder.txtName).setText(name != null ? name : "");
 
         String species = c.getString(c.getColumnIndexOrThrow(Plants.KEY_SPECIES));
-        ((TextView) view.findViewById(R.id.textview_plants_item_species))
-                .setText(species != null ? species : "");
+        (mViewHolder.txtSpecies).setText(species != null ? species : "");
 
         String cultivar = c.getString(c.getColumnIndexOrThrow(Plants.KEY_CULTIVAR));
-        ((TextView) view.findViewById(R.id.textview_plants_item_cultivar))
-                .setText(cultivar != null ? cultivar : "");
+        (mViewHolder.txtCultivar).setText(cultivar != null ? cultivar : "");
 
         String stage = c.getString(c.getColumnIndexOrThrow(Plants.KEY_STAGE));
-        ((TextView) view.findViewById(R.id.textview_plants_item_stage))
-                .setText(stage != null ? stage : "");
+        (mViewHolder.txtStage).setText(stage != null ? stage : "");
 
         String age = c.getString(c.getColumnIndexOrThrow(Plants.KEY_AGE));
-        ((TextView) view.findViewById(R.id.textview_plants_item_age))
-                .setText(age != null ? age : "");
+        (mViewHolder.txtAge).setText(age != null ? age : "");
     }
 
     @Override
@@ -155,21 +165,26 @@ public class Plant extends Organism implements DatabaseAdapter {
 
     }
 
-    public void saveFields(View view, boolean isListItem) {
-        if(!isListItem)
-            setName(((EditText) view.findViewById(R.id.edittext_plant_new_name))
-                    .getText().toString());
+    public void saveFields(View view) {
 
-        mUri = mContext.getContentResolver().insert(getUri(), getValues());
-        mHistoryUri = mContext.getContentResolver().insert(getHistoryUri(), getHistoryValues());
+        EditText editName = (EditText) view.findViewById(R.id.edittext_plant_new_name);
+        String name = editName.getText().toString();
+        Cursor cursor = getCursor();
+        String existingName = cursor.getString(cursor.getColumnIndexOrThrow(Plants.KEY_NAME));
+        while(cursor.moveToNext())
+            if(name == existingName) {
+                Toast.makeText(mContext, "A plant with the name \"" + name + "\"" + " already exists.\n"
+                + " Please enter a unique name, or use the auto name generator", Toast.LENGTH_SHORT);
+            }
     }
 
     public void update(View view, long id) {
+
         setName(((EditText) view.findViewById(R.id.edittext_plant_new_name)).getText().toString());
         mContext.getContentResolver().update(Uri.parse(Plants.CONTENT_URI + "/" + id),
                 getValues(), null, null);
 
-        mHistoryUri = mContext.getContentResolver().insert(getHistoryUri(), getHistoryValues());
+        mContext.getContentResolver().insert(mHistory.getUri(), mHistory.getValues());
     }
 
     public void setViewItemContent(View view, int cursorPosition, String sortOrder) {
@@ -231,14 +246,6 @@ public class Plant extends Organism implements DatabaseAdapter {
         String update = "update_name";
 
         return "creation";
-    }
-
-    @Override
-    public ContentValues getHistoryValues() {
-        ContentValues values = new ContentValues();
-        values.put(PlantHistories.KEY_DATE, getCurrentDate());
-        values.put(PlantHistories.KEY_ACTION, getActionType());
-        return values;
     }
 
     @Override

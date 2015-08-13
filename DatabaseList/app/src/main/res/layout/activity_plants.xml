@@ -5,7 +5,7 @@
     android:orientation="vertical">
     <FrameLayout
         xmlns:tools="http://schemas.android.com/tools"
-        tools:layout="@layout/fragment_plants"
+        tools:layout="@layout/fragment_simple_list"
         android:id="@+id/frame_plant_activity"
         android:name="chadamine.com.databaselist.PlantsActivityFragment"
         android:layout_width="match_parent"
