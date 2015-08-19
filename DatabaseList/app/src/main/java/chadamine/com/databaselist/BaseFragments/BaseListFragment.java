@@ -24,10 +24,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
-import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
+import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
@@ -36,10 +35,11 @@ import java.util.List;
 
 import chadamine.com.databaselist.Adapters.DatabaseAdapter;
 import chadamine.com.databaselist.Adapters.ListCursorAdapter;
+import chadamine.com.databaselist.Cultivation.Plants.PlantNewOverviewFragment;
 import chadamine.com.databaselist.Database.DatabaseSchema;
 import chadamine.com.databaselist.R;
 
-public class SortableListFragment extends Fragment
+public class BaseListFragment extends ListFragment
         implements LoaderManager.LoaderCallbacks<Cursor> {
 
     public BaseOverviewFragment mBaseFragment;
@@ -60,14 +60,13 @@ public class SortableListFragment extends Fragment
     public @IdRes int mSpinnerSort;
     public @IdRes int mActivityFrame;
 
-    public ListView mListView;
     public ListCursorAdapter mListCursorAdapter;
     private LoaderManager.LoaderCallbacks<Cursor> mLoaderManager = this;
 
-    public String mAddBackStack;
-    public String mPlural;
-    public String mSingular;
+    public String mAddBackstack;
     public String mSortOrder;
+    public String mSingular;
+    public String mPlural;
 
     public static final String KEY_SORT_SELECTION = "sort_selection";
     public static final String KEY_SORT_ORDER = "sort_order";
@@ -81,15 +80,15 @@ public class SortableListFragment extends Fragment
         return mUrId;
     }
 
-    public static SortableListFragment newInstance(Bundle args) {
-        SortableListFragment f = new SortableListFragment();
+    public static BaseListFragment newInstance(Bundle args) {
+        BaseListFragment f = new BaseListFragment();
 
         if(args != null)
             f.setArguments(args);
         return f;
     }
 
-    public SortableListFragment() {
+    public BaseListFragment() {
     }
 
     @Override
@@ -105,7 +104,6 @@ public class SortableListFragment extends Fragment
                 mSortSelection = mBundle.getInt(KEY_SORT_SELECTION);
         }
 
-
         setHasOptionsMenu(true);
         setRetainInstance(true);
     }
@@ -113,9 +111,7 @@ public class SortableListFragment extends Fragment
     protected View inflateView(@LayoutRes int resId, LayoutInflater inflater, ViewGroup container) {
         View view = inflater.inflate(resId, container, false);
 
-        mListView = (ListView) view.findViewById(R.id.list);
         prepareView();
-
         trimFragmentManager();
 
         return view;
@@ -124,7 +120,7 @@ public class SortableListFragment extends Fragment
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
+        prepareList();
     }
 
     @Override
@@ -159,19 +155,12 @@ public class SortableListFragment extends Fragment
         mListCursorAdapter.swapCursor(null);
     }
 
-    private void setListAdapter(ListAdapter a) {
-        mListView.setAdapter(a);
-    }
-
-    private ListView getListView() {
-        return mListView;
-    }
     private void prepareView() {
+
         getLoaderManager().initLoader(getUrId(), mBundle, this);
 
-        getFragmentManager().beginTransaction().remove(getFragmentManager().findFragmentByTag(mAddBackStack));
+        getFragmentManager().beginTransaction().remove(getFragmentManager().findFragmentByTag(mAddBackstack));
 
-        prepareList();
         mListCursorAdapter = new ListCursorAdapter(mContext, null, 0, mDBObject);
         setListAdapter(mListCursorAdapter);
     }

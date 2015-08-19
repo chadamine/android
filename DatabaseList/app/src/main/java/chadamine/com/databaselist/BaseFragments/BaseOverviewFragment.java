@@ -1,7 +1,6 @@
 package chadamine.com.databaselist.BaseFragments;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
@@ -17,8 +16,6 @@ import android.view.ViewGroup;
 
 import com.astuetz.PagerSlidingTabStrip;
 
-import java.util.List;
-
 import chadamine.com.databaselist.Adapters.CustomFragmentPagerAdapter;
 import chadamine.com.databaselist.R;
 
@@ -28,10 +25,6 @@ public class BaseOverviewFragment extends Fragment {
     public @MenuRes int mMenu;
     public @IdRes int mEdit;
     public Context mContext;
-    public int mNumTabs;
-    public List<String> mTabTitles;
-    public boolean mIsNew;
-    public Uri mUri;
 
     public BaseOverviewFragment() {}
 
@@ -60,12 +53,9 @@ public class BaseOverviewFragment extends Fragment {
         else
             mBundle = new Bundle();
 
-
-        mIsNew = mBundle.getBoolean("is_new");
         View view = inflater.inflate(layout, container, false);
         CustomFragmentPagerAdapter customFragmentPagerAdapter =
-                new CustomFragmentPagerAdapter(getFragmentManager(), mContext, mUri,
-                        mNumTabs, mTabTitles, mIsNew);
+                new CustomFragmentPagerAdapter(getFragmentManager(), mContext, mBundle);
 
         PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) view.findViewById(R.id.pager_sliding_tab_strip);
 

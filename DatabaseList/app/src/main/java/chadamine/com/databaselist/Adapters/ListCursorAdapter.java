@@ -17,7 +17,7 @@ public class ListCursorAdapter extends CursorAdapter {
 
     private int mID;
     private DatabaseAdapter mDatabaseObject;
-    private View mView;
+    //private View mView;
     private Cursor mCursor;
 	
     Context mContext;
@@ -43,7 +43,7 @@ public class ListCursorAdapter extends CursorAdapter {
         // TODO: MAKE THIS WORK
         //mDatabaseObject.setContent();
 
-        mView = view;
+        //mView = view;
     }
 
 	@Override

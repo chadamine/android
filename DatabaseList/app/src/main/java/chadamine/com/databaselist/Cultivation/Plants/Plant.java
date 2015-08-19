@@ -171,11 +171,16 @@ public class Plant extends Organism implements DatabaseAdapter {
         String name = editName.getText().toString();
         Cursor cursor = getCursor();
         String existingName = cursor.getString(cursor.getColumnIndexOrThrow(Plants.KEY_NAME));
+        boolean exists = false;
         while(cursor.moveToNext())
             if(name == existingName) {
+                exists = true;
                 Toast.makeText(mContext, "A plant with the name \"" + name + "\"" + " already exists.\n"
                 + " Please enter a unique name, or use the auto name generator", Toast.LENGTH_SHORT);
             }
+
+        if(!exists)
+            setName(name);
     }
 
     public void update(View view, long id) {

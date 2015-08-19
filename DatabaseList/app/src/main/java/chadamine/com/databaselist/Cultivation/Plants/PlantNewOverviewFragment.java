@@ -5,9 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import chadamine.com.databaselist.BaseFragments.BaseOverviewFragment;
 import chadamine.com.databaselist.R;
 
@@ -34,18 +31,10 @@ public class PlantNewOverviewFragment extends BaseOverviewFragment {
         else
             mBundle = new Bundle();
 
+        mBundle.putString("type", "plant");
         mContext = getActivity();
         mMenu = R.menu.menu_plants_activity;
         mEdit = R.id.edit_plant;
-        mNumTabs = 3;
-
-        List<String> titles = new ArrayList<>();
-        titles.add("Information");
-        titles.add("Measurements");
-        titles.add("History");
-
-        mTabTitles = titles;
-
         super.onCreate(savedInstanceState);
     }
 

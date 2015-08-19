@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import chadamine.com.databaselist.Adapters.CustomFragmentPagerAdapter.FirstPageFragmentListener;
-import chadamine.com.databaselist.BaseFragments.SortableListFragment;
+import chadamine.com.databaselist.BaseFragments.BaseListFragment;
 import chadamine.com.databaselist.R;
 
 public class PlantViewFragment extends Fragment {
@@ -33,12 +33,12 @@ public class PlantViewFragment extends Fragment {
 
     public PlantViewFragment() {}
 
-/*    public static PlantViewFragment newInstance(Bundle args) {
+    public static PlantViewFragment newInstance(Bundle args) {
         PlantViewFragment f = new PlantViewFragment();
         if(args != null)
             f.setArguments(args);
         return f;
-    }*/
+    }
 
     public static PlantViewFragment newInstance(Bundle args,
                                                 FirstPageFragmentListener listener) {
@@ -49,11 +49,11 @@ public class PlantViewFragment extends Fragment {
         return f;
     }
 
-    /*public static PlantViewFragment newInstance(FirstPageFragmentListener listener) {
+    public static PlantViewFragment newInstance(FirstPageFragmentListener listener) {
         PlantViewFragment f = new PlantViewFragment();
         mListener = listener;
         return f;
-    }*/
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -73,18 +73,17 @@ public class PlantViewFragment extends Fragment {
         if(getArguments() != null) {
             mBundle = getArguments();
 
-            if(mBundle.containsKey(SortableListFragment.KEY_SORT_ORDER))
-                mSortOrder = mBundle.getString(SortableListFragment.KEY_SORT_ORDER);
+            if(mBundle.containsKey(BaseListFragment.KEY_SORT_ORDER))
+                mSortOrder = mBundle.getString(BaseListFragment.KEY_SORT_ORDER);
 
-            if(mBundle.containsKey(SortableListFragment.KEY_POSITION))
-                mCursorPosition = mBundle.getInt(SortableListFragment.KEY_POSITION);
+            if(mBundle.containsKey(BaseListFragment.KEY_POSITION))
+                mCursorPosition = mBundle.getInt(BaseListFragment.KEY_POSITION);
 
-            if(mBundle.containsKey(SortableListFragment.KEY_IS_NEW))
-                mIsNew = mBundle.getBoolean(SortableListFragment.KEY_IS_NEW);
+            if(mBundle.containsKey(BaseListFragment.KEY_IS_NEW))
+                mIsNew = mBundle.getBoolean(BaseListFragment.KEY_IS_NEW);
 
-            (mPlant).setViewItemContent(mView, mCursorPosition, mSortOrder);
-        } else /*if(savedInstanceState != null)*/
-            mBundle = new Bundle();
+            mPlant.setViewItemContent(mView, mCursorPosition, mSortOrder);
+        }
 
         return mView;
     }
@@ -114,12 +113,14 @@ public class PlantViewFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        //mListener = super.getListener();
-        //mBundle = getArguments();
+
+        /*int id = -1;
+        if(mBundle.containsKey("id"))
+                id = mBundle.getInt("id");*/
 
         switch (item.getItemId()) {
             case R.id.edit_plant:
-                mBundle.putBoolean("is_new", false);
+                //mBundle.putInt("id", mPlant.getId() + 1);
                 mListener.onSwitchToNewFragment(mBundle);
         }
 

@@ -2,6 +2,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="chadamine.com.databaselist.BaseFragments.SortableListFragment"
+    tools:context="chadamine.com.databaselist.BaseFragments.BaseListFragment"
     android:id="@+id/frame_base_list">
 </FrameLayout>
