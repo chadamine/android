@@ -54,15 +54,7 @@ public class BaseOverviewFragment extends Fragment {
             mBundle = new Bundle();
 
         View view = inflater.inflate(layout, container, false);
-        CustomFragmentPagerAdapter customFragmentPagerAdapter =
-                new CustomFragmentPagerAdapter(getFragmentManager(), mContext, mBundle);
 
-        PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) view.findViewById(R.id.pager_sliding_tab_strip);
-
-        ViewPager viewPager = (ViewPager) view.findViewById(R.id.pager);
-        viewPager.setAdapter(customFragmentPagerAdapter);
-
-        tabs.setViewPager(viewPager);
 
         return view;
     }

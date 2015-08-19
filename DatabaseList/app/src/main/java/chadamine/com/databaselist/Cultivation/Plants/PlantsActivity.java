@@ -6,7 +6,11 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 
 import android.view.Menu;
+import android.view.View;
 
+import com.astuetz.PagerSlidingTabStrip;
+
+import chadamine.com.databaselist.Adapters.CustomFragmentPagerAdapter;
 import chadamine.com.databaselist.R;
 
 public class PlantsActivity extends ActionBarActivity {
@@ -17,9 +21,21 @@ public class PlantsActivity extends ActionBarActivity {
 
         setContentView(R.layout.activity_plants);
 
-        getSupportFragmentManager().beginTransaction()
+        Bundle mBundle = new Bundle();
+
+        CustomFragmentPagerAdapter customFragmentPagerAdapter =
+                new CustomFragmentPagerAdapter(getSupportFragmentManager(), this, mBundle);
+
+        PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) findViewById(R.id.pager_sliding_tab_strip);
+
+        ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
+        viewPager.setAdapter(customFragmentPagerAdapter);
+
+        tabs.setViewPager(viewPager);
+
+        /*getSupportFragmentManager().beginTransaction()
                 .replace(R.id.frame_plant_activity, new PlantListFragment())
-                .commit();
+                .commit();*/
     }
 
     @Override

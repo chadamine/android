@@ -75,7 +75,7 @@ public class CustomFragmentPagerAdapter extends FragmentPagerAdapter {
 
         mBundle.putInt("page_position", position + 1);
 
-        if (mType == "plant") {
+        //if (mType == "plant") {
             switch (position) {
                 case 0:
                     if (mFragmentAtPos0 == null) {
@@ -92,7 +92,7 @@ public class CustomFragmentPagerAdapter extends FragmentPagerAdapter {
                 default:
                     return null;
             }
-        } else
+        /*} else
             switch (position) {
                 case 0:
                     return NutriSolverInputs.newInstance(mBundle);
@@ -100,21 +100,21 @@ public class CustomFragmentPagerAdapter extends FragmentPagerAdapter {
                     return NutriSolverCalculate.newInstance(mBundle);
                 default:
                     return null;
-            }
+            }*/
     }
 
     @Override
     public int getCount() {
-        if(mType == "plant")
+        //if(mType == "plant")
             return NUM_ITEMS_PLANTS;
-        else
-            return NUM_ITEMS_NUTRISOLVER;
+        /*else
+            return NUM_ITEMS_NUTRISOLVER;*/
     }
 
     @Override
     public CharSequence getPageTitle(int position) {
 
-        if(mType == "plant") {
+        //if(mType == "plant") {
             switch (position) {
                 case 0:
                     return "Information";
@@ -125,7 +125,7 @@ public class CustomFragmentPagerAdapter extends FragmentPagerAdapter {
                 default:
                     return "Page " + (position + 1);
             }
-        }
+        /*}
         else
             switch(position) {
                 case 0:
@@ -135,7 +135,7 @@ public class CustomFragmentPagerAdapter extends FragmentPagerAdapter {
                 default:
                     return "Page " + (position + 1);
 
-            }
+            }*/
     }
 
     public interface FirstPageFragmentListener
