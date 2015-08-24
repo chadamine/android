@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import chadamine.com.databaselist.Adapters.CustomFragmentPagerAdapter;
 import chadamine.com.databaselist.BaseFragments.BaseListFragment;
 import chadamine.com.databaselist.Database.DatabaseSchema.Plants;
 import chadamine.com.databaselist.R;
@@ -15,27 +16,38 @@ import chadamine.com.databaselist.R;
 public class PlantListFragment extends BaseListFragment {
 
     private final String BACKSTACK_LABEL = "plant_overview";
-    public PlantListFragment() {}
+    private static CustomFragmentPagerAdapter.FirstPageFragmentListener mListener;
+
+    public PlantListFragment() {
+        super.mLayout = R.layout.fragment_simple_list;
+        super.mUri = Plants.CONTENT_URI;
+        super.mDelete = R.id.delete_plant;
+        super.mAdd = R.id.add_plant;
+
+        super.mSingular = "Plant";
+        super.mPlural = "Plants";
+        super.mSortSelection = -1;
+        super.mMenu = R.menu.menu_plants;
+        super.mActionMenu = R.menu.menu_plants_action;
+        super.mSortArray = R.array.plant_sort_items;
+        super.mSpinnerSort = R.id.spinner_plant_menu;
+        super.mActivityFrame = R.id.frame_plant_activity;
+    }
+
+    public static PlantListFragment newInstance(Bundle args, CustomFragmentPagerAdapter.FirstPageFragmentListener listener) {
+        PlantListFragment f = new PlantListFragment();
+        if(args != null)
+            f.setArguments(args);
+
+        mListener = listener;
+        return f;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
         mContext = getActivity();
         mDBObject = new Plant(mContext);
-
-        mLayout = R.layout.fragment_simple_list;
-        mUri = Plants.CONTENT_URI;
-        mDelete = R.id.delete_plant;
-        mAdd = R.id.add_plant;
-
-        mSingular = "Plant";
-        mPlural = "Plants";
-        mSortSelection = -1;
-        mMenu = R.menu.menu_plants;
-        mActionMenu = R.menu.menu_plants_action;
-        mSortArray = R.array.plant_sort_items;
-        mSpinnerSort = R.id.spinner_plant_menu;
-        mActivityFrame = R.id.frame_plant_activity;
 
         super.onCreate(savedInstanceState);
     }
@@ -52,7 +64,9 @@ public class PlantListFragment extends BaseListFragment {
         else
             mBundle = new Bundle();
 
-        View view = inflateView(mLayout, inflater, container);
+        mBundle.putString("type", "plant");
+
+        View view = super.inflateView(mLayout, inflater, container);
         return view;
     }
 
@@ -66,7 +80,7 @@ public class PlantListFragment extends BaseListFragment {
             replaceFragment();
         }
 
-        return false;
+        return true;
     }
 
     @Override
@@ -80,9 +94,11 @@ public class PlantListFragment extends BaseListFragment {
     }
 
     private void replaceFragment() {
-        getFragmentManager().beginTransaction()
-                .replace(mActivityFrame, PlantNewOverviewFragment.newInstance(mBundle), BACKSTACK_LABEL)
+        mListener.onSwitchToNewFragment(mBundle);
+        /*getFragmentManager().beginTransaction()
+                .replace(mActivityFrame,
+                        PlantViewFragment.newInstance(mBundle, mListener), BACKSTACK_LABEL)
                 .addToBackStack(BACKSTACK_LABEL)
-                .commit();
+                .commit();*/
     }
 }

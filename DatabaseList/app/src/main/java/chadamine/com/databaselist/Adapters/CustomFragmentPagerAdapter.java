@@ -4,18 +4,18 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 
-import chadamine.com.databaselist.NutriSolver.NutriSolverCalculate;
-import chadamine.com.databaselist.NutriSolver.NutriSolverInputs;
 import chadamine.com.databaselist.Cultivation.Plants.HistoryFragment;
 import chadamine.com.databaselist.Cultivation.Plants.PlantNewFragment;
 import chadamine.com.databaselist.Cultivation.Plants.PlantViewFragment;
+import chadamine.com.databaselist.Cultivation.Plants.PlantsActivity.PlantTabListener;
+import chadamine.com.databaselist.Cultivation.Plants.PlantsFragment;
 
 /**
  * Created by chadamine on 6/7/2015.
  */
-public class CustomFragmentPagerAdapter extends FragmentPagerAdapter {
+public class CustomFragmentPagerAdapter extends FragmentStatePagerAdapter {
 
     Context mContext;
     private static final int NUM_ITEMS_PLANTS = 3;
@@ -24,27 +24,24 @@ public class CustomFragmentPagerAdapter extends FragmentPagerAdapter {
     private Fragment mFragmentAtPos0;
     private Bundle mBundle;
     public FirstPageListener mListener = new FirstPageListener();
+    PlantTabListener mTabListener;
     private static final String KEY_TYPE = "type";
     private static final String KEY_IS_NEW = "is_new";
     //private static final String
     private String mType;
     private boolean mIsNew;
 
-    public CustomFragmentPagerAdapter(FragmentManager fm, Context context, Bundle args) {
+
+    public CustomFragmentPagerAdapter(FragmentManager fm, Context context,
+                                      Bundle args, PlantTabListener tabListener) {
         super(fm);
         mContext = context;
         mFragmentManager = fm;
+        mTabListener = tabListener;
+        mBundle = args;
 
-        if(args != null) {
-            mBundle = args;
-
-            if (mBundle.containsKey(KEY_TYPE))
-                mType = mBundle.getString(KEY_TYPE);
-            if (mBundle.containsKey(KEY_IS_NEW))
-                mIsNew = mBundle.getBoolean(KEY_IS_NEW);
-        }
-        else
-            mBundle = new Bundle();
+        if(mBundle.containsKey(KEY_TYPE))
+            mType = mBundle.getString(KEY_TYPE);
     }
 
     private final class FirstPageListener implements FirstPageFragmentListener {
@@ -57,16 +54,27 @@ public class CustomFragmentPagerAdapter extends FragmentPagerAdapter {
             if(mBundle.containsKey(KEY_TYPE))
                 mType = mBundle.getString(KEY_TYPE);
 
+            if (mBundle.containsKey(KEY_IS_NEW))
+                mIsNew = mBundle.getBoolean(KEY_IS_NEW);
+
             mFragmentManager.beginTransaction().remove(mFragmentAtPos0).commit();
 
             if(mType == "plant") {
-                if (mFragmentAtPos0 instanceof PlantViewFragment)
-                    mFragmentAtPos0 = PlantNewFragment.newInstance(mBundle, mListener);
-                else
-                    mFragmentAtPos0 = PlantViewFragment.newInstance(mBundle, mListener);
 
-                notifyDataSetChanged();
+                if(mFragmentAtPos0 instanceof PlantsFragment) //{
+                    /*if (mIsNew) {
+                        mFragmentAtPos0 = PlantNewFragment.newInstance(mBundle, mListener);
+                    } else
+                        mFragmentAtPos0 = PlantViewFragment.newInstance(mBundle, mListener);
+                } else if (mFragmentAtPos0 instanceof PlantViewFragment)
+                    mFragmentAtPos0 = PlantNewFragment.newInstance(mBundle, mListener);
+                else*/
+                    mFragmentAtPos0 = PlantNewFragment.newInstance(mBundle, mListener);
             }
+
+            mTabListener.toggleTabs();
+
+            //notifyDataSetChanged();
         }
     }
 
@@ -75,14 +83,15 @@ public class CustomFragmentPagerAdapter extends FragmentPagerAdapter {
 
         mBundle.putInt("page_position", position + 1);
 
-        //if (mType == "plant") {
+        if (mType == "plant") {
             switch (position) {
                 case 0:
                     if (mFragmentAtPos0 == null) {
-                        if (mIsNew)
+                        mFragmentAtPos0 = PlantsFragment.newInstance(mBundle, mListener);
+                        /*if (mIsNew)
                             mFragmentAtPos0 = PlantNewFragment.newInstance(mBundle, mListener);
                         else
-                            mFragmentAtPos0 = PlantViewFragment.newInstance(mBundle, mListener);
+                            mFragmentAtPos0 = PlantViewFragment.newInstance(mBundle, mListener);*/
                     }
                     return mFragmentAtPos0;
                 case 1:
@@ -92,7 +101,11 @@ public class CustomFragmentPagerAdapter extends FragmentPagerAdapter {
                 default:
                     return null;
             }
-        /*} else
+
+
+        }
+        else return null;
+        /*else
             switch (position) {
                 case 0:
                     return NutriSolverInputs.newInstance(mBundle);
@@ -105,16 +118,16 @@ public class CustomFragmentPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        //if(mType == "plant")
+        if(mType == "plant")
             return NUM_ITEMS_PLANTS;
-        /*else
-            return NUM_ITEMS_NUTRISOLVER;*/
+        else
+            return NUM_ITEMS_NUTRISOLVER;
     }
 
     @Override
     public CharSequence getPageTitle(int position) {
 
-        //if(mType == "plant") {
+        if(mType == "plant") {
             switch (position) {
                 case 0:
                     return "Information";
@@ -125,7 +138,7 @@ public class CustomFragmentPagerAdapter extends FragmentPagerAdapter {
                 default:
                     return "Page " + (position + 1);
             }
-        /*}
+        }
         else
             switch(position) {
                 case 0:
@@ -135,7 +148,7 @@ public class CustomFragmentPagerAdapter extends FragmentPagerAdapter {
                 default:
                     return "Page " + (position + 1);
 
-            }*/
+            }
     }
 
     public interface FirstPageFragmentListener

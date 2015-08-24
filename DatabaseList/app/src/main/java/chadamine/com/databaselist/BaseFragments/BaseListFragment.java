@@ -80,13 +80,13 @@ public class BaseListFragment extends ListFragment
         return mUrId;
     }
 
-    public static BaseListFragment newInstance(Bundle args) {
+    /*public static BaseListFragment newInstance(Bundle args) {
         BaseListFragment f = new BaseListFragment();
 
         if(args != null)
             f.setArguments(args);
         return f;
-    }
+    }*/
 
     public BaseListFragment() {
     }
@@ -97,12 +97,12 @@ public class BaseListFragment extends ListFragment
 
         mUrId = DatabaseSchema.URI_MATCHER.match(mUri);
 
-        if (getArguments() != null) {
+        /*if (getArguments() != null) {
             mBundle = getArguments();
 
             if(mBundle.containsKey(KEY_SORT_SELECTION))
                 mSortSelection = mBundle.getInt(KEY_SORT_SELECTION);
-        }
+        }*/
 
         setHasOptionsMenu(true);
         setRetainInstance(true);
@@ -159,7 +159,9 @@ public class BaseListFragment extends ListFragment
 
         getLoaderManager().initLoader(getUrId(), mBundle, this);
 
-        getFragmentManager().beginTransaction().remove(getFragmentManager().findFragmentByTag(mAddBackstack));
+        /*getFragmentManager()
+                .beginTransaction()
+                .remove(getFragmentManager().findFragmentByTag(mAddBackstack));*/
 
         mListCursorAdapter = new ListCursorAdapter(mContext, null, 0, mDBObject);
         setListAdapter(mListCursorAdapter);

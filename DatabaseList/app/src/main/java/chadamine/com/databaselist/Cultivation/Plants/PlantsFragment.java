@@ -61,10 +61,11 @@ public class PlantsFragment extends ListFragment
 
    public PlantsFragment() { }
 
-    public static PlantsFragment newInstance(Bundle args) {
+    public static PlantsFragment newInstance(Bundle args, FirstPageFragmentListener listener) {
         PlantsFragment f = new PlantsFragment();
         if(args != null)
             f.setArguments(args);
+        mListener = listener;
         return f;
     }
 
@@ -91,12 +92,8 @@ public class PlantsFragment extends ListFragment
         mListCursorAdapter = new ListCursorAdapter(mContext, null, 0, mPlant);
         setListAdapter(mListCursorAdapter);
 
-        if(getArguments() != null)
-            mBundle = getArguments();
-
         //TODO: FIND BETTER WAY (VIEWPAGER?) TO HANDLE EXCESS FRAGMENTS
         // HACK TO REMOVE FRAGMENTS LEFTOVER FROM OVERVIEW FIASCO
-
         FragmentManager manager = getFragmentManager();
         List<Fragment> fragments = manager.getFragments();
 
@@ -119,6 +116,8 @@ public class PlantsFragment extends ListFragment
                 mSortSelection = mBundle.getInt("sortSelection");
         } else if(mBundle == null)
             mBundle = new Bundle();
+
+        mBundle.putString("type", "plant");
 
         getListView().setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
 
@@ -242,27 +241,28 @@ public class PlantsFragment extends ListFragment
         mBundle.putBoolean("isNew", false);
         mBundle.putString("type", "plant");
 
-        getFragmentManager().beginTransaction()
+        mListener.onSwitchToNewFragment(mBundle);
+        /*getFragmentManager().beginTransaction()
                 .replace(R.id.frame_plant_activity,
                         PlantOverviewFragment.newInstance(mBundle), "plant_overview")
                 .addToBackStack("plant_overview")
-                .commit();
+                .commit();*/
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        mBundle.putBoolean("isNew", true);
+        mBundle.putBoolean("is_new", true);
         mBundle.remove("id");
 
         switch(item.getItemId()) {
             case R.id.add_plant:
-
-                getFragmentManager().beginTransaction()
+                mListener.onSwitchToNewFragment(mBundle);
+                /*getFragmentManager().beginTransaction()
                         .replace(R.id.frame_plant_activity,
                                 PlantOverviewFragment.newInstance(mBundle), "plant_overview")
                         .addToBackStack("plant_overview")
-                        .commit();
+                        .commit();*/
 
                 break;
         }

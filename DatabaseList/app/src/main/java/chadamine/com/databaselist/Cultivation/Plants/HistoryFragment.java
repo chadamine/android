@@ -60,7 +60,7 @@ public class HistoryFragment extends BaseListFragment {
         mDBObject = new Plant(mContext);
         mHistory = new History(mContext, mDBObject);
 
-        mLayout = R.layout.fragment_plant_history; // TODO: REMOVE THIS
+        mLayout = R.layout.fragment_simple_list;
         mUri = DatabaseSchema.Histories.CONTENT_URI;
 
         mSingular = "History";

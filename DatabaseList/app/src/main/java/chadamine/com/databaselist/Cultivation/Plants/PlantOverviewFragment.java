@@ -64,8 +64,10 @@ public class PlantOverviewFragment extends Fragment {
         }
 
         mBundle.putString("type", "plant");
+/*
         mCustomFragmentPagerAdapter =
                 new CustomFragmentPagerAdapter(getFragmentManager(), mContext, mBundle);
+*/
 
         PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) mView.findViewById(R.id.pager_sliding_tab_strip);
 
